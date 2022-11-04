@@ -33,9 +33,9 @@ class Power extends Phaser.Scene {
 
     var consumption = getPowerConsumption()
 
-    this.rcText = this.add.bitmapText(25, 925, 'topaz', 'R Consumption: ' + consumption[0], 40).setOrigin(0, .5).setTint(0x000000).setInteractive();
-    this.ccText = this.add.bitmapText(25, 1025, 'topaz', 'C Consumption: ' + consumption[1], 40).setOrigin(0, .5).setTint(0x000000).setInteractive();
-    this.iccText = this.add.bitmapText(25, 1125, 'topaz', 'I Consumption: ' + consumption[2], 40).setOrigin(0, .5).setTint(0x000000).setInteractive();
+    this.rcText = this.add.bitmapText(25, 925, 'topaz', 'R: ' + consumption[0], 40).setOrigin(0, .5).setTint(0x000000).setInteractive();
+    this.ccText = this.add.bitmapText(25, 1025, 'topaz', 'C: ' + consumption[1], 40).setOrigin(0, .5).setTint(0x000000).setInteractive();
+    this.iccText = this.add.bitmapText(25, 1125, 'topaz', 'I: ' + consumption[2], 40).setOrigin(0, .5).setTint(0x000000).setInteractive();
 
 
 
@@ -54,7 +54,7 @@ class Power extends Phaser.Scene {
 
 
 
-    this.totalText = this.add.bitmapText(25, 1225, 'topaz', 'Total Consumption: ' + consumption[3] + ' Total Capacity: ' + totalCapicity + 'MW/h', 40).setOrigin(0, .5).setTint(0x000000).setInteractive();
+    this.totalText = this.add.bitmapText(25, 1225, 'topaz', 'Total Used/Capacity ' + consumption[3] + ' / ' + totalCapicity + 'MW/h', 40).setOrigin(0, .5).setTint(0x000000).setInteractive();
 
     this.numText = this.add.bitmapText(25, 1325, 'topaz', 'Plants: ' + sim.gameData.powerPlants.length, 40).setOrigin(0, .5).setTint(0x000000).setInteractive();
 
