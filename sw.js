@@ -29,7 +29,7 @@ var filesToCache = [
   '/classes/settings.js',
   '/classes/simulation.js',
   '/classes/tile.js',
-  '/classes/uiplug.min.js',
+  /*   '/classes/uiplug.min.js', */
 
 
   '/assets/sprites/blank.png',
