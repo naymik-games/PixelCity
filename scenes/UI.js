@@ -156,6 +156,7 @@ class UI extends Phaser.Scene {
           this.yearText.setText('Y: ' + sim.gameData.year)
         }
         //this.saveStats()
+        this.Main.saveMap()
       },
       callbackScope: this,
       loop: true

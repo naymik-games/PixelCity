@@ -42,8 +42,37 @@ class playGame extends Phaser.Scene {
   create() {
 
 
-    sim = new Sim(this, gameStats)
-    sim.endDay()
+    if (mapLoad == 'load') {
+      mapConfig = gameDataSaved.mapConfig
+      grid = JSON.parse(localStorage.getItem('PixelCityGrid'));
+      sim = new Sim(this, gameDataSaved, mapConfig)
+
+      tileWidth = 32;
+      tileHeight = 16;
+      tileWidthHalf = 16;
+      tileHeightHalf = 8;
+      centerX = (mapConfig.width / 2) * tileWidth;
+      centerY = 600;
+
+
+      this.loadMap()
+    } else {
+      mapConfig = mapConfigDefault
+      sim = new Sim(this, gameStats, mapConfig)
+
+      tileWidth = 32;
+      tileHeight = 16;
+      tileWidthHalf = 16;
+      tileHeightHalf = 8;
+      centerX = (mapConfig.width / 2) * tileWidth;
+      centerY = 600;
+
+
+      this.createMap()
+    }
+
+
+
     //console.log(sim.gameData.day)
 
     this.scene.launch('UI')
@@ -70,34 +99,9 @@ class playGame extends Phaser.Scene {
 
 
 
-    let m = new Map(mapConfig);
-    m.generateMap()
-    this.map = m.getMap()
 
-    grid = this.create2DArray(mapConfig.width, mapConfig.height)
     //this.buildings = this.create2DArray(mapConfig.width, mapConfig.height)
 
-    tileWidth = 32;
-    tileHeight = 16;
-
-    tileWidthHalf = 16;
-    tileHeightHalf = 8;
-
-    centerX = (mapConfig.width / 2) * tileWidth;
-    centerY = 600;
-
-    for (var y = 0; y < mapConfig.height; y++) {
-      for (var x = 0; x < mapConfig.width; x++) {
-
-        var tile = new Tile(this, x, y, this.map[y][x])
-        //console.log(tile)
-        grid[y][x] = tile
-        /* var isoXY = this.toIso(x, y)
-        var text = this.add.bitmapText(centerX + isoXY.x, centerY + isoXY.y - 7, 'topaz', x + ',' + y, 7).setOrigin(.5, 1);
-        text.setDepth(centerY + isoXY.y); */
-
-      }
-    }
 
 
 
@@ -1099,6 +1103,91 @@ class playGame extends Phaser.Scene {
     }
   }
 
+  ////////////////////////////////////////////
+  //
+  // create new map
+  //
+  //////////////////////////////////////////////
+  createMap() {
+    let m = new Map(mapConfig);
+    m.generateMap()
+    this.map = m.getMap()
+
+    grid = this.create2DArray(mapConfig.width, mapConfig.height)
+
+
+    for (var y = 0; y < mapConfig.height; y++) {
+      for (var x = 0; x < mapConfig.width; x++) {
+
+        var tile = new Tile(this, x, y, this.map[y][x])
+        //console.log(tile)
+        grid[y][x] = tile
+        /* var isoXY = this.toIso(x, y)
+        var text = this.add.bitmapText(centerX + isoXY.x, centerY + isoXY.y - 7, 'topaz', x + ',' + y, 7).setOrigin(.5, 1);
+        text.setDepth(centerY + isoXY.y); */
+
+      }
+    }
+  }
+  ////////////////////////////////////////////
+  //
+  // LOAD EXISTING MAP
+  //
+  //////////////////////////////////////////////
+  loadMap() {
+
+
+    for (var y = 0; y < grid.length; y++) {
+      for (var x = 0; x < grid[0].length; x++) {
+        //load terrain tile
+        var ind
+        if (grid[y][x].terrain == 'concrete') {
+          ind = 0
+        } else if (grid[y][x].terrain == 'dirt') {
+          ind = 1
+        } else if (grid[y][x].terrain == 'water') {
+          ind = 2
+        } else if (grid[y][x].terrain == 'grass') {
+          ind = 3
+        }
+        var isoXY = this.toIso(x, y)
+        var tile = this.add.image(centerX + isoXY.x, centerY + isoXY.y + 8, 'tiles', ind).setOrigin(.5, 1);
+        tile.setDepth(centerY + isoXY.y - 16);
+        grid[y][x].tile = tile
+        //load road image
+
+        //load building image
+        if (grid[y][x].building != null) {
+          console.log(grid[y][x].building.textureKey)
+          var isoXY = this.toIso(x, y)
+          var building = this.add.image(centerX + isoXY.x, centerY + isoXY.y, grid[y][x].building.textureKey, grid[y][x].building.frameKey).setOrigin(.5, 1);
+          building.setDepth(centerY + isoXY.y);
+          grid[y][x].building = building
+        }
+        if (grid[y][x].road != null) {
+          var isoXY = this.toIso(x, y)
+          var road = this.add.image(centerX + isoXY.x, centerY + isoXY.y, grid[y][x].road.textureKey, grid[y][x].road.frameKey).setOrigin(.5, 1);
+          road.setDepth(centerY + isoXY.y);
+          grid[y][x].road = road
+        }
+      }
+
+    }
+  }
+  ////////////////////////////////////////////
+  //
+  // SAVE MAP
+  //
+  //////////////////////////////////////////////
+  saveMap() {
+
+    localStorage.setItem('PixelCityGrid', JSON.stringify(grid));
+    localStorage.setItem('PixelCityData', JSON.stringify(sim.gameData));
+  }
+  saveStats() {
+    localStorage.setItem('PixelCityData', JSON.stringify(gameStats));
+
+  }
 
 
 }

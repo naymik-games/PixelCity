@@ -1,9 +1,10 @@
 
 
 class Sim {
-  constructor(scene, data) {
+  constructor(scene, data, config) {
     this.scene = scene
     this.gameData = data
+    this.gameData.mapConfig = config
   }
   endDay() {
     console.log('end day')

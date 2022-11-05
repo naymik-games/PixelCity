@@ -21,20 +21,23 @@ var defaultValues = {
   group: 0,
   currentLevel: 0
 }
-let mapConfig = {
-  width: 64,
-  height: 64,
-  eastCost: false,
-  westCost: true,
+let mapConfig
+let mapConfigDefault = {
+  width: 16,
+  height: 16,
+  eastCost: true,
+  westCost: false,
   northCost: false,
   southCost: true,
-  eWRiver: true,
+  eWRiver: false,
   nSRiver: false,
-  numLakes: 1
-
+  numLakes: 0
 
 }
 let tileWidth, tileHeight, tileWidthHalf, tileHeightHalf, centerX, centerY
+let gameData
+let gameDataSaved
+let mapLoad = 'new'
 let gameStats = {
   day: 1,
   year: 1900,
