@@ -11,7 +11,8 @@ window.onload = function () {
       width: 900,
       height: 1640
     },
-
+    //pixelArt: true,
+    // roundPixels: true,
 
     scene: [preloadGame, startGame, playGame, UI, Menu, Info, People, Rci, Power]
   }
@@ -1115,11 +1116,13 @@ class playGame extends Phaser.Scene {
 
     grid = this.create2DArray(mapConfig.width, mapConfig.height)
 
-
+    var test = new Map2(mapConfig.width, mapConfig.height, mapConfig.seed)//mapConfig.seed 64 888567 389864 219000
+    //console.log(test)
     for (var y = 0; y < mapConfig.height; y++) {
       for (var x = 0; x < mapConfig.width; x++) {
 
-        var tile = new Tile(this, x, y, this.map[y][x])
+        //var tile = new Tile(this, x, y, this.map[y][x])
+        var tile = new Tile(this, x, y, test.dataMap[y][x])
         //console.log(tile)
         grid[y][x] = tile
         /* var isoXY = this.toIso(x, y)
@@ -1149,6 +1152,8 @@ class playGame extends Phaser.Scene {
           ind = 2
         } else if (grid[y][x].terrain == 'grass') {
           ind = 3
+        } else if (grid[y][x].terrain == 'sand') {
+          ind = 4
         }
         var isoXY = this.toIso(x, y)
         var tile = this.add.image(centerX + isoXY.x, centerY + isoXY.y + 8, 'tiles', ind).setOrigin(.5, 1);

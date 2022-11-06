@@ -182,9 +182,9 @@ class UI extends Phaser.Scene {
     this.modeText.setText(gameModeNames[gameMode])
 
 
-    this.res.displayHeight = 75 * (gameStats.rci[0] / 2000)
-    this.com.displayHeight = 75 * (gameStats.rci[1] / 1500)
-    this.ind.displayHeight = 75 * (gameStats.rci[2] / 1500)
+    this.res.displayHeight = 75 * (sim.gameData.rci[0] / 2000)
+    this.com.displayHeight = 75 * (sim.gameData.rci[1] / 1500)
+    this.ind.displayHeight = 75 * (sim.gameData.rci[2] / 1500)
   }
   updateStats() {
     this.fundsText.setText('$' + sim.gameData.funds)

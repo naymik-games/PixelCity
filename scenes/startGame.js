@@ -23,10 +23,12 @@ class startGame extends Phaser.Scene {
     newGameButton.setInteractive();
     newGameButton.on('pointerdown', this.clickHandler, this);
 
-    var loadGameButton = this.add.bitmapText(game.config.width / 2 - 50, 375, 'topaz', 'Load Game', 50).setOrigin(0, .5).setTint(0x000000);
+    var loadGameButton = this.add.bitmapText(game.config.width / 2 - 50, 875, 'topaz', 'Load Game', 50).setOrigin(0, .5).setTint(0x000000);
     loadGameButton.setInteractive();
     loadGameButton.on('pointerdown', this.clickHandler2, this);
-
+    var day = this.add.bitmapText(50, 975, 'topaz', 'Day: ' + gameDataSaved.day, 50).setOrigin(0, .5).setTint(0xc76210);
+    var funds = this.add.bitmapText(450, 975, 'topaz', '$' + gameDataSaved.funds, 50).setOrigin(.5, .5).setTint(0xc76210);
+    var pop = this.add.bitmapText(850, 975, 'topaz', 'Pop: ' + gameDataSaved.population, 50).setOrigin(1, .5).setTint(0xc76210);
   }
   clickHandler() {
     mapLoad = 'new'

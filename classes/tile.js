@@ -13,6 +13,8 @@ class Tile {
       this.terrain = 'water'
     } else if (ind == 3) {
       this.terrain = 'grass'
+    } else if (ind == 4) {
+      this.terrain = 'sand'
     }
     this.type = 'blank'
     this.hasWater = false

@@ -22,17 +22,15 @@ var defaultValues = {
   currentLevel: 0
 }
 let mapConfig
+let mapConfigDefault1 = {
+  width: 64,
+  height: 64,
+  seed: 44456
+}
 let mapConfigDefault = {
-  width: 16,
-  height: 16,
-  eastCost: true,
-  westCost: false,
-  northCost: false,
-  southCost: true,
-  eWRiver: false,
-  nSRiver: false,
-  numLakes: 0
-
+  width: 64,
+  height: 64,
+  seed: 64
 }
 let tileWidth, tileHeight, tileWidthHalf, tileHeightHalf, centerX, centerY
 let gameData
