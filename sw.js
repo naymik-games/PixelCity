@@ -16,7 +16,7 @@ var filesToCache = [
   '/scenes/power.js',
   '/scenes/rci.js',
 
-
+  'assets/fonts/QuinqueFive.ttf',
   '/assets/fonts/topaz.png',
   '/assets/fonts/topaz.xml',
 

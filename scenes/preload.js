@@ -438,6 +438,9 @@ class preloadGame extends Phaser.Scene {
       // spacing: 1
     });
     this.load.image('selectx1', 'assets/sprites/tiles/selectx1.png');
+    this.load.image('modal_top', 'assets/sprites/modal_top.png');
+    this.load.image('modal_mid', 'assets/sprites/modal_mid.png');
+    this.load.image('modal_bot', 'assets/sprites/modal_bot.png');
 
     this.load.image('blank', 'assets/sprites/blank.png');
     // this.load.image('tile', 'assets/sprites/tile.png');

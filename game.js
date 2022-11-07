@@ -1217,7 +1217,7 @@ class playGame extends Phaser.Scene {
   saveMap() {
 
     //localStorage.setItem('PixelCityGrid', JSON.stringify(grid));
-    //localStorage.setItem('PixelCityData', JSON.stringify(sim.gameData));
+    localStorage.setItem('PixelCityData', JSON.stringify(sim.gameData));
     //localStorage.setItem('PixelCityGrid', JSON.stringify(grid));
 
     localforage.setItem('PixelCityData1', sim.gameData).then(function (value) {
@@ -1227,7 +1227,7 @@ class playGame extends Phaser.Scene {
       // This code runs if there were any errors
       console.log(err);
     });
-    console.log(grid)
+
     localforage.setItem('PixelCityGrid1', grid).then(function (value) {
       // Do other things once the value has been saved.
       console.log('saved grid');
