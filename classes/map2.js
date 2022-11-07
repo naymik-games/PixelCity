@@ -13,12 +13,12 @@ snow = 1;
 let terrainNames = ['Deep Water', 'Shallow Water', 'Sand', 'Flood Plain', 'Forest', 'Grass', 'Plains', 'Hills', 'Mountains', 'Snow']
 
 class Map2 {
-  constructor(width, height, mySeed) {
+  constructor(width, height, mySeed, divisor) {
     this.width = width
     this.height = height
     this.mapArray = new Array(this.height).fill(null).map(() => new Array(this.width).fill(null));
     this.dataMap = new Array(this.height).fill(null).map(() => new Array(this.width).fill(null));
-    this.divisor = 12
+    this.divisor = divisor
     this.generateMap(mySeed)
   }
   generateMap(mySeed) {

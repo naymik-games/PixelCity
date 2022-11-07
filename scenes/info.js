@@ -26,15 +26,17 @@ class Info extends Phaser.Scene {
 
     if (grid[this.mapXY.y][this.mapXY.x].partOf == null) {
       var tile = grid[this.mapXY.y][this.mapXY.x]
+      var tileImage = gridImage[this.mapXY.y][this.mapXY.x].building
       console.log(tile)
     } else {
       var tile = grid[grid[this.mapXY.y][this.mapXY.x].partOf.y][grid[this.mapXY.y][this.mapXY.x].partOf.x]
+      var tileImage = gridImage[grid[this.mapXY.y][this.mapXY.x].partOf.y][grid[this.mapXY.y][this.mapXY.x].partOf.x].building
       console.log(tile)
     }
 
     console.log(tile.buildingData.name)
     //thumb
-    this.thumbIcon = this.add.image(25, 1050, tile.building.texture.key, tile.building.frame.name).setOrigin(0, 1)
+    this.thumbIcon = this.add.image(25, 1050, tile.building.sheet, tile.building.frame).setOrigin(0, 1)
     this.thumbIcon.displayHeight = 200
     this.thumbIcon.scaleX = this.thumbIcon.scaleY
     this.thumbIcon.flipX = tile.building.flipX
@@ -45,9 +47,11 @@ class Info extends Phaser.Scene {
       if (tile.building.flipX) {
         tile.building.flipX = false
         this.thumbIcon.flipX = false
+        tileImage.flipX = false
       } else {
         tile.building.flipX = true
         this.thumbIcon.flipX = true
+        tileImage.flipX = true
       }
 
     }, this)

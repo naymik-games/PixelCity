@@ -45,7 +45,9 @@ class playGame extends Phaser.Scene {
 
     if (mapLoad == 'load') {
       mapConfig = gameDataSaved.mapConfig
-      grid = JSON.parse(localStorage.getItem('PixelCityGrid'));
+      // grid = JSON.parse(localStorage.getItem('PixelCityGrid'));
+
+
       sim = new Sim(this, gameDataSaved, mapConfig)
 
       tileWidth = 32;
@@ -55,8 +57,26 @@ class playGame extends Phaser.Scene {
       centerX = (mapConfig.width / 2) * tileWidth;
       centerY = 600;
 
+      let temp = this
+      localforage.getItem('PixelCityGrid1').then(function (value) {
+        // This code runs once the value has been loaded
+        // from the offline store.
+        console.log(value);
 
-      this.loadMap()
+        temp.loadMap(value)
+      }).catch(function (err) {
+        // This code runs if there were any errors
+        console.log(err);
+      });
+
+
+
+
+
+
+
+
+
     } else {
       mapConfig = mapConfigDefault
       sim = new Sim(this, gameStats, mapConfig)
@@ -501,9 +521,10 @@ class playGame extends Phaser.Scene {
         grid[tile.y][tile.x].menu = this.zoneData.id
         grid[tile.y][tile.x].parentMenu = this.zoneData.parentMenu
         grid[tile.y][tile.x].size = size
-        grid[tile.y][tile.x].building = build
+        grid[tile.y][tile.x].building = { sheet: sheet, frame: buildFrame, flipX: false }
         grid[tile.y][tile.x].buildingData.name = 'Dwelling'
         grid[tile.y][tile.x].buildingData.added = 1
+        gridImage[tile.y][tile.x].building = build
       }
 
     }
@@ -754,14 +775,14 @@ class playGame extends Phaser.Scene {
       if (this.selected.length > 0) {
         var preTile = this.selected[this.selected.length - 1]
         var preValue = this.calculatePath(preTile)
-        if (grid[preTile.y][preTile.x].road.frame.name == 18) {
+        if (grid[preTile.y][preTile.x].road.frame == 18) {
           preValue = 18
-        } else if (grid[preTile.y][preTile.x].road.frame.name == 17) {
+        } else if (grid[preTile.y][preTile.x].road.frame == 17) {
           preValue = 17
         }
-        if (grid[preTile.y][preTile.x].road.frame.name == 19) {
+        if (grid[preTile.y][preTile.x].road.frame == 19) {
           preValue = 19
-        } else if (grid[preTile.y][preTile.x].road.frame.name == 20) {
+        } else if (grid[preTile.y][preTile.x].road.frame == 20) {
           preValue = 20
         }
         console.log('previous value')
@@ -786,18 +807,21 @@ class playGame extends Phaser.Scene {
     if (value == 0) {
       if (grid[mapXY.y][mapXY.x].raod == null) {
         var road = this.add.image(centerX + isoXY.x, centerY + isoXY.y, this.transportType.sheet, 1).setOrigin(.5, 1).setDepth(centerY + isoXY.y);
-        grid[mapXY.y][mapXY.x].road = road
+        grid[mapXY.y][mapXY.x].road = { sheet: this.transportType.sheet, frame: 1 }
+        gridImage[mapXY.y][mapXY.x].road = road
       } else {
-        grid[mapXY.y][mapXY.x].road.setFrame(1)
+        grid[mapXY.y][mapXY.x].road.frame = 1
+        gridImage[mapXY.y][mapXY.x].road.setFrame(1)
       }
       grid[mapXY.y][mapXY.x].type = this.transportType.action
     } else {
       if (grid[mapXY.y][mapXY.x].road == null) {
         var road = this.add.image(centerX + isoXY.x, centerY + isoXY.y, this.transportType.sheet, value).setOrigin(.5, 1).setDepth(centerY + isoXY.y);
-        grid[mapXY.y][mapXY.x].road = road
+        grid[mapXY.y][mapXY.x].road = { sheet: this.transportType.sheet, frame: value }
+        gridImage[mapXY.y][mapXY.x].road = road
       } else {
-
-        grid[mapXY.y][mapXY.x].road.setFrame(value)
+        grid[mapXY.y][mapXY.x].road.frame = value
+        gridImage[mapXY.y][mapXY.x].road.setFrame(value)
       }
       grid[mapXY.y][mapXY.x].type = this.transportType.action
     }
@@ -828,7 +852,8 @@ class playGame extends Phaser.Scene {
       var building = this.add.image(centerX + isoXY.x, centerY + isoXY.y, this.placeData.sheet, this.placeData.index).setOrigin(.5, 1);
       building.setDepth(centerY + isoXY.y);
       addPollution(mapXY, this.placeData)
-      grid[mapXY.y][mapXY.x].building = building
+      grid[mapXY.y][mapXY.x].building = { sheet: this.placeData.sheet, frame: this.placeData.index, flipX: false }
+      gridImage[mapXY.y][mapXY.x].building = building
       grid[mapXY.y][mapXY.x].zone = this.placeData.zone
       grid[mapXY.y][mapXY.x].size = this.placeData.size
       grid[mapXY.y][mapXY.x].buildingData.name = this.placeData.name
@@ -869,7 +894,7 @@ class playGame extends Phaser.Scene {
     var area = this.getTileArea(mapXY, size)
     for (let i = 0; i < area.length; i++) {
       const tile = area[i];
-      if ((grid[tile.y][tile.x].terrain != 'grass' || grid[tile.y][tile.x].terrain != 'water') && grid[tile.y][tile.x].hasBuilding || grid[mapXY.y][mapXY.x].type == 'road' || grid[mapXY.y][mapXY.x].type == 'rail') {
+      if ((grid[tile.y][tile.x].terrain != 'grass' || grid[tile.y][tile.x].terrain != 'water' || grid[tile.y][tile.x].terrain != 'sand') && grid[tile.y][tile.x].hasBuilding || grid[mapXY.y][mapXY.x].type == 'road' || grid[mapXY.y][mapXY.x].type == 'rail') {
         return false
       }
     }
@@ -886,13 +911,13 @@ class playGame extends Phaser.Scene {
     return true
   }
   canContinueRoad(mapXY) {
-    if ((grid[mapXY.y][mapXY.x].terrain == 'grass' || grid[mapXY.y][mapXY.x].type == 'road' || grid[mapXY.y][mapXY.x].type == 'rail' || grid[mapXY.y][mapXY.x].terrain == 'water') && !grid[mapXY.y][mapXY.x].hasBuilding) {
+    if ((grid[mapXY.y][mapXY.x].terrain == 'grass' || grid[mapXY.y][mapXY.x].terrain == 'sand' || grid[mapXY.y][mapXY.x].type == 'road' || grid[mapXY.y][mapXY.x].type == 'rail' || grid[mapXY.y][mapXY.x].terrain == 'water') && !grid[mapXY.y][mapXY.x].hasBuilding) {
       return true
     }
     return false
   }
   canZoneSelect(mapXY) {
-    if (grid[mapXY.y][mapXY.x].terrain == 'grass' && !grid[mapXY.y][mapXY.x].hasBuilding && grid[mapXY.y][mapXY.x].zone == -1 && grid[mapXY.y][mapXY.x].type != 'road' && grid[mapXY.y][mapXY.x].type != 'rail') {
+    if ((grid[mapXY.y][mapXY.x].terrain == 'grass' || grid[mapXY.y][mapXY.x].terrain == 'sand') && !grid[mapXY.y][mapXY.x].hasBuilding && grid[mapXY.y][mapXY.x].zone == -1 && grid[mapXY.y][mapXY.x].type != 'road' && grid[mapXY.y][mapXY.x].type != 'rail') {
       return true
     }
     return false
@@ -1115,16 +1140,18 @@ class playGame extends Phaser.Scene {
     this.map = m.getMap()
 
     grid = this.create2DArray(mapConfig.width, mapConfig.height)
+    gridImage = this.create2DArray(mapConfig.width, mapConfig.height)
 
-    var test = new Map2(mapConfig.width, mapConfig.height, mapConfig.seed)//mapConfig.seed 64 888567 389864 219000
+    var test = new Map2(mapConfig.width, mapConfig.height, mapConfig.seed, mapConfig.divisor)//mapConfig.seed 64 888567 389864 219000
     //console.log(test)
     for (var y = 0; y < mapConfig.height; y++) {
       for (var x = 0; x < mapConfig.width; x++) {
-
+        gridImage[y][x] = {}
         //var tile = new Tile(this, x, y, this.map[y][x])
         var tile = new Tile(this, x, y, test.dataMap[y][x])
         //console.log(tile)
         grid[y][x] = tile
+
         /* var isoXY = this.toIso(x, y)
         var text = this.add.bitmapText(centerX + isoXY.x, centerY + isoXY.y - 7, 'topaz', x + ',' + y, 7).setOrigin(.5, 1);
         text.setDepth(centerY + isoXY.y); */
@@ -1137,9 +1164,11 @@ class playGame extends Phaser.Scene {
   // LOAD EXISTING MAP
   //
   //////////////////////////////////////////////
-  loadMap() {
+  loadMap(value) {
 
-
+    grid = value
+    gridImage = this.create2DArray(mapConfig.width, mapConfig.height)
+    console.log(grid)
     for (var y = 0; y < grid.length; y++) {
       for (var x = 0; x < grid[0].length; x++) {
         //load terrain tile
@@ -1158,22 +1187,23 @@ class playGame extends Phaser.Scene {
         var isoXY = this.toIso(x, y)
         var tile = this.add.image(centerX + isoXY.x, centerY + isoXY.y + 8, 'tiles', ind).setOrigin(.5, 1);
         tile.setDepth(centerY + isoXY.y - 16);
-        grid[y][x].tile = tile
+        gridImage[y][x] = {}
+        gridImage[y][x].tile = tile
         //load road image
 
         //load building image
         if (grid[y][x].building != null) {
-          console.log(grid[y][x].building.textureKey)
+          //console.log(grid[y][x].building.textureKey)
           var isoXY = this.toIso(x, y)
-          var building = this.add.image(centerX + isoXY.x, centerY + isoXY.y, grid[y][x].building.textureKey, grid[y][x].building.frameKey).setOrigin(.5, 1);
+          var building = this.add.image(centerX + isoXY.x, centerY + isoXY.y, grid[y][x].building.sheet, grid[y][x].building.frame).setOrigin(.5, 1);
           building.setDepth(centerY + isoXY.y);
-          grid[y][x].building = building
+          gridImage[y][x].building = building
         }
         if (grid[y][x].road != null) {
           var isoXY = this.toIso(x, y)
-          var road = this.add.image(centerX + isoXY.x, centerY + isoXY.y, grid[y][x].road.textureKey, grid[y][x].road.frameKey).setOrigin(.5, 1);
+          var road = this.add.image(centerX + isoXY.x, centerY + isoXY.y, grid[y][x].road.sheet, grid[y][x].road.frame).setOrigin(.5, 1);
           road.setDepth(centerY + isoXY.y);
-          grid[y][x].road = road
+          gridImage[y][x].road = road
         }
       }
 
@@ -1186,11 +1216,28 @@ class playGame extends Phaser.Scene {
   //////////////////////////////////////////////
   saveMap() {
 
-    localStorage.setItem('PixelCityGrid', JSON.stringify(grid));
-    localStorage.setItem('PixelCityData', JSON.stringify(sim.gameData));
+    //localStorage.setItem('PixelCityGrid', JSON.stringify(grid));
+    //localStorage.setItem('PixelCityData', JSON.stringify(sim.gameData));
+    //localStorage.setItem('PixelCityGrid', JSON.stringify(grid));
+
+    localforage.setItem('PixelCityData1', sim.gameData).then(function (value) {
+      // Do other things once the value has been saved.
+      console.log('saved data');
+    }).catch(function (err) {
+      // This code runs if there were any errors
+      console.log(err);
+    });
+    console.log(grid)
+    localforage.setItem('PixelCityGrid1', grid).then(function (value) {
+      // Do other things once the value has been saved.
+      console.log('saved grid');
+    }).catch(function (err) {
+      // This code runs if there were any errors
+      console.log(err);
+    });
   }
   saveStats() {
-    localStorage.setItem('PixelCityData', JSON.stringify(gameStats));
+
 
   }
 

@@ -34,8 +34,12 @@ class Tile {
 
     var isoXY = scene.toIso(x, y)
     var tile = scene.add.image(centerX + isoXY.x, centerY + isoXY.y + 8, 'tiles', ind).setOrigin(.5, 1);
+
     tile.setDepth(centerY + isoXY.y - 16);
     scene.add.existing(tile);
+    gridImage[y][x].tile = tile
+
+    var imageInfo = { sheet: 'tiles', frame: ind }
 
     this.buildingData = {
       name: null,
@@ -43,7 +47,7 @@ class Tile {
 
     }
 
-    this.tile = tile
+    this.tile = imageInfo
     this.building = null
     this.road = null
 

@@ -283,6 +283,7 @@ noiseSeed = function (seed) {
         // pick a random seed if val is undefined or null
         // the >>> 0 casts the seed to an unsigned 32-bit integer
         z = seed = (val == null ? Math.random() * m : val) >>> 0;
+        console.log(z)
       },
       getSeed() {
         return seed;

@@ -12,7 +12,7 @@ class startGame extends Phaser.Scene {
     gameDataSaved = JSON.parse(localStorage.getItem('PixelCityData'));
     if (gameDataSaved === null || gameDataSaved.length <= 0) {
       localStorage.setItem('PixelCityData', JSON.stringify(gameStats));
-
+      gameDataSaved = gameStats
     }
 
     this.cameras.main.setBackgroundColor(0xf7eac6);
@@ -38,6 +38,7 @@ class startGame extends Phaser.Scene {
   }
   clickHandler2() {
     mapLoad = 'load'
+
     this.scene.start('playGame');
 
     this.scene.launch('Menu');

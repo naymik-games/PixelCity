@@ -27,11 +27,14 @@ let mapConfigDefault1 = {
   height: 64,
   seed: 44456
 }
+//32,   / bhvcgg364, 128, 192
 let mapConfigDefault = {
-  width: 64,
-  height: 64,
-  seed: 64
+  width: 128,
+  height: 128,
+  seed: 3990765355,
+  divisor: 12
 }
+//64  234234 20002 2730764127
 let tileWidth, tileHeight, tileWidthHalf, tileHeightHalf, centerX, centerY
 let gameData
 let gameDataSaved
@@ -76,3 +79,4 @@ let zoneNames = ['Light Residential', 'Medium Residential', 'Dense Residential',
 
 let sim;
 let grid
+let gridImage
