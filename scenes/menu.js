@@ -21,9 +21,12 @@ class Menu extends Phaser.Scene {
   create() {
     this.containers = []
     this.menuOpen = false
+    this.menuButtons = []
     this.currentMenu = null
     this.Main = this.scene.get('playGame');
-    var tablebg = this.add.image(game.config.width / 2, 15, 'blank').setOrigin(.5, 0).setTint(0xf7f7f7);
+    var tablebg = this.add.image(game.config.width / 2, 15, 'modal_mid').setOrigin(.5, 0);
+    var headerbg = this.add.image(game.config.width / 2, 15, 'modal_top').setOrigin(.5, 0);
+    var footerbg = this.add.image(game.config.width / 2, 15, 'modal_bot').setOrigin(.5, 0);
     /* this.header.displayWidth = 870;
      this.header.displayHeight = 200; */
     for (var i = 0; i < buildMenu.length; i++) {
@@ -38,7 +41,7 @@ class Menu extends Phaser.Scene {
       }
 
       icon.on('pointerdown', this.menuPress.bind(this, icon))
-
+      this.menuButtons.push(icon)
     }
     //this.createTransportationMenu()
 
@@ -46,9 +49,9 @@ class Menu extends Phaser.Scene {
     var scrollMode = 0; // 0:vertical, 1:horizontal
     this.gridTable = this.rexUI.add.gridTable({
       x: -450,
-      y: 820,
+      y: 770,
       width: 900,
-      height: 990,
+      height: 1090,
 
       scrollMode: 0,
 
@@ -64,41 +67,73 @@ class Menu extends Phaser.Scene {
         reuseCellContainer: true
       },
 
-      /*  slider: {
-         track: this.rexUI.add.roundRectangle(0, 0, 20, 10, 10, 0x260e04),
-         thumb: this.add.image(0, 0, 'blank').setTint(0xff0000).setScale(.5),
-         adaptThumbSize: true
-       }, */
+      slider: {
+        track: this.add.image(0, 0, 'scroll_track').setScale(2),
+        thumb: this.add.image(0, 0, 'scroll_thumb').setScale(2),
+        adaptThumbSize: false,
+        buttons: {
+          top: this.add.image(0, 0, 'scroll_top').setScale(2),
+          bottom: this.add.image(0, 0, 'scroll_bot').setScale(2),
+
+          step: 0.01,
+        }
+      },
 
 
       mouseWheelScroller: {
         focus: false,
-        speed: 0.1
+        speed: 0.2
       },
 
 
       header: this.rexUI.add.label({
-        width: undefined,
-        height: 30,
-
+        // width: width,
+        height: 75,
         orientation: scrollMode,
-        background: this.rexUI.add.roundRectangle(0, 0, 20, 20, 0, 0xffffff),
-        //text: this.add.text(0, 0, 'Header', { fontFamily: 'Arial', fontSize: 24, color: '#000000' })
-        text: this.add.bitmapText(0, 0, 'topaz', 'Header', 36).setTint(0x000000).setAlpha(1)
+
+        background: headerbg,
+        //icon: scene.rexUI.add.roundRectangle(0, 0, 20, 20, 10, 0x0),
+        // icon: scene.add.image(0, 0, buildMenu[0].subMenu[0].sheet, buildMenu[0].subMenu[0].index).setScale(.5),
+        //text: scene.add.text(0, 0, '', { color: '#000000' }),
+        // data: buildMenu[0].subMenu[0],
+        // type: buildMenu[0].subMenu[0].action,
+        text: this.add.text(100, 0, 'Utilities ', { fontFamily: 'PixelFont', fontSize: '30px', color: '#0057AF', align: 'left', backgroundColor: '#A6CAF0' }),
+
+        space: {
+          left: 100,
+          right: 0,
+          top: -23,
+          bottom: 0,
+
+          icon: 0,
+          text: 0,
+        }
       }),
+      footer: footerbg,
 
 
       /*  footer: GetFooterSizer(this, scrollMode), */
 
       space: {
-        left: 20,
-        right: 20,
-        top: 20,
-        bottom: 20,
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
 
-        table: 10,
-        header: 10,
-        footer: 10
+        table: {
+          top: 0,
+          bottom: 0,
+          left: 35,
+          right: 0,
+        },
+        header: 0,
+        footer: 0,
+        slider: {
+          top: 0,
+          bottom: 0,
+          left: 25,
+          right: 35,
+        }
       },
 
 
@@ -178,6 +213,7 @@ class Menu extends Phaser.Scene {
       return
     }
     if (this.menuOpen) {
+      this.menuButtons[this.currentMenu].setFrame(buildMenu[this.currentMenu].frameOff)
       var tween = this.tweens.add({
         targets: this.gridTable,
         x: -450,
@@ -191,7 +227,10 @@ class Menu extends Phaser.Scene {
               duration: 250
             })
             this.gridTable.setItems(buildMenu[men.id].subMenu)
+            var tableBody = this.gridTable.getElement('header')
+            tableBody.text = buildMenu[men.id].name
             this.currentMenu = men.id
+            this.menuButtons[men.id].setFrame(buildMenu[men.id].frameOn)
             // this.gridTable.header.setText(buildMenu[men.id].name)
           } else {
             this.currentMenu = null
@@ -209,6 +248,9 @@ class Menu extends Phaser.Scene {
       })
       this.gridTable.setItems(buildMenu[men.id].subMenu)
       this.gridTable.scrollToTop()
+      var tableBody = this.gridTable.getElement('header')
+      tableBody.text = buildMenu[men.id].name
+      this.menuButtons[men.id].setFrame(buildMenu[men.id].frameOn)
       this.menuOpen = true
       this.currentMenu = men.id
     }
@@ -486,7 +528,7 @@ let buildMenu = [
     id: 1,
     name: 'Zone',
     frameOff: 7,
-    frameOn: 14,
+    frameOn: 16,
     subMenu: [
       {
         name: 'Light Residential',

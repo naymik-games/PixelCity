@@ -17,16 +17,16 @@ class UI extends Phaser.Scene {
 
     //this.Main.drag = true
 
-    this.header = this.add.image(0, 0, 'blank').setOrigin(0, 0).setTint(0x3e5e71);
-    this.header.displayWidth = 150;
-    this.header.displayHeight = 200;
+    this.header = this.add.image(0, 0, 'main_ui').setOrigin(0, 0)
+    // this.header.displayWidth = 150;
+    ///this.header.displayHeight = 200;
 
 
-    this.progress = this.add.image(0, 0, 'blank').setOrigin(0)
-    this.progress.displayWidth = 25
+    this.progress = this.add.image(23, 70, 'blank').setOrigin(0).setTint(0xe08000)
+    this.progress.displayWidth = 19
     this.progress.displayHeight = 0
 
-    this.playpause = this.add.image(25 + 62.5, 190, 'playpause', 0).setScale(3).setOrigin(.5, 1).setInteractive()
+    this.playpause = this.add.image(25 + 62.5, 220, 'playpause', 0).setScale(3).setOrigin(.5, 1).setInteractive()
     this.playpause.on('pointerdown', function () {
       if (this.day.paused) {
         this.day.paused = false
@@ -37,32 +37,32 @@ class UI extends Phaser.Scene {
       }
     }, this)
 
-    this.rcibg = this.add.image(150, 100, 'blank').setOrigin(0, .5).setTint(0xfafafa).setAlpha(.7)
-    this.rcibg.displayWidth = 150
-    this.rcibg.displayHeight = 200
+    /*  this.rcibg = this.add.image(150, 150, 'blank').setOrigin(0, .5).setTint(0xfafafa).setAlpha(.7)
+     this.rcibg.displayWidth = 150
+     this.rcibg.displayHeight = 200 */
 
-    this.res = this.add.image(175, 100, 'blank').setOrigin(.5, 1).setTint(0x529345)
+    this.res = this.add.image(175, 150, 'blank').setOrigin(.5, 1).setTint(0x529345)
     this.res.displayWidth = 25
     this.res.displayHeight = -75
 
-    this.com = this.add.image(225, 100, 'blank').setOrigin(.5, 1).setTint(0x45a0c6)
+    this.com = this.add.image(225, 150, 'blank').setOrigin(.5, 1).setTint(0x45a0c6)
     this.com.displayWidth = 25
     this.com.displayHeight = -75
 
-    this.ind = this.add.image(275, 100, 'blank').setOrigin(.5, 1).setTint(0xc6c245)
+    this.ind = this.add.image(275, 150, 'blank').setOrigin(.5, 1).setTint(0xc6c245)
     this.ind.displayWidth = 25
     this.ind.displayHeight = -75
 
-    this.rci = this.add.image(225, 100, 'blank').setOrigin(.5, 1).setTint(0x000000)
+    this.rci = this.add.image(225, 150, 'blank').setOrigin(.5, 1).setTint(0x000000)
     this.rci.displayWidth = 150
     this.rci.displayHeight = 5
 
 
 
-    this.scoreText = this.add.bitmapText(72.5, 65, 'topaz', sim.gameData.day, 80).setOrigin(.5).setTint(0xcbf7ff).setAlpha(1);
-    this.fundsText = this.add.bitmapText(315, 30, 'topaz', '$' + sim.gameData.funds, 50).setOrigin(0, .5).setTint(0xcbf7ff).setAlpha(1);
-    this.popText = this.add.bitmapText(315, 90, 'topaz', 'P: ' + sim.gameData.population, 50).setOrigin(0, .5).setTint(0xcbf7ff).setAlpha(1);
-    this.yearText = this.add.bitmapText(315, 150, 'topaz', 'Y: ' + sim.gameData.year, 50).setOrigin(0, .5).setTint(0xcbf7ff).setAlpha(1);
+    this.scoreText = this.add.bitmapText(80, 100, 'topaz', sim.gameData.day, 80).setOrigin(.5).setTint(0xCAD4D8).setAlpha(1);
+    this.fundsText = this.add.bitmapText(325, 85, 'topaz', '$' + sim.gameData.funds, 45).setOrigin(0, .5).setTint(0xCAD4D8).setAlpha(1);
+    this.popText = this.add.bitmapText(325, 145, 'topaz', 'P: ' + sim.gameData.population, 45).setOrigin(0, .5).setTint(0xCAD4D8).setAlpha(1);
+    this.yearText = this.add.bitmapText(325, 205, 'topaz', 'Y: ' + sim.gameData.year, 45).setOrigin(0, .5).setTint(0xCAD4D8).setAlpha(1);
 
     this.modeLabelText = this.add.bitmapText(600, 25, 'topaz', 'Mode:', 50).setOrigin(0, .5).setTint(0xffffff).setInteractive();
     this.modeText = this.add.bitmapText(750, 25, 'topaz', '', 50).setOrigin(0, .5).setTint(0xffffff);
@@ -178,7 +178,7 @@ class UI extends Phaser.Scene {
   }
 
   update() {
-    this.progress.displayHeight = 200 * (this.day.getElapsed() / gameRules.dayLength)
+    this.progress.displayHeight = 160 * (this.day.getElapsed() / gameRules.dayLength)
     this.modeText.setText(gameModeNames[gameMode])
 
 

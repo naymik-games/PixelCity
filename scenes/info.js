@@ -19,9 +19,17 @@ class Info extends Phaser.Scene {
   create() {
     this.Main = this.scene.get('playGame');
     console.log(this.mapXY)
-    var tablebg = this.add.image(game.config.width / 2, game.config.height, 'blank').setOrigin(.5, 1).setTint(0xf7f7f7);
-    tablebg.displayWidth = 900
-    tablebg.displayHeight = game.config.height / 2
+    /*    var tablebg = this.add.image(game.config.width / 2, game.config.height, 'blank').setOrigin(.5, 1).setTint(0xf7f7f7);
+       tablebg.displayWidth = 900
+       tablebg.displayHeight = game.config.height / 2 */
+
+
+    var tablebg_top = this.add.image(game.config.width / 2, game.config.height - 825, 'modal_top').setOrigin(.5, 1);
+    var tablebg_mid = this.add.image(game.config.width / 2, game.config.height - 75, 'modal_mid').setOrigin(.5, 1);
+    tablebg_mid.displayHeight = 750
+    var tablebg_bot = this.add.image(game.config.width / 2, game.config.height, 'modal_bot').setOrigin(.5, 1);
+    this.closeIcon = this.add.image(42, 762, 'icons', 20).setOrigin(.5).setScale(1.5).setInteractive().setAlpha(0.01);
+    this.nameText = this.add.text(100, 747, 'Building Data ', { fontFamily: 'PixelFont', fontSize: '30px', color: '#0057AF', align: 'left', backgroundColor: '#A6CAF0' })
 
 
     if (grid[this.mapXY.y][this.mapXY.x].partOf == null) {
@@ -98,7 +106,7 @@ class Info extends Phaser.Scene {
     //
 
     //close screen
-    this.closeIcon = this.add.image(450, 1550, 'icons', 20).setOrigin(.5).setScale(3).setInteractive();
+    //this.closeIcon = this.add.image(450, 1550, 'icons', 20).setOrigin(.5).setScale(3).setInteractive();
     this.closeIcon.on('pointerdown', function () {
       this.scene.stop()
       this.scene.resume('playGame')
