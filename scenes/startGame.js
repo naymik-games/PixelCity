@@ -47,19 +47,54 @@ class startGame extends Phaser.Scene {
 
 
 
+    mapConfig = mapConfigs[1]
 
 
-
-    var newGameButton = this.add.text(game.config.width / 2, 275, 'New Game', { fontFamily: 'PixelFont', fontSize: '50px', color: '#CAD4D8', align: 'center' }).setOrigin(.5);
+    var newGameButton = this.add.text(game.config.width / 2, 225, 'New Game', { fontFamily: 'PixelFont', fontSize: '50px', color: '#CAD4D8', align: 'center' }).setOrigin(.5);
     newGameButton.setInteractive();
     newGameButton.on('pointerdown', this.clickHandler, this);
+    this.sizeRadios = []
+    var radio1 = this.add.image(100, 350, 'radio', 3)
+    this.sizeRadios.push(radio1)
+    var radio1Text = this.add.text(radio1.x + 50, 350, 'Micro', { fontFamily: 'PixelFont', fontSize: '30px', color: '#CAD4D8', align: 'left' }).setOrigin(0, .5).setInteractive();
+    radio1Text.on('pointerdown', function () {
+      this.sizeHandler(0)
+    }, this);
+
+    var radio2 = this.add.image(500, 350, 'radio', 2)
+    this.sizeRadios.push(radio2)
+    var radio2Text = this.add.text(radio2.x + 50, 350, 'small', { fontFamily: 'PixelFont', fontSize: '30px', color: '#CAD4D8', align: 'left' }).setOrigin(0, .5).setInteractive();
+    radio2Text.on('pointerdown', function () {
+      this.sizeHandler(1)
+    }, this);
+
+    var radio3 = this.add.image(100, 425, 'radio', 3)
+    this.sizeRadios.push(radio3)
+    var radio3Text = this.add.text(radio3.x + 50, 425, 'Medium', { fontFamily: 'PixelFont', fontSize: '30px', color: '#CAD4D8', align: 'left' }).setOrigin(0, .5).setInteractive();
+    radio3Text.on('pointerdown', function () {
+      this.sizeHandler(2)
+    }, this);
+
+    var radio4 = this.add.image(500, 425, 'radio', 3)
+    this.sizeRadios.push(radio4)
+    var radio4Text = this.add.text(radio4.x + 50, 425, 'large', { fontFamily: 'PixelFont', fontSize: '30px', color: '#CAD4D8', align: 'left' }).setOrigin(0, .5).setInteractive();
+    radio4Text.on('pointerdown', function () {
+      this.sizeHandler(3)
+    }, this);
 
     var loadGameButton = this.add.text(game.config.width / 2, 875, 'Continue Game', { fontFamily: 'PixelFont', fontSize: '50px', color: '#CAD4D8', align: 'center' }).setOrigin(.5);
     loadGameButton.setInteractive();
     loadGameButton.on('pointerdown', this.clickHandler2, this);
-    var day = this.add.bitmapText(50, 975, 'topaz', 'Day: ' + gameDataSaved.day, 50).setOrigin(0, .5).setTint(0xc76210);
-    var funds = this.add.bitmapText(450, 975, 'topaz', '$' + gameDataSaved.funds, 50).setOrigin(.5, .5).setTint(0xc76210);
-    var pop = this.add.bitmapText(850, 975, 'topaz', 'Pop: ' + gameDataSaved.population, 50).setOrigin(1, .5).setTint(0xc76210);
+    var day = this.add.bitmapText(50, 975, 'topaz', 'Day: ' + gameDataSaved.day, 50).setOrigin(0, .5).setTint(0xF0B060);
+    var funds = this.add.bitmapText(450, 975, 'topaz', '$' + gameDataSaved.funds, 50).setOrigin(.5, .5).setTint(0xF0B060);
+    var pop = this.add.bitmapText(850, 975, 'topaz', 'Pop: ' + gameDataSaved.population, 50).setOrigin(1, .5).setTint(0xF0B060);
+  }
+  sizeHandler(radio) {
+    for (var i = 0; i < this.sizeRadios.length; i++) {
+      this.sizeRadios[i].setFrame(3)
+    }
+    this.sizeRadios[radio].setFrame(2)
+    mapConfig = mapConfigs[radio]
   }
   clickHandler() {
     mapLoad = 'new'

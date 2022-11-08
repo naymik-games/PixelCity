@@ -16,17 +16,21 @@ class UI extends Phaser.Scene {
     this.Main = this.scene.get('playGame');
 
     //this.Main.drag = true
+    this.headerbg = this.add.image(0, 0, 'blank').setOrigin(0, 0).setTint(0x0060BF)
+    this.headerbg.displayWidth = 50
+    this.headerbg.displayHeight = 230
+    this.progress = this.add.image(5, 70, 'blank').setOrigin(0).setTint(0xe08000)
+    this.progress.displayWidth = 60
+    this.progress.displayHeight = 0
 
     this.header = this.add.image(0, 0, 'main_ui').setOrigin(0, 0)
     // this.header.displayWidth = 150;
     ///this.header.displayHeight = 200;
 
 
-    this.progress = this.add.image(23, 70, 'blank').setOrigin(0).setTint(0xe08000)
-    this.progress.displayWidth = 19
-    this.progress.displayHeight = 0
 
-    this.playpause = this.add.image(25 + 62.5, 220, 'playpause', 0).setScale(3).setOrigin(.5, 1).setInteractive()
+
+    this.playpause = this.add.image(110, 220, 'playpause', 0).setScale(4).setOrigin(.5, 1).setInteractive()
     this.playpause.on('pointerdown', function () {
       if (this.day.paused) {
         this.day.paused = false
@@ -41,28 +45,28 @@ class UI extends Phaser.Scene {
      this.rcibg.displayWidth = 150
      this.rcibg.displayHeight = 200 */
 
-    this.res = this.add.image(175, 150, 'blank').setOrigin(.5, 1).setTint(0x529345)
+    this.res = this.add.image(200, 150, 'blank').setOrigin(.5, 1).setTint(0x529345)
     this.res.displayWidth = 25
     this.res.displayHeight = -75
 
-    this.com = this.add.image(225, 150, 'blank').setOrigin(.5, 1).setTint(0x45a0c6)
+    this.com = this.add.image(250, 150, 'blank').setOrigin(.5, 1).setTint(0x45a0c6)
     this.com.displayWidth = 25
     this.com.displayHeight = -75
 
-    this.ind = this.add.image(275, 150, 'blank').setOrigin(.5, 1).setTint(0xc6c245)
+    this.ind = this.add.image(300, 150, 'blank').setOrigin(.5, 1).setTint(0xc6c245)
     this.ind.displayWidth = 25
     this.ind.displayHeight = -75
 
-    this.rci = this.add.image(225, 150, 'blank').setOrigin(.5, 1).setTint(0x000000)
+    this.rci = this.add.image(250, 150, 'blank').setOrigin(.5, 1).setTint(0x000000)
     this.rci.displayWidth = 150
     this.rci.displayHeight = 5
 
 
-
-    this.scoreText = this.add.bitmapText(80, 100, 'topaz', sim.gameData.day, 80).setOrigin(.5).setTint(0xCAD4D8).setAlpha(1);
-    this.fundsText = this.add.bitmapText(325, 85, 'topaz', '$' + sim.gameData.funds, 45).setOrigin(0, .5).setTint(0xCAD4D8).setAlpha(1);
-    this.popText = this.add.bitmapText(325, 145, 'topaz', 'P: ' + sim.gameData.population, 45).setOrigin(0, .5).setTint(0xCAD4D8).setAlpha(1);
-    this.yearText = this.add.bitmapText(325, 205, 'topaz', 'Y: ' + sim.gameData.year, 45).setOrigin(0, .5).setTint(0xCAD4D8).setAlpha(1);
+    //sim.gameData.day
+    this.scoreText = this.add.bitmapText(110, 100, 'topaz', sim.gameData.day, 72).setOrigin(.5).setTint(0xCAD4D8).setAlpha(1);
+    this.fundsText = this.add.bitmapText(370, 85, 'topaz', '$' + sim.gameData.funds, 42).setOrigin(0, .5).setTint(0xCAD4D8).setAlpha(1);
+    this.popText = this.add.bitmapText(370, 145, 'topaz', 'P: ' + sim.gameData.population, 42).setOrigin(0, .5).setTint(0xCAD4D8).setAlpha(1);
+    this.yearText = this.add.bitmapText(370, 205, 'topaz', 'Y: ' + sim.gameData.year, 42).setOrigin(0, .5).setTint(0xCAD4D8).setAlpha(1);
 
     this.modeLabelText = this.add.bitmapText(600, 25, 'topaz', 'Mode:', 50).setOrigin(0, .5).setTint(0xffffff).setInteractive();
     this.modeText = this.add.bitmapText(750, 25, 'topaz', '', 50).setOrigin(0, .5).setTint(0xffffff);
@@ -138,6 +142,16 @@ class UI extends Phaser.Scene {
     this.zoomOutIcon.on('pointerdown', function () {
       this.setZoom('out')
     }, this)
+
+
+    this.homeIcon = this.add.image(825, 1525, 'home').setOrigin(.5).setScale(3).setInteractive();
+    this.homeIcon.on('pointerdown', function () {
+      this.scene.start('startGame')
+      this.scene.stop('Menu')
+      this.scene.stop('playGame')
+      this.scene.stop('UI')
+    }, this)
+
     this.coordText = this.add.bitmapText(game.config.width / 2, 150, 'topaz', '--', 50).setOrigin(.5).setTint(0x000000).setAlpha(0);
 
     ///////////////////////////////

@@ -44,13 +44,13 @@ class Info extends Phaser.Scene {
 
     console.log(tile.buildingData.name)
     //thumb
-    this.thumbIcon = this.add.image(25, 1050, tile.building.sheet, tile.building.frame).setOrigin(0, 1)
+    this.thumbIcon = this.add.image(25, 1100, tile.building.sheet, tile.building.frame).setOrigin(0, 1)
     this.thumbIcon.displayHeight = 200
     this.thumbIcon.scaleX = this.thumbIcon.scaleY
     this.thumbIcon.flipX = tile.building.flipX
 
     //this.flipText = this.add.bitmapText(50, 1100, 'topaz', 'FLIP', 40).setOrigin(0, .5).setTint(0x000000).setInteractive();
-    this.flipIcon = this.add.image(50, 1100, 'icons', 36).setOrigin(0, .5).setScale(2).setInteractive();
+    this.flipIcon = this.add.image(300, 1100, 'icons', 36).setOrigin(0, .5).setScale(2).setInteractive();
     this.flipIcon.on('pointerdown', function () {
       if (tile.building.flipX) {
         tile.building.flipX = false
@@ -63,18 +63,18 @@ class Info extends Phaser.Scene {
       }
 
     }, this)
-
-    this.nameText = this.add.bitmapText(300, 860, 'topaz', tile.buildingData.name, 50).setOrigin(0, .5).setTint(0x000000)
-    this.zoneText = this.add.bitmapText(300, 930, 'topaz', 'Zone: ' + zoneNames[tile.zone], 40).setOrigin(0, .5).setTint(0x000000)
-    this.sizeText = this.add.bitmapText(300, 1000, 'topaz', 'Size: ' + tile.size, 40).setOrigin(0, .5).setTint(0x000000)
+    this.nameText = this.add.text(25, 840, tile.buildingData.name, { fontFamily: 'PixelFont', fontSize: '35px', color: '#CAD4D8', align: 'left' })
+    //this.nameText = this.add.bitmapText(300, 860, 'topaz', tile.buildingData.name, 50).setOrigin(0, .5).setTint(0x000000)
+    this.zoneText = this.add.bitmapText(300, 930, 'topaz', 'Zone: ' + zoneNames[tile.zone], 40).setOrigin(0, .5).setTint(0xCAD4D8)
+    this.sizeText = this.add.bitmapText(300, 1000, 'topaz', 'Size: ' + tile.size, 40).setOrigin(0, .5).setTint(0xCAD4D8)
 
     if (roadInRange(tile.xy)) {
       var answer = 'Yes'
     } else {
       var answer = 'No'
     }
-    this.transportationText = this.add.bitmapText(25, 1175, 'topaz', 'Connected: ' + answer, 40).setOrigin(0, .5).setTint(0x000000)
-    this.jobsText = this.add.bitmapText(25, 1275, 'topaz', 'Jobs: ' + tile.buildingData.jobs, 40).setOrigin(0, .5).setTint(0x000000)
+    this.transportationText = this.add.bitmapText(25, 1175, 'topaz', 'Connected: ' + answer, 40).setOrigin(0, .5).setTint(0xA6CAF0)
+    this.jobsText = this.add.bitmapText(25, 1275, 'topaz', 'Jobs: ' + tile.buildingData.jobs, 40).setOrigin(0, .5).setTint(0xA6CAF0)
 
 
     var distance = getDistanceBonus(this.mapXY)
@@ -83,8 +83,8 @@ class Info extends Phaser.Scene {
     var dwater = distanceFromOpenWater(this.mapXY, 5)
     this.nearWaterText = this.add.bitmapText(25, 1475, 'topaz', 'Near Water: ' + dwater, 40).setOrigin(0, .5).setTint(0x000000)
 
-    this.airPollutionText = this.add.bitmapText(450, 1175, 'topaz', 'Air P: ' + tile.pollution[0], 40).setOrigin(0, .5).setTint(0x000000)
-    this.airPollutionText = this.add.bitmapText(450, 1275, 'topaz', 'Water P: ' + tile.pollution[1], 40).setOrigin(0, .5).setTint(0x000000)
+    this.airPollutionText = this.add.bitmapText(450, 1175, 'topaz', 'Air P: ' + tile.pollution[0], 40).setOrigin(0, .5).setTint(0xA6CAF0)
+    this.airPollutionText = this.add.bitmapText(450, 1275, 'topaz', 'Water P: ' + tile.pollution[1], 40).setOrigin(0, .5).setTint(0xA6CAF0)
     var landvalue = distance + sim.gameData.globalLV[0]
 
     if (dwater <= 5.1) {

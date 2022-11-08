@@ -39,9 +39,9 @@ class Power extends Phaser.Scene {
 
     var consumption = getPowerConsumption()
 
-    this.rcText = this.add.bitmapText(25, 925, 'topaz', 'R: ' + consumption[0], 40).setOrigin(0, .5).setTint(0x000000).setInteractive();
-    this.ccText = this.add.bitmapText(25, 1025, 'topaz', 'C: ' + consumption[1], 40).setOrigin(0, .5).setTint(0x000000).setInteractive();
-    this.iccText = this.add.bitmapText(25, 1125, 'topaz', 'I: ' + consumption[2], 40).setOrigin(0, .5).setTint(0x000000).setInteractive();
+    this.rcText = this.add.bitmapText(25, 925, 'topaz', 'R: ' + consumption[0], 40).setOrigin(0, .5).setTint(0xC0D7E2).setInteractive();
+    this.ccText = this.add.bitmapText(25, 1025, 'topaz', 'C: ' + consumption[1], 40).setOrigin(0, .5).setTint(0xC0D7E2).setInteractive();
+    this.iccText = this.add.bitmapText(25, 1125, 'topaz', 'I: ' + consumption[2], 40).setOrigin(0, .5).setTint(0xC0D7E2).setInteractive();
 
 
 

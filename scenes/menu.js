@@ -92,7 +92,7 @@ class Menu extends Phaser.Scene {
         orientation: scrollMode,
 
         background: headerbg,
-        //icon: scene.rexUI.add.roundRectangle(0, 0, 20, 20, 10, 0x0),
+        //icon: this.add.image(-50, 0, 'icons', 20),
         // icon: scene.add.image(0, 0, buildMenu[0].subMenu[0].sheet, buildMenu[0].subMenu[0].index).setScale(.5),
         //text: scene.add.text(0, 0, '', { color: '#000000' }),
         // data: buildMenu[0].subMenu[0],
@@ -156,7 +156,7 @@ class Menu extends Phaser.Scene {
             //text: scene.add.text(0, 0, '', { color: '#000000' }),
             data: buildMenu[0].subMenu[0],
             type: buildMenu[0].subMenu[0].action,
-            text: scene.add.bitmapText(0, 0, 'topaz', '', 40).setTint(0x000000),
+            text: scene.add.bitmapText(0, 0, 'topaz', '', 40).setTint(0xC0D7E2),
 
             space: {
               icon: 10,
@@ -194,6 +194,10 @@ class Menu extends Phaser.Scene {
       console.log(cellContainer.data)
       this.subMenuPress(cellContainer.data)
     }, this)
+
+    /*  this.gridTable.getElement('header').onClick(function () {
+       this.closeMenu()
+     }) */
 
 
 
@@ -287,6 +291,7 @@ class Menu extends Phaser.Scene {
     }
   }
   closeMenu() {
+    this.menuButtons[this.currentMenu].setFrame(buildMenu[this.currentMenu].frameOff)
     var tween = this.tweens.add({
       targets: this.gridTable,
       x: -450,
@@ -749,8 +754,8 @@ let buildMenu = [
         waterPollutionRadius: 6,
         garbage: 4,
         jobs: 0,
-        globalLV: [-20, -10, 0, 0],//res,com,ind, other
-        localLV: 0
+        globalLV: [-2, -1, 0, 0],//res,com,ind, other
+        localLV: -10
       },
       {
         name: 'Dense Industrial',
@@ -781,8 +786,8 @@ let buildMenu = [
         waterPollutionRadius: 6,
         garbage: 100,
         jobs: 0,
-        globalLV: [-30, -20, 0, 0],//res,com,ind, other
-        localLV: 0
+        globalLV: [-4, -3, 0, 0],//res,com,ind, other
+        localLV: -30
       }
     ]
   },

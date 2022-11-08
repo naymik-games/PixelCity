@@ -78,7 +78,7 @@ class playGame extends Phaser.Scene {
 
 
     } else {
-      mapConfig = mapConfigDefault
+
       sim = new Sim(this, gameStats, mapConfig)
 
       tileWidth = 32;
@@ -492,6 +492,7 @@ class playGame extends Phaser.Scene {
       grid[tile.y][tile.x].hasBuilding = true
       grid[tile.y][tile.x].partOf = area[area.length - 1]
       addGlobalLandValue(this.zoneData)
+      addLocalLandValue(tile, this.zoneData)
       if (i < area.length - 1) {
 
       } else {

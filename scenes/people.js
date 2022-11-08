@@ -33,10 +33,10 @@ class People extends Phaser.Scene {
 
     //this.nameText = this.add.bitmapText(300, 860, 'topaz', 'Citizen Data', 50).setOrigin(0, .5).setTint(0x000000).setInteractive();
 
-    var workers = Math.floor(gameStats.population * .50)
+    var workers = Math.floor(sim.gameData.population * .50)
 
-    this.popText = this.add.bitmapText(25, 925, 'topaz', 'Pop: ' + gameStats.population + ' Workers: ' + workers, 40).setOrigin(0, .5).setTint(0x000000).setInteractive();
-    this.housingText = this.add.bitmapText(25, 1000, 'topaz', 'Housing Capacity: ' + sim.getTotalResCapacity(), 40).setOrigin(0, .5).setTint(0x000000).setInteractive();
+    this.popText = this.add.bitmapText(25, 925, 'topaz', 'Pop: ' + sim.gameData.population + ' Workers: ' + workers, 40).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive();
+    this.housingText = this.add.bitmapText(25, 1000, 'topaz', 'Housing Capacity: ' + sim.getTotalResCapacity(), 40).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive();
 
     console.log(sim.gameData.zoneCounts)
     //console.log(roadInRange(tile.xy))

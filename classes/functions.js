@@ -100,6 +100,21 @@ function removeLocalLandValue(point, data) {
     tiles[i].localLandValue -= data.localLV
   }
 }
+/* function updateLocalLandValue() {
+  for (var y = 0; y < mapConfig.height; y++) {
+    for (var x = 0; x < mapConfig.width; x++) {
+      var tile = grid[y][x]
+      tile.localLandValue = 0
+    }
+  }
+  for (var y = 0; y < mapConfig.height; y++) {
+    for (var x = 0; x < mapConfig.width; x++) {
+      var tile = grid[y][x]
+      var point = { x: x, y: y }
+      addLocalLandValue(point, buildMenu[tile.parentMenu].subMenu[tile.menu])
+    }
+  }
+} */
 function nearOpenWater(point, range) {
   var tiles = this.getTilesInRange(point, range)
   for (var i = 0; i < tiles.length; i++) {
