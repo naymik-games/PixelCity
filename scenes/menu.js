@@ -213,7 +213,8 @@ class Menu extends Phaser.Scene {
   menuPress(men) {
     console.log(men.name)
     if (men.action == 'doze') {
-      gameMode = GM_ERASE;
+      var item = null
+      this.events.emit('testErase', item);
       return
     }
     if (this.menuOpen) {
@@ -272,7 +273,7 @@ class Menu extends Phaser.Scene {
       gameMode = GM_PLACE;
     } else if (item.action == 'zone') {
       this.events.emit('zone', item);
-
+      buildingsDim()
       this.closeMenu()
       gameMode = GM_ZONE;
     } else if (item.action == 'close') {

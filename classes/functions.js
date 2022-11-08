@@ -173,6 +173,28 @@ function getCityCenterDistance(point) {
   //console.log('center x ' + centerX + ', center y ' + centerY)
 
 }
+function buildingsDim() {
+  for (var y = 0; y < mapConfig.height; y++) {
+    for (var x = 0; x < mapConfig.width; x++) {
+      var tile = gridImage[y][x]
+      if (tile.building != null) {
+        tile.building.setAlpha(.3)
+      }
+    }
+  }
+
+}
+function buildingsBright() {
+  for (var y = 0; y < mapConfig.height; y++) {
+    for (var x = 0; x < mapConfig.width; x++) {
+      var tile = gridImage[y][x]
+      if (tile.building != null) {
+        tile.building.setAlpha(1)
+      }
+    }
+  }
+
+}
 function getDistance(point1, point2) {
   var a = point1.x - point2.x;
   var b = point1.y - point2.y;
