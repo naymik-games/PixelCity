@@ -5,6 +5,7 @@ class startGame extends Phaser.Scene {
   preload() {
     //this.load.bitmapFont('atari', 'assets/fonts/atari-smooth.png', 'assets/fonts/atari-smooth.xml');
     // this.load.bitmapFont('atari', 'assets/fonts/Lato_0.png', 'assets/fonts/lato.xml');
+    this.load.plugin('rexinputtextplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexinputtextplugin.min.js', true);
 
   }
   create() {
@@ -54,34 +55,120 @@ class startGame extends Phaser.Scene {
     newGameButton.setInteractive();
     newGameButton.on('pointerdown', this.clickHandler, this);
 
+    this.sizeRadioContainer = this.add.container(0, 200)
     this.sizeRadios = []
-    var radio1 = this.add.image(100, 200, 'radio', 3)
+
+    var sizeRadioLabel = this.add.text(100, 0, 'City Size', { fontFamily: 'PixelFont', fontSize: '30px', fontStyle: 'bold', color: '#CAD4D8', align: 'left' }).setOrigin(0, .5).setInteractive();
+    this.sizeRadioContainer.add(sizeRadioLabel)
+    var radio1 = this.add.image(100, 75, 'radio', 3)
+    this.sizeRadioContainer.add(radio1)
     this.sizeRadios.push(radio1)
-    var radio1Text = this.add.text(radio1.x + 50, 200, 'Micro', { fontFamily: 'PixelFont', fontSize: '30px', color: '#CAD4D8', align: 'left' }).setOrigin(0, .5).setInteractive();
+    var radio1Text = this.add.text(radio1.x + 50, 75, 'Micro', { fontFamily: 'PixelFont', fontSize: '30px', color: '#CAD4D8', align: 'left' }).setOrigin(0, .5).setInteractive();
+    this.sizeRadioContainer.add(radio1Text)
     radio1Text.on('pointerdown', function () {
       this.sizeHandler(0)
     }, this);
 
-    var radio2 = this.add.image(500, 200, 'radio', 2)
+    var radio2 = this.add.image(500, 75, 'radio', 2)
+    this.sizeRadioContainer.add(radio2)
     this.sizeRadios.push(radio2)
-    var radio2Text = this.add.text(radio2.x + 50, 200, 'small', { fontFamily: 'PixelFont', fontSize: '30px', color: '#CAD4D8', align: 'left' }).setOrigin(0, .5).setInteractive();
+    var radio2Text = this.add.text(radio2.x + 50, 75, 'small', { fontFamily: 'PixelFont', fontSize: '30px', color: '#CAD4D8', align: 'left' }).setOrigin(0, .5).setInteractive();
+    this.sizeRadioContainer.add(radio2Text)
     radio2Text.on('pointerdown', function () {
       this.sizeHandler(1)
     }, this);
 
-    var radio3 = this.add.image(100, 275, 'radio', 3)
+    var radio3 = this.add.image(100, 150, 'radio', 3)
     this.sizeRadios.push(radio3)
-    var radio3Text = this.add.text(radio3.x + 50, 275, 'Medium', { fontFamily: 'PixelFont', fontSize: '30px', color: '#CAD4D8', align: 'left' }).setOrigin(0, .5).setInteractive();
+    this.sizeRadioContainer.add(radio3)
+    var radio3Text = this.add.text(radio3.x + 50, 150, 'Medium', { fontFamily: 'PixelFont', fontSize: '30px', color: '#CAD4D8', align: 'left' }).setOrigin(0, .5).setInteractive();
+    this.sizeRadioContainer.add(radio3Text)
     radio3Text.on('pointerdown', function () {
       this.sizeHandler(2)
     }, this);
 
-    var radio4 = this.add.image(500, 275, 'radio', 3)
+    var radio4 = this.add.image(500, 150, 'radio', 3)
     this.sizeRadios.push(radio4)
-    var radio4Text = this.add.text(radio4.x + 50, 275, 'large', { fontFamily: 'PixelFont', fontSize: '30px', color: '#CAD4D8', align: 'left' }).setOrigin(0, .5).setInteractive();
+    this.sizeRadioContainer.add(radio4)
+    var radio4Text = this.add.text(radio4.x + 50, 150, 'large', { fontFamily: 'PixelFont', fontSize: '30px', color: '#CAD4D8', align: 'left' }).setOrigin(0, .5).setInteractive();
+    this.sizeRadioContainer.add(radio4Text)
     radio4Text.on('pointerdown', function () {
       this.sizeHandler(3)
     }, this);
+
+
+
+
+
+
+
+
+
+    this.water = 1
+
+
+    this.waterRadioContainer = this.add.container(0, 500)
+    this.waterRadios = []
+
+    var waterRadioLabel = this.add.text(100, 0, 'Water Amount', { fontFamily: 'PixelFont', fontSize: '30px', fontStyle: 'bold', color: '#CAD4D8', align: 'left' }).setOrigin(0, .5).setInteractive();
+    this.waterRadioContainer.add(waterRadioLabel)
+    var radio1 = this.add.image(100, 75, 'radio', 3)
+    this.waterRadioContainer.add(radio1)
+    this.waterRadios.push(radio1)
+    var wradio1Text = this.add.text(radio1.x + 50, 75, 'Very Dry', { fontFamily: 'PixelFont', fontSize: '30px', color: '#CAD4D8', align: 'left' }).setOrigin(0, .5).setInteractive();
+    this.waterRadioContainer.add(wradio1Text)
+    wradio1Text.on('pointerdown', function () {
+      this.waterHandler(0)
+    }, this);
+
+    var radio2 = this.add.image(500, 75, 'radio', 2)
+    this.waterRadioContainer.add(radio2)
+    this.waterRadios.push(radio2)
+    var wradio2Text = this.add.text(radio2.x + 50, 75, 'Normal', { fontFamily: 'PixelFont', fontSize: '30px', color: '#CAD4D8', align: 'left' }).setOrigin(0, .5).setInteractive();
+    this.waterRadioContainer.add(wradio2Text)
+    wradio2Text.on('pointerdown', function () {
+      this.waterHandler(1)
+    }, this);
+
+    var radio3 = this.add.image(100, 150, 'radio', 3)
+    this.waterRadios.push(radio3)
+    this.waterRadioContainer.add(radio3)
+    var wradio3Text = this.add.text(radio3.x + 50, 150, 'Even', { fontFamily: 'PixelFont', fontSize: '30px', color: '#CAD4D8', align: 'left' }).setOrigin(0, .5).setInteractive();
+    this.waterRadioContainer.add(wradio3Text)
+    wradio3Text.on('pointerdown', function () {
+      this.waterHandler(2)
+    }, this);
+
+    var radio4 = this.add.image(500, 150, 'radio', 3)
+    this.waterRadios.push(radio4)
+    this.waterRadioContainer.add(radio4)
+    var wradio4Text = this.add.text(radio4.x + 50, 150, 'Very Wet', { fontFamily: 'PixelFont', fontSize: '30px', color: '#CAD4D8', align: 'left' }).setOrigin(0, .5).setInteractive();
+    this.waterRadioContainer.add(wradio4Text)
+    wradio4Text.on('pointerdown', function () {
+      this.waterHandler(3)
+    }, this);
+
+
+
+    this.inputText = this.add.rexInputText(400, 800, 500, 80, {
+      type: 'text',
+      text: 'hello world',
+      fontFamily: 'PixelFont',
+      fontSize: '34px',
+      border: 5,
+      borderColor: '#000000',
+      paddingLeft: 5,
+      paddingRight: 5,
+      paddingTop: 5,
+      paddingBottom: 5
+    })
+
+
+
+
+
+
+
 
     var loadGameButton = this.add.text(game.config.width / 2, 1375, 'Continue Game', { fontFamily: 'PixelFont', fontSize: '50px', color: '#CAD4D8', align: 'center' }).setOrigin(.5);
     loadGameButton.setInteractive();
@@ -97,8 +184,16 @@ class startGame extends Phaser.Scene {
     this.sizeRadios[radio].setFrame(2)
     mapConfig = mapConfigs[radio]
   }
+  waterHandler(radio) {
+    for (var i = 0; i < this.waterRadios.length; i++) {
+      this.waterRadios[i].setFrame(3)
+    }
+    this.waterRadios[radio].setFrame(2)
+    this.water = radio
+  }
   clickHandler() {
     mapLoad = 'new'
+    mapConfig.water = this.water
     this.scene.start('playGame');
 
     this.scene.launch('Menu');

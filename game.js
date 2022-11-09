@@ -14,6 +14,9 @@ window.onload = function () {
     //pixelArt: true,
     // roundPixels: true,
 
+    dom: {
+      createContainer: true
+    },
     scene: [preloadGame, startGame, playGame, UI, Menu, Info, People, Rci, Power]
   }
   game = new Phaser.Game(gameConfig);
@@ -1318,7 +1321,7 @@ class playGame extends Phaser.Scene {
     grid = this.create2DArray(mapConfig.width, mapConfig.height)
     gridImage = this.create2DArray(mapConfig.width, mapConfig.height)
 
-    var test = new Map2(mapConfig.width, mapConfig.height, mapConfig.seed, mapConfig.divisor, 3)//mapConfig.seed 64 888567 389864 219000
+    var test = new Map2(mapConfig.width, mapConfig.height, mapConfig.seed, mapConfig.divisor, mapConfig.water)//mapConfig.seed 64 888567 389864 219000
     //console.log(test)
     for (var y = 0; y < mapConfig.height; y++) {
       for (var x = 0; x < mapConfig.width; x++) {

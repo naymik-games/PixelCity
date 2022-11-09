@@ -39,25 +39,29 @@ let mapConfigs = [
     width: 32,
     height: 32,
     seed: 3990765355,
-    divisor: 12
+    divisor: 12,
+    water: 1
   },
   {
     width: 64,
     height: 64,
     seed: 3990765355,
-    divisor: 12
+    divisor: 12,
+    water: 1
   },
   {
     width: 128,
     height: 128,
     seed: 3990765355,
-    divisor: 12
+    divisor: 12,
+    water: 1
   },
   {
     width: 192,
     height: 192,
     seed: 3990765355,
-    divisor: 12
+    divisor: 12,
+    water: 1
   }
 ]
 //64  234234 20002 2730764127
