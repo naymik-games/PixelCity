@@ -1042,7 +1042,7 @@ class playGame extends Phaser.Scene {
       grid[mapXY.y][mapXY.x].menu = this.placeData.id
       grid[mapXY.y][mapXY.x].parentMenu = this.placeData.parentMenu
       this.setBuilding(mapXY, this.placeData.size)
-      gameStats.zoneCounts[this.placeData.zone] += 1
+      sim.gameData.zoneCounts[this.placeData.zone] += 1
       addGlobalLandValue(this.placeData)
       addLocalLandValue(mapXY, this.placeData)
       sim.gameData.funds -= this.placeData.cost

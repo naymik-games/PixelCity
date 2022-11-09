@@ -119,3 +119,31 @@ function loadFont(name, url) {
     return error;
   });
 }
+
+
+//reference
+/* let zoneNames = [
+  0 'Light Residential', 
+  1 'Medium Residential', 
+  2 'Dense Residential', 
+  3 'Light Commercial', 
+  4 'Medium Commercial', 
+  5 'Dense Commercial', 
+  6 'Clean Industry', 
+  7 'Dirty Industry', 
+  8 'Power', 
+  9 'Water', 
+  10 'Waste', 
+  11 'Communication', 
+  12 'Health', 
+  13 'Police', 
+  14 'Fire', 
+  15 'Education', 
+  16 'Culture', 
+  17 'Parks', 
+  18 'Recreation', 
+  19 'Government', 
+  20'Special', 
+  21 'Military', 
+  22 'Transportation'
+  ] */

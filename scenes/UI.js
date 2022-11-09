@@ -129,6 +129,14 @@ class UI extends Phaser.Scene {
     }, this)
 
 
+    var homeIcon = this.add.image(825, 1525, 'home').setOrigin(.5).setScale(3).setInteractive();
+    homeIcon.on('pointerdown', function () {
+      this.scene.launch('Power')
+      this.scene.pause()
+      this.scene.pause('playGame')
+      this.scene.pause('Menu')
+    }, this)
+
     this.cursorIcon = this.add.image(825, 1389, 'icons', 1).setOrigin(.5).setScale(3).setInteractive();
     this.cursorIcon.on('pointerdown', function () {
       this.events.emit('cursor');
@@ -144,13 +152,7 @@ class UI extends Phaser.Scene {
     }, this)
 
 
-    this.homeIcon = this.add.image(825, 1525, 'home').setOrigin(.5).setScale(3).setInteractive();
-    this.homeIcon.on('pointerdown', function () {
-      this.scene.start('startGame')
-      this.scene.stop('Menu')
-      this.scene.stop('playGame')
-      this.scene.stop('UI')
-    }, this)
+
 
     this.coordText = this.add.bitmapText(game.config.width / 2, 150, 'topaz', '--', 50).setOrigin(.5).setTint(0x000000).setAlpha(0);
 

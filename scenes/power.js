@@ -38,12 +38,16 @@ class Power extends Phaser.Scene {
     //this.nameText = this.add.bitmapText(300, 860, 'topaz', 'Power', 50).setOrigin(0, .5).setTint(0x000000).setInteractive();
 
     var consumption = getPowerConsumption()
+    this.consumptionText = this.add.text(25, 825, 'Consumption', { fontFamily: 'PixelFont', fontSize: '30px', color: '#C0D7E2', align: 'left' })
 
     this.rcText = this.add.bitmapText(25, 925, 'topaz', 'R: ' + consumption[0], 40).setOrigin(0, .5).setTint(0xC0D7E2).setInteractive();
-    this.ccText = this.add.bitmapText(25, 1025, 'topaz', 'C: ' + consumption[1], 40).setOrigin(0, .5).setTint(0xC0D7E2).setInteractive();
-    this.iccText = this.add.bitmapText(25, 1125, 'topaz', 'I: ' + consumption[2], 40).setOrigin(0, .5).setTint(0xC0D7E2).setInteractive();
+    this.ccText = this.add.bitmapText(175, 925, 'topaz', 'C: ' + consumption[1], 40).setOrigin(0, .5).setTint(0xC0D7E2).setInteractive();
+    this.iccText = this.add.bitmapText(325, 925, 'topaz', 'I: ' + consumption[2], 40).setOrigin(0, .5).setTint(0xC0D7E2).setInteractive();
+    this.iccText = this.add.bitmapText(500, 925, 'topaz', '0: ' + consumption[3], 40).setOrigin(0, .5).setTint(0xC0D7E2).setInteractive();
+    this.totalText = this.add.bitmapText(23, 1000, 'topaz', 'Total: ' + consumption[4], 50).setOrigin(0, .5).setTint(0xF0B060).setInteractive();
 
 
+    this.consumptionText = this.add.text(25, 1100, 'Capacity', { fontFamily: 'PixelFont', fontSize: '30px', color: '#C0D7E2', align: 'left' })
 
     var totalCapicity = 0
     if (sim.gameData.powerPlants.length > 0) {
@@ -60,11 +64,11 @@ class Power extends Phaser.Scene {
 
 
 
-    this.totalText = this.add.bitmapText(25, 1225, 'topaz', 'Total Used/Capacity ' + consumption[3] + ' / ' + totalCapicity + 'MW/h', 40).setOrigin(0, .5).setTint(0xC0D7E2).setInteractive();
+    this.totalText = this.add.bitmapText(25, 1200, 'topaz', 'Capacity ' + totalCapicity + 'MW/h', 50).setOrigin(0, .5).setTint(0xF0B060).setInteractive();
 
-    this.numText = this.add.bitmapText(25, 1325, 'topaz', 'Plants: ' + sim.gameData.powerPlants.length, 40).setOrigin(0, .5).setTint(0xC0D7E2).setInteractive();
+    this.numText = this.add.bitmapText(25, 1425, 'topaz', 'Plants: ' + sim.gameData.powerPlants.length, 40).setOrigin(0, .5).setTint(0xC0D7E2).setInteractive();
 
-    this.listText = this.add.bitmapText(25, 1425, 'topaz', 'Plants: ' + text, 40).setOrigin(0, .5).setTint(0xC0D7E2).setInteractive();
+    this.listText = this.add.bitmapText(25, 1525, 'topaz', 'Plants: ' + text, 40).setOrigin(0, .5).setTint(0xC0D7E2).setInteractive();
 
     //console.log(roadInRange(tile.xy))
     /* if (tile.hasBuilding) {

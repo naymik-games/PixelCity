@@ -23,12 +23,55 @@ function getTilesInRange(point, range) {
   }
   return tilesInRange
 }
+
+//reference
+/* let zoneNames = [
+  0 'Light Residential', 
+  1 'Medium Residential', 
+  2 'Dense Residential', 
+  3 'Light Commercial', 
+  4 'Medium Commercial', 
+  5 'Dense Commercial', 
+  6 'Clean Industry', 
+  7 'Dirty Industry', 
+  8 'Power', 
+  9 'Water', 
+  10 'Waste', 
+  11 'Communication', 
+  12 'Health', 
+  13 'Police', 
+  14 'Fire', 
+  15 'Education', 
+  16 'Culture', 
+  17 'Parks', 
+  18 'Recreation', 
+  19 'Government', 
+  20 'Special', 
+  21 'Military', 
+  22 'Transportation'
+  ] */
+
 function getPowerConsumption() {
   var resCapacity = (sim.gameData.zoneCounts[0] * 3) + (sim.gameData.zoneCounts[1] * 12) + (sim.gameData.zoneCounts[2] * 50)
   var comCapacity = (sim.gameData.zoneCounts[3] * 6) + (sim.gameData.zoneCounts[4] * 20) + (sim.gameData.zoneCounts[5] * 80)
-  var indCapacity = (sim.gameData.zoneCounts[6] * 8) + (sim.gameData.zoneCounts[7] * 50)
-  var totalCapicity = resCapacity + comCapacity + indCapacity
-  return [resCapacity, comCapacity, indCapacity, totalCapicity]
+  var indCapacity = (sim.gameData.zoneCounts[6] * 12) + (sim.gameData.zoneCounts[7] * 64)
+  var otherCapacity = 0
+  for (i = 8; i < sim.gameData.zoneCounts.length; i++) {
+    if (i == 18) {
+      otherCapacity += sim.gameData.zoneCounts[i] * 5
+    } else if (i == 21) {
+      otherCapacity += sim.gameData.zoneCounts[i] * 1000
+    } else if (i == 22) {
+      otherCapacity += sim.gameData.zoneCounts[i] * 1
+    } else if (i == 16 || i == 15) {
+      otherCapacity += sim.gameData.zoneCounts[i] * 20
+    } else {
+      otherCapacity += sim.gameData.zoneCounts[i] * 100
+    }
+
+  }
+  var totalCapicity = resCapacity + comCapacity + indCapacity + otherCapacity
+  return [resCapacity, comCapacity, indCapacity, otherCapacity, totalCapicity]
 }
 function addPowerPlant(mapXY, id, yearAdded) {
   sim.gameData.powerPlants.push([mapXY, id, yearAdded])
@@ -230,7 +273,7 @@ function perc2color(perc) {
 
   return '#' + ('000000' + h.toString(16)).slice(-6);
 }
-/* 
+/*
 let mapConfig = {
   width: 64,
   height: 64,
@@ -244,3 +287,30 @@ let mapConfig = {
 
 
 } */
+
+//reference
+/* let zoneNames = [
+  0 'Light Residential', 
+  1 'Medium Residential', 
+  2 'Dense Residential', 
+  3 'Light Commercial', 
+  4 'Medium Commercial', 
+  5 'Dense Commercial', 
+  6 'Clean Industry', 
+  7 'Dirty Industry', 
+  8 'Power', 
+  9 'Water', 
+  10 'Waste', 
+  11 'Communication', 
+  12 'Health', 
+  13 'Police', 
+  14 'Fire', 
+  15 'Education', 
+  16 'Culture', 
+  17 'Parks', 
+  18 'Recreation', 
+  19 'Government', 
+  20'Special', 
+  21 'Military', 
+  22 'Transportation'
+  ] */
