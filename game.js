@@ -663,12 +663,16 @@ class playGame extends Phaser.Scene {
     for (var y = 0; y < size; y++) {
       for (var x = 0; x < size; x++) {
 
+        if (!this.onMap({ x: point.x + x, y: point.y + y })) {
+          return false
+        }
         if (this.onMap(point) && grid[point.y + y][point.x + x].zone == this.zoneData.zone && !grid[point.y + y][point.x + x].hasBuilding) {
           //console.log(grid[point.y + y][point.x + x])
 
         } else {
           return false
         }
+
 
       }
     }
@@ -1007,18 +1011,33 @@ class playGame extends Phaser.Scene {
   }
   calculatePath(point) {
     var value = 0
-    if (grid[point.y - 1][point.x].type == this.transportType.action || grid[point.y - 1][point.x].type == 'crossing') {
-      value += 1;
+    if (this.onMap({ x: point.x, y: point.y - 1 })) {
+      if (grid[point.y - 1][point.x].type == this.transportType.action || grid[point.y - 1][point.x].type == 'crossing') {
+        value += 1;
+      }
     }
-    if (grid[point.y + 1][point.x].type == this.transportType.action || grid[point.y - 1][point.x].type == 'crossing') {
-      value += 8;
+    if (this.onMap({ x: point.x, y: point.y + 1 })) {
+      if (grid[point.y + 1][point.x].type == this.transportType.action || grid[point.y - 1][point.x].type == 'crossing') {
+        value += 8;
+      }
     }
-    if (grid[point.y][point.x - 1].type == this.transportType.action || grid[point.y - 1][point.x].type == 'crossing') {
-      value += 2;
+    if (this.onMap({ x: point.x - 1, y: point.y })) {
+      if (grid[point.y][point.x - 1].type == this.transportType.action || grid[point.y - 1][point.x].type == 'crossing') {
+        value += 2;
+      }
     }
-    if (grid[point.y][point.x + 1].type == this.transportType.action || grid[point.y - 1][point.x].type == 'crossing') {
-      value += 4;
+    if (this.onMap({ x: point.x + 1, y: point.y })) {
+      if (grid[point.y][point.x + 1].type == this.transportType.action || grid[point.y - 1][point.x].type == 'crossing') {
+        value += 4;
+      }
     }
+
+
+
+
+
+
+
     return value
   }
 
@@ -1073,6 +1092,9 @@ class playGame extends Phaser.Scene {
     var area = this.getTileArea(mapXY, size)
     for (let i = 0; i < area.length; i++) {
       const tile = area[i];
+      if (!this.onMap(tile)) {
+        return false
+      }
       if ((grid[tile.y][tile.x].terrain != 'grass' || grid[tile.y][tile.x].terrain != 'water' || grid[tile.y][tile.x].terrain != 'sand') && grid[tile.y][tile.x].hasBuilding || grid[mapXY.y][mapXY.x].type == 'road' || grid[mapXY.y][mapXY.x].type == 'rail') {
         return false
       }

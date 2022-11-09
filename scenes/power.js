@@ -11,10 +11,13 @@ class Power extends Phaser.Scene {
          //  url: 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexuiplugin.min.js',
          sceneKey: 'rexUI'
        }); */
+    this.load.plugin('rexflashplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexflashplugin.min.js', true);
+
   }
 
   create() {
     this.Main = this.scene.get('playGame');
+
 
     /*  var tablebg = this.add.image(game.config.width / 2, game.config.height, 'blank').setOrigin(.5, 1).setTint(0xf7f7f7);
      tablebg.displayWidth = 900
@@ -63,12 +66,22 @@ class Power extends Phaser.Scene {
     }
 
 
+    var capacityUsed = Math.round((consumption[4] / totalCapicity) * 100)
+    this.totalText = this.add.bitmapText(25, 1200, 'topaz', 'Capacity ' + totalCapicity + ' MW/h', 50).setOrigin(0, .5).setTint(0xF0B060).setInteractive();
+    this.percentText = this.add.bitmapText(this.totalText.x + this.totalText.width + 25, 1200, 'topaz', capacityUsed + '%', 50).setOrigin(0, .5).setTint(0xC0D7E2).setInteractive();
 
-    this.totalText = this.add.bitmapText(25, 1200, 'topaz', 'Capacity ' + totalCapicity + 'MW/h', 50).setOrigin(0, .5).setTint(0xF0B060).setInteractive();
+    var caution = this.add.image(this.percentText.x + this.percentText.width + 25, 1200, 'caution').setOrigin(0, .5).setScale(3).setAlpha(0)
+    var flash = this.plugins.get('rexflashplugin').add(caution, { duration: 500, repeat: 10 });
+    if (capacityUsed > 94) {
+      caution.setAlpha(1)
+      flash.flash()
+    }
 
-    this.numText = this.add.bitmapText(25, 1425, 'topaz', 'Plants: ' + sim.gameData.powerPlants.length, 40).setOrigin(0, .5).setTint(0xC0D7E2).setInteractive();
 
-    this.listText = this.add.bitmapText(25, 1525, 'topaz', 'Plants: ' + text, 40).setOrigin(0, .5).setTint(0xC0D7E2).setInteractive();
+    this.numText = this.add.text(25, 1300, 'Plants: ' + sim.gameData.powerPlants.length, { fontFamily: 'PixelFont', fontSize: '30px', color: '#C0D7E2', align: 'left' })
+    // this.numText = this.add.bitmapText(25, 1425, 'topaz', 'Plants: ' + sim.gameData.powerPlants.length, 40).setOrigin(0, .5).setTint(0xC0D7E2).setInteractive();
+
+    this.listText = this.add.bitmapText(25, 1400, 'topaz', text, 40).setOrigin(0, .5).setTint(0xC0D7E2).setInteractive();
 
     //console.log(roadInRange(tile.xy))
     /* if (tile.hasBuilding) {

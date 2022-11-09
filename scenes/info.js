@@ -63,6 +63,16 @@ class Info extends Phaser.Scene {
       }
 
     }, this)
+
+    this.deleteIcon = this.add.image(400, 1100, 'icons', 46).setOrigin(0, .5).setScale(2).setInteractive();
+    this.deleteIcon.on('pointerdown', function () {
+      this.Main.deleteBuilding(tile.xy, tile.size)
+      this.scene.stop()
+      this.scene.resume('playGame')
+      this.scene.resume('UI')
+      this.scene.resume('Menu')
+    }, this)
+
     this.nameText = this.add.text(25, 840, tile.buildingData.name, { fontFamily: 'PixelFont', fontSize: '35px', color: '#CAD4D8', align: 'left' })
     //this.nameText = this.add.bitmapText(300, 860, 'topaz', tile.buildingData.name, 50).setOrigin(0, .5).setTint(0x000000)
     this.zoneText = this.add.bitmapText(300, 930, 'topaz', 'Zone: ' + zoneNames[tile.zone], 40).setOrigin(0, .5).setTint(0xCAD4D8)
