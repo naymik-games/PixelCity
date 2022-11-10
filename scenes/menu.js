@@ -396,7 +396,8 @@ let buildMenu = [
         parentMenu: 0,
         jobs: 0,
         globalLV: [1, 3, 3, 0],//res,com,ind, other
-        localLV: 0
+        localLV: 0,
+        maintenance: .5
       },
       {
         name: 'Rail',
@@ -410,7 +411,8 @@ let buildMenu = [
         parentMenu: 0,
         jobs: 0,
         globalLV: [-4, 0, 0, 0],//res,com,ind, other
-        localLV: 0
+        localLV: 0,
+        maintenance: .3
       },
       {
         name: 'Bus Stop',
@@ -429,7 +431,8 @@ let buildMenu = [
         garbage: 1,
         jobs: 0,
         globalLV: [-10, 12, 5, 0],//res,com,ind, other
-        localLV: 0
+        localLV: 0,
+        maintenance: 10
       },
       {
         name: 'Train Stop',
@@ -448,7 +451,8 @@ let buildMenu = [
         garbage: 1,
         jobs: 0,
         globalLV: [-15, 10, 10, 0],//res,com,ind, other
-        localLV: 0
+        localLV: 0,
+        maintenance: 15
       },
       {
         name: 'Freight Stop',
@@ -467,7 +471,8 @@ let buildMenu = [
         garbage: 250,
         jobs: 4,
         globalLV: [0, 0, 15, 0],//res,com,ind, other
-        localLV: 0
+        localLV: 0,
+        maintenance: 30
       },
       {
         name: 'Taxi Company',
@@ -486,7 +491,8 @@ let buildMenu = [
         garbage: 250,
         jobs: 8,
         globalLV: [0, 10, 0, 0],//res,com,ind, other
-        localLV: -10
+        localLV: -10,
+        maintenance: 150
       },
       {
         name: 'Bus Station',
@@ -505,7 +511,8 @@ let buildMenu = [
         garbage: 250,
         jobs: 8,
         globalLV: [0, 15, 0, 0],//res,com,ind, other
-        localLV: -10
+        localLV: -10,
+        maintenance: 250
       },
       {
         name: 'Bus System Depot',
@@ -524,7 +531,8 @@ let buildMenu = [
         garbage: 250,
         jobs: 8,
         globalLV: [0, 20, 5, 20],//res,com,ind, other
-        localLV: -10
+        localLV: -10,
+        maintenance: 1000
       }
 
     ]
@@ -564,7 +572,8 @@ let buildMenu = [
         garbage: 1,
         jobs: 0,
         globalLV: [0, 0, 0, 0],//res,com,ind, other
-        localLV: 0
+        localLV: 0,
+        maintenance: 0
       },
       {
         name: 'Medium Residential',
@@ -596,7 +605,8 @@ let buildMenu = [
         garbage: 10,
         jobs: 0,
         globalLV: [0, 0, 0, 0],//res,com,ind, other
-        localLV: 0
+        localLV: 0,
+        maintenance: 0
       },
       {
         name: 'Dense Residential',
@@ -628,7 +638,8 @@ let buildMenu = [
         garbage: 30,
         jobs: 0,
         globalLV: [0, 0, 0, 0],//res,com,ind, other
-        localLV: 0
+        localLV: 0,
+        maintenance: 0
       },
       {
         name: 'Light Commercial',
@@ -660,7 +671,8 @@ let buildMenu = [
         garbage: 2,
         jobs: 0,
         globalLV: [3, 0, 0, 0],//res,com,ind, other
-        localLV: 0
+        localLV: 0,
+        maintenance: 0
       },
       {
         name: 'Medium Commercial',
@@ -692,7 +704,8 @@ let buildMenu = [
         garbage: 15,
         jobs: 0,
         globalLV: [0, 0, 0, 0],//res,com,ind, other
-        localLV: 0
+        localLV: 0,
+        maintenance: 0
       },
       {
         name: 'Dense Commercial',
@@ -724,7 +737,8 @@ let buildMenu = [
         garbage: 45,
         jobs: 0,
         globalLV: [0, 5, 0, 0],//res,com,ind, other
-        localLV: 0
+        localLV: 0,
+        maintenance: 0
       },
       {
         name: 'Light Industrial',
@@ -756,7 +770,8 @@ let buildMenu = [
         garbage: 4,
         jobs: 0,
         globalLV: [-2, -1, 0, 0],//res,com,ind, other
-        localLV: -10
+        localLV: -10,
+        maintenance: 0
       },
       {
         name: 'Dense Industrial',
@@ -788,7 +803,8 @@ let buildMenu = [
         garbage: 100,
         jobs: 0,
         globalLV: [-4, -3, 0, 0],//res,com,ind, other
-        localLV: -30
+        localLV: -30,
+        maintenance: 0
       }
     ]
   },
@@ -815,7 +831,8 @@ let buildMenu = [
         garbage: 0,
         jobs: 0,
         globalLV: [-5, -2, 0, 0],//res,com,ind, other
-        localLV: 0
+        localLV: 0,
+        maintenance: 100
       },
       {
         name: 'Water Pump',
@@ -834,7 +851,8 @@ let buildMenu = [
         garbage: 0,
         jobs: 0,
         globalLV: [-10, 0, 0, 0],//res,com,ind, other
-        localLV: 0
+        localLV: 0,
+        maintenance: 150
       },
       {
         name: 'Cell Tower',
@@ -853,7 +871,8 @@ let buildMenu = [
         garbage: 0,
         jobs: 0,
         globalLV: [-10, 3, 0, 0],//res,com,ind, other
-        localLV: 0
+        localLV: 0,
+        maintenance: 75
       },
       {
         name: 'Coal Plant',
@@ -873,7 +892,8 @@ let buildMenu = [
         jobs: 12,
         globalLV: [-90, -70, -15, -15],//res,com,ind, other
         localLV: -10,
-        capacity: 6000
+        capacity: 6000,
+        maintenance: 10000
       },
       {
         name: 'Garbage Dump',
@@ -892,7 +912,8 @@ let buildMenu = [
         garbage: -1000,
         jobs: 4,
         globalLV: [-20, -20, -5, 0],//res,com,ind, other
-        localLV: -10
+        localLV: -10,
+        maintenance: 100
       },
       {
         name: 'Large Water Tower',
@@ -911,7 +932,8 @@ let buildMenu = [
         garbage: 0,
         jobs: 0,
         globalLV: [-10, -4, 0, 0],//res,com,ind, other
-        localLV: 0
+        localLV: 0,
+        maintenance: 125
       },
       {
         name: 'Wind Turbine',
@@ -931,7 +953,8 @@ let buildMenu = [
         jobs: 1,
         globalLV: [0, 0, 0, 0],//res,com,ind, other
         localLV: -10,
-        capacity: 200
+        capacity: 200,
+        maintenance: 50
       },
       {
         name: 'Solar Plant',
@@ -951,7 +974,8 @@ let buildMenu = [
         jobs: 1,
         globalLV: [0, 0, 0, 0],//res,com,ind, other
         localLV: -10,
-        capacity: 500
+        capacity: 500,
+        maintenance: 200
       },
       {
         name: 'Water Filtration Plant',
@@ -970,7 +994,8 @@ let buildMenu = [
         garbage: 120,
         jobs: 4,
         globalLV: [-20, -12, -5, -10],//res,com,ind, other
-        localLV: -20
+        localLV: -20,
+        maintenance: 900
       },
       {
         name: 'Fusion Plant',
@@ -990,7 +1015,8 @@ let buildMenu = [
         jobs: 12,
         globalLV: [-50, -18, -7, -12],
         localLV: -50,
-        capacity: 50000
+        capacity: 50000,
+        maintenance: 20000
       },
       {
         name: 'Gas Power Plant',
@@ -1010,7 +1036,8 @@ let buildMenu = [
         jobs: 12,
         globalLV: [-60, -40, -9, -14],
         localLV: -60,
-        capacity: 3000
+        capacity: 3000,
+        maintenance: 9000
       },
       {
         name: 'Nuclear Plant',
@@ -1030,7 +1057,8 @@ let buildMenu = [
         jobs: 24,
         globalLV: [-110, -80, -30, -12],
         localLV: -75,
-        capacity: 16000
+        capacity: 16000,
+        maintenance: 17000
       },
       {
         name: 'Recycling Center',
@@ -1049,7 +1077,9 @@ let buildMenu = [
         garbage: -5000,
         jobs: 5,
         globalLV: [-20, -10, -3, -8],
-        localLV: -15
+        localLV: -15,
+        maintenance: 0,
+        maintenance: 230
       },
 
     ]
@@ -1077,7 +1107,8 @@ let buildMenu = [
         garbage: 120,
         jobs: 8,
         globalLV: [5, 5, 5, 5],
-        localLV: 7
+        localLV: 7,
+        maintenance: 400
       },
       {
         name: 'Hospital',
@@ -1096,7 +1127,8 @@ let buildMenu = [
         garbage: 216,
         jobs: 12,
         globalLV: [0, 5, 5, 5],
-        localLV: 10
+        localLV: 10,
+        maintenance: 1200
       },
       {
         name: 'Police Station',
@@ -1115,7 +1147,8 @@ let buildMenu = [
         garbage: 270,
         jobs: 12,
         globalLV: [10, 15, 10, 10],
-        localLV: 10
+        localLV: 10,
+        maintenance: 125
       },
       {
         name: 'Fire Station',
@@ -1134,7 +1167,8 @@ let buildMenu = [
         garbage: 270,
         jobs: 12,
         globalLV: [5, 12, 12, 10],
-        localLV: 8
+        localLV: 8,
+        maintenance: 125
       },
       {
         name: 'Metro Hospital',
@@ -1153,7 +1187,8 @@ let buildMenu = [
         garbage: 500,
         jobs: 24,
         globalLV: [15, 15, 5, 5],
-        localLV: 10
+        localLV: 10,
+        maintenance: 11000
       },
       {
         name: 'Police Headquarters',
@@ -1172,7 +1207,8 @@ let buildMenu = [
         garbage: 500,
         jobs: 24,
         globalLV: [25, 15, 10, 10],
-        localLV: 10
+        localLV: 10,
+        maintenance: 3000
       },
       {
         name: 'Fire Headquarters',
@@ -1191,7 +1227,8 @@ let buildMenu = [
         garbage: 500,
         jobs: 24,
         globalLV: [15, 12, 12, 10],
-        localLV: 8
+        localLV: 8,
+        maintenance: 3000
       },
       {
         name: 'Prison',
@@ -1210,7 +1247,8 @@ let buildMenu = [
         garbage: 3600,
         jobs: 63,
         globalLV: [-25, -20, -10, -10],
-        localLV: -50
+        localLV: -50,
+        maintenance: 9000
       }
     ]
   },
@@ -1237,7 +1275,8 @@ let buildMenu = [
         garbage: 360,
         jobs: 11,
         globalLV: [10, 10, 0, 0],
-        localLV: 15
+        localLV: 15,
+        maintenance: 400
       },
       {
         name: 'High School',
@@ -1256,7 +1295,8 @@ let buildMenu = [
         garbage: 460,
         jobs: 16,
         globalLV: [10, 10, 0, 0],
-        localLV: 15
+        localLV: 15,
+        maintenance: 1050
       },
       {
         name: 'Library',
@@ -1275,7 +1315,8 @@ let buildMenu = [
         garbage: 120,
         jobs: 5,
         globalLV: [15, 15, 0, 0],
-        localLV: 15
+        localLV: 15,
+        maintenance: 1000
       },
       {
         name: 'Museum',
@@ -1294,7 +1335,8 @@ let buildMenu = [
         garbage: 270,
         jobs: 6,
         globalLV: [15, 15, 0, 0],
-        localLV: 15
+        localLV: 15,
+        maintenance: 1500
       },
       {
         name: 'Performing Arts Center',
@@ -1314,7 +1356,8 @@ let buildMenu = [
         garbage: 270,
         jobs: 6,
         globalLV: [12, 20, 0, 0],
-        localLV: 15
+        localLV: 15,
+        maintenance: 2000
       },
       {
         name: 'University',
@@ -1334,7 +1377,8 @@ let buildMenu = [
         garbage: 8800,
         jobs: 125,
         globalLV: [5, 15, 0, 0],
-        localLV: 10
+        localLV: 10,
+        maintenance: 12000
       },
       {
         name: 'Private School',
@@ -1353,7 +1397,8 @@ let buildMenu = [
         garbage: 460,
         jobs: 18,
         globalLV: [5, 10, 0, 0],
-        localLV: 15
+        localLV: 15,
+        maintenance: 8000
       },
       {
         name: 'MOMA',
@@ -1374,7 +1419,8 @@ let buildMenu = [
         garbage: 270,
         jobs: 7,
         globalLV: [15, 15, 0, 0],
-        localLV: 10
+        localLV: 10,
+        maintenance: 1700
       },
       {
         name: 'Community College',
@@ -1395,7 +1441,8 @@ let buildMenu = [
         garbage: 310,
         jobs: 10,
         globalLV: [10, 10, 0, 0],
-        localLV: 10
+        localLV: 10,
+        maintenance: 3000
       },
       {
         name: 'Science Center',
@@ -1414,7 +1461,8 @@ let buildMenu = [
         garbage: 290,
         jobs: 9,
         globalLV: [10, 10, 5, 0],
-        localLV: 15
+        localLV: 15,
+        maintenance: 1900
       }
     ]
   },
@@ -1943,7 +1991,8 @@ let buildMenu = [
         garbage: 1,
         jobs: 0,
         globalLV: [50, 30, 10, 8],//res,com,ind, other
-        localLV: 10
+        localLV: 10,
+        maintenance: 5
       },
       {
         name: 'Statue',
@@ -1962,7 +2011,8 @@ let buildMenu = [
         garbage: 1,
         jobs: 0,
         globalLV: [50, 30, 10, 8],//res,com,ind, other
-        localLV: 10
+        localLV: 10,
+        maintenance: 5
       },
       {
         name: 'Small Plaza',
@@ -1981,7 +2031,8 @@ let buildMenu = [
         garbage: 8,
         jobs: 0,
         globalLV: [50, 30, 10, 8],//res,com,ind, other
-        localLV: 10
+        localLV: 10,
+        maintenance: 5
       },
       {
         name: 'Small Beach',
@@ -2000,7 +2051,8 @@ let buildMenu = [
         garbage: 8,
         jobs: 0,
         globalLV: [50, 30, 10, 8],//res,com,ind, other
-        localLV: 10
+        localLV: 10,
+        maintenance: 20
       },
       {
         name: 'Small Forest',
@@ -2019,7 +2071,8 @@ let buildMenu = [
         garbage: 0,
         jobs: 0,
         globalLV: [50, 30, 10, 8],//res,com,ind, other
-        localLV: 10
+        localLV: 10,
+        maintenance: 1
       },
       {
         name: 'Small Park',
@@ -2038,7 +2091,8 @@ let buildMenu = [
         garbage: 8,
         jobs: 0,
         globalLV: [50, 30, 10, 8],//res,com,ind, other
-        localLV: 10
+        localLV: 10,
+        maintenance: 5
       },
       {
         name: 'Picnic Park',
@@ -2057,7 +2111,8 @@ let buildMenu = [
         garbage: 15,
         jobs: 0,
         globalLV: [50, 30, 10, 8],//res,com,ind, other
-        localLV: 20
+        localLV: 20,
+        maintenance: 10
       },
       {
         name: 'Gazeebo',
@@ -2076,7 +2131,8 @@ let buildMenu = [
         garbage: 8,
         jobs: 0,
         globalLV: [50, 30, 10, 8],//res,com,ind, other
-        localLV: 10
+        localLV: 10,
+        maintenance: 10
       },
       {
         name: 'Large Park',
@@ -2095,7 +2151,8 @@ let buildMenu = [
         garbage: 12,
         jobs: 0,
         globalLV: [50, 30, 10, 8],//res,com,ind, other
-        localLV: 20
+        localLV: 20,
+        maintenance: 25
       },
       {
         name: 'Large Plaza',
@@ -2114,7 +2171,8 @@ let buildMenu = [
         garbage: 8,
         jobs: 0,
         globalLV: [50, 30, 10, 8],//res,com,ind, other
-        localLV: 10
+        localLV: 10,
+        maintenance: 25
       },
       {
         name: 'Tennis Court',
@@ -2133,7 +2191,8 @@ let buildMenu = [
         garbage: 5,
         jobs: 0,
         globalLV: [50, 30, 10, 8],//res,com,ind, other
-        localLV: 10
+        localLV: 10,
+        maintenance: 20
       },
       {
         name: 'Statue Plaza',
@@ -2152,7 +2211,8 @@ let buildMenu = [
         garbage: 8,
         jobs: 0,
         globalLV: [50, 30, 10, 8],//res,com,ind, other
-        localLV: 10
+        localLV: 10,
+        maintenance: 25
       },
       {
         name: 'Playground',
@@ -2171,7 +2231,8 @@ let buildMenu = [
         garbage: 8,
         jobs: 0,
         globalLV: [60, 30, 10, 8],//res,com,ind, other
-        localLV: 10
+        localLV: 10,
+        maintenance: 15
       },
       {
         name: 'Basketball Court',
@@ -2190,7 +2251,8 @@ let buildMenu = [
         garbage: 8,
         jobs: 0,
         globalLV: [50, 30, 10, 8],//res,com,ind, other
-        localLV: 10
+        localLV: 10,
+        maintenance: 15
       },
       {
         name: 'Large Beach',
@@ -2209,7 +2271,8 @@ let buildMenu = [
         garbage: 11,
         jobs: 0,
         globalLV: [50, 30, 10, 8],//res,com,ind, other
-        localLV: 10
+        localLV: 10,
+        maintenance: 25
       },
       {
         name: 'Lake Park',
@@ -2228,7 +2291,8 @@ let buildMenu = [
         garbage: 16,
         jobs: 0,
         globalLV: [50, 30, 10, 8],//res,com,ind, other
-        localLV: 20
+        localLV: 20,
+        maintenance: 25
       },
       {
         name: 'Nature Center',
@@ -2247,7 +2311,8 @@ let buildMenu = [
         garbage: 16,
         jobs: 2,
         globalLV: [50, 30, 10, 8],//res,com,ind, other
-        localLV: 30
+        localLV: 30,
+        maintenance: 150
       },
       {
         name: 'Deluxe Plaza',
@@ -2266,7 +2331,8 @@ let buildMenu = [
         garbage: 11,
         jobs: 0,
         globalLV: [50, 30, 10, 8],//res,com,ind, other
-        localLV: 10
+        localLV: 10,
+        maintenance: 150
       },
       {
         name: 'Baseball',
@@ -2285,7 +2351,8 @@ let buildMenu = [
         garbage: 9,
         jobs: 0,
         globalLV: [50, 30, 10, 8],//res,com,ind, other
-        localLV: 10
+        localLV: 10,
+        maintenance: 35
       },
       {
         name: 'Extra Lage Park',
@@ -2304,7 +2371,8 @@ let buildMenu = [
         garbage: 16,
         jobs: 0,
         globalLV: [50, 30, 10, 8],//res,com,ind, other
-        localLV: 40
+        localLV: 40,
+        maintenance: 100
       },
       {
         name: 'City Pool',
@@ -2323,7 +2391,8 @@ let buildMenu = [
         garbage: 16,
         jobs: 2,
         globalLV: [50, 30, 10, 8],//res,com,ind, other
-        localLV: 10
+        localLV: 10,
+        maintenance: 350
       },
       {
         name: 'Oblisk Plaza',
@@ -2342,7 +2411,8 @@ let buildMenu = [
         garbage: 16,
         jobs: 0,
         globalLV: [50, 30, 10, 8],//res,com,ind, other
-        localLV: 10
+        localLV: 10,
+        maintenance: 50
       },
       {
         name: 'Small Stadium',
@@ -2361,7 +2431,8 @@ let buildMenu = [
         garbage: 35,
         jobs: 3,
         globalLV: [20, 30, 10, 8],//res,com,ind, other
-        localLV: 10
+        localLV: 10,
+        maintenance: 1000
       },
       {
         name: 'Water Park',
@@ -2380,7 +2451,8 @@ let buildMenu = [
         garbage: 25,
         jobs: 3,
         globalLV: [50, 30, 10, 8],//res,com,ind, other
-        localLV: 10
+        localLV: 10,
+        maintenance: 3000
       },
       {
         name: 'Zoo',
@@ -2398,7 +2470,9 @@ let buildMenu = [
         garbage: 50,
         jobs: 12,
         globalLV: [50, 30, 10, 8],//res,com,ind, other
-        localLV: 20
+        localLV: 20,
+        maintenance: 7500
+
       },
       {
         name: 'Large Stadium',
@@ -2416,6 +2490,9 @@ let buildMenu = [
         waterPollutionRadius: 8,
         garbage: 75,
         jobs: 13,
+        globalLV: [50, 30, 0, 8],//res,com,ind, other
+        localLV: 10,
+        maintenance: 11000
 
       },
       {
@@ -2435,7 +2512,8 @@ let buildMenu = [
         garbage: 50,
         jobs: 4,
         globalLV: [50, 30, 10, 8],//res,com,ind, other
-        localLV: 10
+        localLV: 10,
+        maintenance: 75
       },
       {
         name: 'Lage Forest',
@@ -2454,7 +2532,8 @@ let buildMenu = [
         garbage: 16,
         jobs: 0,
         globalLV: [50, 30, 10, 8],//res,com,ind, other
-        localLV: 100
+        localLV: 100,
+        maintenance: 125
       },
       {
         name: 'Amusement Park',
@@ -2473,7 +2552,8 @@ let buildMenu = [
         garbage: 60,
         jobs: 9,
         globalLV: [50, 30, 10, 8],//res,com,ind, other
-        localLV: 10
+        localLV: 10,
+        maintenance: 8000
       },
       {
         name: 'State Park',
@@ -2492,7 +2572,8 @@ let buildMenu = [
         garbage: 16,
         jobs: 5,
         globalLV: [50, 30, 10, 8],//res,com,ind, other
-        localLV: 100
+        localLV: 100,
+        maintenance: 5000
       }
 
     ]
@@ -2520,7 +2601,8 @@ let buildMenu = [
         garbage: 64,
         jobs: 15,
         globalLV: [20, 25, 0, 0],//res,com,ind, other
-        localLV: 10
+        localLV: 10,
+        maintenance: 1000
       },
       {
         name: 'Post Office',
@@ -2540,7 +2622,8 @@ let buildMenu = [
         garbage: 64,
         jobs: 6,
         globalLV: [20, 25, 0, 0],//res,com,ind, other
-        localLV: 10
+        localLV: 10,
+        maintenance: 150
 
       },
       {
@@ -2561,7 +2644,8 @@ let buildMenu = [
         garbage: 64,
         jobs: 5,
         globalLV: [20, 25, 0, 0],//res,com,ind, other
-        localLV: 10
+        localLV: 10,
+        maintenance: 275
       },
       {
         name: 'Courthouse',
@@ -2580,7 +2664,8 @@ let buildMenu = [
         garbage: 64,
         jobs: 7,
         globalLV: [20, 25, 0, 0],//res,com,ind, other
-        localLV: 10
+        localLV: 10,
+        maintenance: 400
 
       },
       {
@@ -2600,7 +2685,8 @@ let buildMenu = [
         garbage: 4000,
         jobs: 250,
         globalLV: [-20, 12, 12, -8],//res,com,ind, other
-        localLV: -15
+        localLV: -15,
+        maintenance: 1000
 
       },
       {
@@ -2620,7 +2706,8 @@ let buildMenu = [
         garbage: 264,
         jobs: 25,
         globalLV: [10, 35, 0, 35],//res,com,ind, other
-        localLV: 10
+        localLV: 10,
+        maintenance: 800
 
       },
       {
@@ -2629,7 +2716,7 @@ let buildMenu = [
         index: 0,
         sheet: 'G_tilesx16',
         size: 16,
-        cost: 100000,
+        cost: 100,
         action: 'place',
         zone: 21,
         parentMenu: 6,
@@ -2640,7 +2727,8 @@ let buildMenu = [
         garbage: 10000,
         jobs: 450,
         globalLV: [-60, 12, 24, -8],//res,com,ind, other
-        localLV: -55
+        localLV: -55,
+        maintenance: 13000
 
       }
     ]

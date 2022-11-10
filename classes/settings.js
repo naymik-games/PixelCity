@@ -72,13 +72,15 @@ let mapLoad = 'new'
 let gameStats = {
   day: 1,
   year: 1900,
-  funds: 10000,
+  funds: 100000,
   population: 100,
   globalLV: [0, 0, 0, 0],
   specialJobs: 0,
   powerPlants: [],
   zoneCounts: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  rci: [0, 0, 0]
+  rci: [0, 0, 0],
+  taxRates: [7, 7, 7],
+  maintenanceCosts: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 }
 
 let gameRules = {

@@ -40,6 +40,8 @@ class Power extends Phaser.Scene {
 
     //this.nameText = this.add.bitmapText(300, 860, 'topaz', 'Power', 50).setOrigin(0, .5).setTint(0x000000).setInteractive();
 
+
+
     var consumption = getPowerConsumption()
     this.consumptionText = this.add.text(25, 825, 'Consumption', { fontFamily: 'PixelFont', fontSize: '30px', color: '#C0D7E2', align: 'left' })
 

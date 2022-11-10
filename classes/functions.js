@@ -273,6 +273,36 @@ function perc2color(perc) {
 
   return '#' + ('000000' + h.toString(16)).slice(-6);
 }
+//////////////////////////////////////////////////////////////////////////////
+function getResTaxIncome() {
+  // TR x pop x LV x Modifier x months
+  return Math.round(sim.gameData.taxRates[0] * sim.gameData.population * 22 * 0.0035)
+}
+function getComTaxIncome() {
+  var comCapacity = sim.gameData.zoneCounts[3] + sim.gameData.zoneCounts[4] * 2 + sim.gameData.zoneCounts[5] * 4
+  return Math.round(sim.gameData.taxRates[1] * comCapacity * 22 * 0.0045)
+}
+function getIndTaxIncome() {
+  var indCapacity = sim.gameData.zoneCounts[6] * 2 + sim.gameData.zoneCounts[7] * 4
+  return Math.round(sim.gameData.taxRates[2] * indCapacity * 22 * 0.005)
+}
+function getTotalMaintenanceCost() {
+  var total = 0
+  for (var i = 0; i < sim.gameData.maintenanceCosts.length; i++) {
+    total += sim.gameData.maintenanceCosts[i]
+  }
+  return total
+}
+
+const formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+
+  // These options are needed to round to whole numbers if that's what you want.
+  //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+  //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+});
+
 /*
 let mapConfig = {
   width: 64,

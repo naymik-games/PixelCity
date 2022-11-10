@@ -17,7 +17,7 @@ window.onload = function () {
     dom: {
       createContainer: true
     },
-    scene: [preloadGame, startGame, playGame, UI, Menu, Info, People, Rci, Power]
+    scene: [preloadGame, startGame, playGame, UI, Menu, Info, People, Rci, Power, Finance]
   }
   game = new Phaser.Game(gameConfig);
   window.focus();
@@ -912,6 +912,7 @@ class playGame extends Phaser.Scene {
     console.log(value)
     this.setRoad(mapXY, value)
     sim.gameData.funds -= this.transportType.cost
+    sim.gameData.maintenanceCosts[this.transportType.zone] += this.transportType.maintenance
     this.events.emit('updateStats')
 
 
@@ -928,7 +929,7 @@ class playGame extends Phaser.Scene {
     if (!this.onMap(mapXY) && this.areNext(mapXY, this.selected[this.selected.length - 1])) { return }
     if (this.newTile(mapXY) && this.canContinueRoad(mapXY) && this.canAfford(this.transportType.cost)) {
       console.log('next road')
-
+      sim.gameData.maintenanceCosts[this.transportType.zone] += this.transportType.maintenance
       var value = this.calculatePath(mapXY)
       if (grid[mapXY.y][mapXY.x].terrain == 'water') {
         if (value == 2 || value == 4) {
@@ -1062,6 +1063,7 @@ class playGame extends Phaser.Scene {
       grid[mapXY.y][mapXY.x].parentMenu = this.placeData.parentMenu
       this.setBuilding(mapXY, this.placeData.size)
       sim.gameData.zoneCounts[this.placeData.zone] += 1
+      sim.gameData.maintenanceCosts[this.placeData.zone] += this.placeData.maintenance
       addGlobalLandValue(this.placeData)
       addLocalLandValue(mapXY, this.placeData)
       sim.gameData.funds -= this.placeData.cost

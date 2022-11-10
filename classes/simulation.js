@@ -9,6 +9,24 @@ class Sim {
   endDay() {
     console.log('end day')
 
+    this.updateRCI()
+    this.updateFunds()
+
+  }
+  updateFunds() {
+    //income
+    var rI = getResTaxIncome()
+    var cI = getComTaxIncome()
+    var iI = getIndTaxIncome()
+    var tI = rI + cI + iI
+    console.log('Total Income: ' + tI)
+    var tM = getTotalMaintenanceCost()
+    console.log('Total Cost: ' + tM)
+    var balance = tI - tM
+    console.log('Balance: ' + balance)
+    this.gameData.funds += balance
+  }
+  updateRCI() {
     //RCI
     //residential capacity
 
@@ -130,8 +148,6 @@ class Sim {
     var r = clamp(newPop, -20, availableHousing)
     this.gameData.population += Math.ceil(r)
     //}
-
-
   }
   getTotalResCapacity() {
     var lrCapacity = this.gameData.zoneCounts[0] * 8 //8 residents per tile

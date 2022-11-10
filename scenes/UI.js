@@ -128,6 +128,14 @@ class UI extends Phaser.Scene {
       this.scene.pause('Menu')
     }, this)
 
+    var financeIcon = this.add.image(850, 700, 'icons', 30).setOrigin(1, .5).setScale(2).setInteractive()
+    financeIcon.on('pointerdown', function () {
+      this.scene.launch('Finance')
+      this.scene.pause()
+      this.scene.pause('playGame')
+      this.scene.pause('Menu')
+    }, this)
+
 
     var homeIcon = this.add.image(825, 1525, 'home').setOrigin(.5).setScale(3).setInteractive();
     homeIcon.on('pointerdown', function () {
@@ -165,12 +173,15 @@ class UI extends Phaser.Scene {
         this.events.emit('endDay');
         sim.endDay()
         sim.gameData.day++
-        this.scoreText.setText(sim.gameData.day);
+
         this.popText.setText('P: ' + sim.gameData.population)
-        if (sim.gameData.day % 10 == 0) {
+        if (sim.gameData.day == 13) {
           sim.gameData.year++
           this.yearText.setText('Y: ' + sim.gameData.year)
+          sim.gameData.day = 1
         }
+        this.scoreText.setText(sim.gameData.day);
+        this.fundsText.setText(sim.gameData.funds)
         //this.saveStats()
         this.Main.saveMap()
       },
