@@ -335,6 +335,8 @@ class playGame extends Phaser.Scene {
       tileIMG.building.destroy()
       if (tile.zone > 7) {
         sim.gameData.zoneCounts[tile.zone] -= 1
+        sim.gameData.maintenanceCosts[tile.zone] -= buildMenu[tile.parentMenu].subMenu[tile.menu].maintenance
+        sim.gameData.maintenanceCostsSpending[tile.zone] -= buildMenu[tile.parentMenu].subMenu[tile.menu].maintenance * (sim.gameData.maintenanceCostsPer[tile.zone] / 100)
       }
       if (tile.zone >= 0 || tile.zone < 8) {
         sim.gameData.zoneCounts[tile.zone] -= zoneSizeTable[tile.size]

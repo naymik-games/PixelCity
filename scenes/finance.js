@@ -70,9 +70,9 @@ class Finance extends Phaser.Scene {
     //var resIncome = Math.round(sim.gameData.taxRates[0] * sim.gameData.population * 22 * 0.0035)
     var rIText = this.add.bitmapText(625, 525, 'topaz', getResTaxIncome(), 35).setOrigin(0, .5).setTint(0xC0D7E2)
     this.incomeGroup.add(rIText)
-    var min = 0,
-      max = 12,
-      range = max - min,
+    var minz = 0,
+      maxz = 12,
+      rangez = maxz - minz,
       gap = 1;
     var rtSlider = this.rexUI.add.slider({
       x: 375,
@@ -83,10 +83,10 @@ class Finance extends Phaser.Scene {
 
       track: this.add.image(0, 0, 'slider_track'),
       thumb: this.add.image(0, 0, 'slider_thumb'),
-      value: sim.gameData.taxRates[0] / range,
-      gap: gap / range,
+      value: sim.gameData.taxRates[0] / rangez,
+      gap: gap / rangez,
       valuechangeCallback: function (value) {
-        value = (value * range) + min;
+        value = (value * rangez) + minz;
         rtText.setText(Math.round(value) + '%')
         sim.gameData.taxRates[0] = Math.round(value)
         rIText.setText(formatter.format(getResTaxIncome()))
@@ -123,10 +123,10 @@ class Finance extends Phaser.Scene {
 
       track: this.add.image(0, 0, 'slider_track'),
       thumb: this.add.image(0, 0, 'slider_thumb'),
-      value: sim.gameData.taxRates[1] / range,
-      gap: gap / range,
+      value: sim.gameData.taxRates[1] / rangez,
+      gap: gap / rangez,
       valuechangeCallback: function (value) {
-        value = (value * range) + min;
+        value = (value * rangez) + minz;
         ctText.setText(Math.round(value) + '%')
         sim.gameData.taxRates[1] = Math.round(value)
         cIText.setText(formatter.format(getComTaxIncome()))
@@ -157,10 +157,10 @@ class Finance extends Phaser.Scene {
 
       track: this.add.image(0, 0, 'slider_track'),
       thumb: this.add.image(0, 0, 'slider_thumb'),
-      value: sim.gameData.taxRates[2] / range,
-      gap: gap / range,
+      value: sim.gameData.taxRates[2] / rangez,
+      gap: gap / rangez,
       valuechangeCallback: function (value) {
-        value = (value * range) + min;
+        value = (value * rangez) + minz;
         itText.setText(Math.round(value) + '%')
         sim.gameData.taxRates[2] = Math.round(value)
         iIText.setText(formatter.format(getIndTaxIncome()))
@@ -177,8 +177,9 @@ class Finance extends Phaser.Scene {
     // Expenditures sliders
     /////////
     //power slider
-    var powerSLabel = this.add.bitmapText(25, 525, 'topaz', 'P: ', 35).setOrigin(0, .5).setTint(0xC0D7E2)
-    this.expendituresGroup.add(powerSLabel)
+    //var powerSLabel = this.add.bitmapText(25, 525, 'topaz', 'P: ', 35).setOrigin(0, .5).setTint(0xC0D7E2)
+    var powerIcon = this.add.image(12, 525, 'icons', 3).setOrigin(0, .5).setScale(2).setInteractive().setAlpha(1);
+    this.expendituresGroup.add(powerIcon)
     var powerSText = this.add.bitmapText(75, 525, 'topaz', sim.gameData.maintenanceCostsPer[8], 35).setOrigin(0, .5).setTint(0xC0D7E2)
     this.expendituresGroup.add(powerSText)
 
@@ -224,8 +225,9 @@ class Finance extends Phaser.Scene {
     this.expendituresGroup.add(powersSlider)
     /// end power slider
     //police slider
-    var policeSLabel = this.add.bitmapText(25, 600, 'topaz', 'P: ', 35).setOrigin(0, .5).setTint(0xC0D7E2)
-    this.expendituresGroup.add(policeSLabel)
+    //var policeSLabel = this.add.bitmapText(25, 600, 'topaz', 'P: ', 35).setOrigin(0, .5).setTint(0xC0D7E2)
+    var policeIcon = this.add.image(12, 600, 'icons', 48).setOrigin(0, .5).setScale(2).setInteractive().setAlpha(1);
+    this.expendituresGroup.add(policeIcon)
     var policeSText = this.add.bitmapText(75, 600, 'topaz', sim.gameData.maintenanceCostsPer[13], 35).setOrigin(0, .5).setTint(0xC0D7E2)
     this.expendituresGroup.add(policeSText)
 
@@ -271,8 +273,9 @@ class Finance extends Phaser.Scene {
     this.expendituresGroup.add(policeSlider)
     /// end police slider
     //fire slider
-    var fireSLabel = this.add.bitmapText(25, 675, 'topaz', 'F: ', 35).setOrigin(0, .5).setTint(0xC0D7E2)
-    this.expendituresGroup.add(fireSLabel)
+    //var fireSLabel = this.add.bitmapText(25, 675, 'topaz', 'F: ', 35).setOrigin(0, .5).setTint(0xC0D7E2)
+    var fireIcon = this.add.image(12, 675, 'icons', 49).setOrigin(0, .5).setScale(2).setInteractive().setAlpha(1);
+    this.expendituresGroup.add(fireIcon)
     var firePerSText = this.add.bitmapText(75, 675, 'topaz', sim.gameData.maintenanceCostsPer[14], 35).setOrigin(0, .5).setTint(0xC0D7E2)
     this.expendituresGroup.add(firePerSText)
 
@@ -318,8 +321,9 @@ class Finance extends Phaser.Scene {
     this.expendituresGroup.add(fireSlider)
     /// end fire slider
     //Health slider
-    var healthSLabel = this.add.bitmapText(25, 750, 'topaz', 'H: ', 35).setOrigin(0, .5).setTint(0xC0D7E2)
-    this.expendituresGroup.add(healthSLabel)
+    //var healthSLabel = this.add.bitmapText(25, 750, 'topaz', 'H: ', 35).setOrigin(0, .5).setTint(0xC0D7E2)
+    var healthIcon = this.add.image(12, 750, 'icons', 50).setOrigin(0, .5).setScale(2).setInteractive().setAlpha(1);
+    this.expendituresGroup.add(healthIcon)
     var healthPerSText = this.add.bitmapText(75, 750, 'topaz', sim.gameData.maintenanceCostsPer[12], 35).setOrigin(0, .5).setTint(0xC0D7E2)
     this.expendituresGroup.add(healthPerSText)
 
@@ -365,8 +369,9 @@ class Finance extends Phaser.Scene {
     this.expendituresGroup.add(healthSlider)
     /// end health slider
     //education and culture slider
-    var educationSLabel = this.add.bitmapText(25, 825, 'topaz', 'E: ', 35).setOrigin(0, .5).setTint(0xC0D7E2)
-    this.expendituresGroup.add(educationSLabel)
+    /// var educationSLabel = this.add.bitmapText(25, 825, 'topaz', 'E: ', 35).setOrigin(0, .5).setTint(0xC0D7E2)
+    var educationIcon = this.add.image(12, 825, 'icons', 24).setOrigin(0, .5).setScale(2).setInteractive().setAlpha(1);
+    this.expendituresGroup.add(educationIcon)
 
     var educationPerSText = this.add.bitmapText(75, 825, 'topaz', sim.gameData.maintenanceCostsPer[15], 35).setOrigin(0, .5).setTint(0xC0D7E2)
     this.expendituresGroup.add(educationPerSText)
@@ -412,8 +417,9 @@ class Finance extends Phaser.Scene {
     this.expendituresGroup.add(educationSlider)
     /// end education slider
     //parks slider
-    var parksSLabel = this.add.bitmapText(25, 900, 'topaz', 'P: ', 35).setOrigin(0, .5).setTint(0xC0D7E2)
-    this.expendituresGroup.add(parksSLabel)
+    //var parksSLabel = this.add.bitmapText(25, 900, 'topaz', 'P: ', 35).setOrigin(0, .5).setTint(0xC0D7E2)
+    var parkIcon = this.add.image(12, 900, 'icons', 32).setOrigin(0, .5).setScale(2).setInteractive().setAlpha(1);
+    this.expendituresGroup.add(parkIcon)
 
     var parksPerSText = this.add.bitmapText(75, 900, 'topaz', sim.gameData.maintenanceCostsPer[17], 35).setOrigin(0, .5).setTint(0xC0D7E2)
     this.expendituresGroup.add(parksPerSText)
@@ -459,8 +465,9 @@ class Finance extends Phaser.Scene {
     this.expendituresGroup.add(parksSlider)
     /// end parks slider
     //transportation slider
-    var transportationSLabel = this.add.bitmapText(25, 975, 'topaz', 'T: ', 35).setOrigin(0, .5).setTint(0xC0D7E2)
-    this.expendituresGroup.add(transportationSLabel)
+    //var transportationSLabel = this.add.bitmapText(25, 975, 'topaz', 'T: ', 35).setOrigin(0, .5).setTint(0xC0D7E2)
+    var transIcon = this.add.image(12, 975, 'icons', 5).setOrigin(0, .5).setScale(2).setInteractive().setAlpha(1);
+    this.expendituresGroup.add(transIcon)
 
     var transportationPerSText = this.add.bitmapText(75, 975, 'topaz', sim.gameData.maintenanceCostsPer[22], 35).setOrigin(0, .5).setTint(0xC0D7E2)
     this.expendituresGroup.add(transportationPerSText)

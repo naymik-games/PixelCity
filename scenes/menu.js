@@ -893,7 +893,7 @@ let buildMenu = [
         globalLV: [-10, -15, -15, -15],//res,com,ind, other
         localLV: -25,
         capacity: 6000,
-        maintenance: 10000
+        maintenance: 1000
       },
       {
         name: 'Garbage Dump',

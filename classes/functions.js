@@ -246,11 +246,11 @@ function getResTaxIncome() {
   return Math.round(sim.gameData.taxRates[0] * sim.gameData.population * 22 * 0.0035)
 }
 function getComTaxIncome() {
-  var comCapacity = sim.gameData.zoneCounts[3] + sim.gameData.zoneCounts[4] * 2 + sim.gameData.zoneCounts[5] * 4
+  var comCapacity = sim.gameData.zoneCounts[3] * 2 + sim.gameData.zoneCounts[4] * 3 + sim.gameData.zoneCounts[5] * 6
   return Math.round(sim.gameData.taxRates[1] * comCapacity * 22 * 0.0045)
 }
 function getIndTaxIncome() {
-  var indCapacity = sim.gameData.zoneCounts[6] * 2 + sim.gameData.zoneCounts[7] * 4
+  var indCapacity = sim.gameData.zoneCounts[6] * 3 + sim.gameData.zoneCounts[7] * 6
   return Math.round(sim.gameData.taxRates[2] * indCapacity * 22 * 0.005)
 }
 function getTotalMaintenanceCost() {
