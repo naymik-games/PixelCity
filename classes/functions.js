@@ -11,18 +11,6 @@ function roadInRange(point) {
   }
   return false
 }
-function getTilesInRange(point, range) {
-  var tilesInRange = [];
-  for (var y = point.y - range; y <= point.y + range; y++) {
-    for (var x = point.x - range; x <= point.x + range; x++) {
-      if (this.validPoint(x, y)) {
-        tilesInRange.push(grid[y][x])
-      }
-
-    }
-  }
-  return tilesInRange
-}
 
 //reference
 /* let zoneNames = [
@@ -50,7 +38,9 @@ function getTilesInRange(point, range) {
   21 'Military', 
   22 'Transportation'
   ] */
-
+//////////////////////////////////////////////////////////////////////////////
+// POWER
+////////////////////////////////////////////////////////////////////////////
 function getPowerConsumption() {
   var resCapacity = (sim.gameData.zoneCounts[0] * 3) + (sim.gameData.zoneCounts[1] * 12) + (sim.gameData.zoneCounts[2] * 50)
   var comCapacity = (sim.gameData.zoneCounts[3] * 6) + (sim.gameData.zoneCounts[4] * 20) + (sim.gameData.zoneCounts[5] * 80)
@@ -76,6 +66,9 @@ function getPowerConsumption() {
 function addPowerPlant(mapXY, id, yearAdded) {
   sim.gameData.powerPlants.push([mapXY, id, yearAdded])
 }
+////////////////////////////////////////////////////////////////////////////////////////
+// POLLUTION
+//////////////////////////////////////////////////////////////////////////////////////
 function addPollution(point, data) {
   //air
   var tiles = this.getTilesInRange(point, data.airPollutionRadius)
@@ -119,6 +112,9 @@ function updatePollution() {
     }
   }
 }
+//////////////////////////////////////////////////////////////////////////////////////
+// LAND VALUE
+//////////////////////////////////////////////////////////////////////////////////////
 function addGlobalLandValue(data) {
   sim.gameData.globalLV[0] += data.globalLV[0]
   sim.gameData.globalLV[1] += data.globalLV[1]
@@ -216,6 +212,9 @@ function getCityCenterDistance(point) {
   //console.log('center x ' + centerX + ', center y ' + centerY)
 
 }
+////////////////////////////////////////////////////////////////////////////////
+// MAP
+////////////////////////////////////////////////////////////////////////////////
 function buildingsDim() {
   for (var y = 0; y < mapConfig.height; y++) {
     for (var x = 0; x < mapConfig.width; x++) {
@@ -238,6 +237,107 @@ function buildingsBright() {
   }
 
 }
+
+//////////////////////////////////////////////////////////////////////////////
+// FINANCE
+///////////////////////////////////////////////////////////////////////////////
+function getResTaxIncome() {
+  // TR x pop x LV x Modifier x months
+  return Math.round(sim.gameData.taxRates[0] * sim.gameData.population * 22 * 0.0035)
+}
+function getComTaxIncome() {
+  var comCapacity = sim.gameData.zoneCounts[3] + sim.gameData.zoneCounts[4] * 2 + sim.gameData.zoneCounts[5] * 4
+  return Math.round(sim.gameData.taxRates[1] * comCapacity * 22 * 0.0045)
+}
+function getIndTaxIncome() {
+  var indCapacity = sim.gameData.zoneCounts[6] * 2 + sim.gameData.zoneCounts[7] * 4
+  return Math.round(sim.gameData.taxRates[2] * indCapacity * 22 * 0.005)
+}
+function getTotalMaintenanceCost() {
+  var total = 0
+  for (var i = 0; i < sim.gameData.maintenanceCostsSpending.length; i++) {
+    total += sim.gameData.maintenanceCostsSpending[i]
+  }
+  return total
+}
+function getTotalFlexibleMaintenanceCost() {
+  var total = 0
+  for (var i = 0; i < sim.gameData.maintenanceCostsSpending.length; i++) {
+    if (i == 8 || i == 12 || i == 13 || i == 14 || i == 15 || i == 17 || i == 22) {
+      total += sim.gameData.maintenanceCostsSpending[i]
+    }
+  }
+  return total
+}
+function getTotalFixedMaintenanceCost() {
+  var total = 0
+  for (var i = 0; i < sim.gameData.maintenanceCostsSpending.length; i++) {
+    if (i == 9 || i == 10 || i == 11 || i == 16 || i == 18 || i == 19 || i == 20 || i == 21) {
+      total += sim.gameData.maintenanceCostsSpending[i]
+    }
+  }
+  return total
+}
+function getPowerMaintenanceCost() {
+  var total = 0
+  total += sim.gameData.maintenanceCostsSpending[8]
+  return total
+}
+function getPoliceMaintenanceCost() {
+  var total = 0
+  total += sim.gameData.maintenanceCostsSpending[13]
+  return total
+}
+function getFireMaintenanceCost() {
+  var total = 0
+  total += sim.gameData.maintenanceCostsSpending[14]
+  return total
+}
+function getHealthMaintenanceCost() {
+  var total = 0
+  total += sim.gameData.maintenanceCostsSpending[12]
+  return total
+}
+function getEducationMaintenanceCost() {
+  var total = 0
+  total += sim.gameData.maintenanceCostsSpending[15]
+  return total
+}
+function getParksMaintenanceCost() {
+  var total = 0
+  total += sim.gameData.maintenanceCostsSpending[17]
+  return total
+}
+function getTransportationMaintenanceCost() {
+  var total = 0
+  total += sim.gameData.maintenanceCostsSpending[22]
+  return total
+}
+const formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+
+  // These options are needed to round to whole numbers if that's what you want.
+  //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+  //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+});
+/////////////////////////////////////////////////////////////////////////////////
+// HELPER/UTILITY
+///////////////////////////////////////////////////////////////////////////////
+function getTilesInRange(point, range) {
+  var tilesInRange = [];
+  for (var y = point.y - range; y <= point.y + range; y++) {
+    for (var x = point.x - range; x <= point.x + range; x++) {
+      if (this.validPoint(x, y)) {
+        tilesInRange.push(grid[y][x])
+      }
+
+    }
+  }
+  return tilesInRange
+}
+
+
 function getDistance(point1, point2) {
   var a = point1.x - point2.x;
   var b = point1.y - point2.y;
@@ -273,36 +373,6 @@ function perc2color(perc) {
 
   return '#' + ('000000' + h.toString(16)).slice(-6);
 }
-//////////////////////////////////////////////////////////////////////////////
-function getResTaxIncome() {
-  // TR x pop x LV x Modifier x months
-  return Math.round(sim.gameData.taxRates[0] * sim.gameData.population * 22 * 0.0035)
-}
-function getComTaxIncome() {
-  var comCapacity = sim.gameData.zoneCounts[3] + sim.gameData.zoneCounts[4] * 2 + sim.gameData.zoneCounts[5] * 4
-  return Math.round(sim.gameData.taxRates[1] * comCapacity * 22 * 0.0045)
-}
-function getIndTaxIncome() {
-  var indCapacity = sim.gameData.zoneCounts[6] * 2 + sim.gameData.zoneCounts[7] * 4
-  return Math.round(sim.gameData.taxRates[2] * indCapacity * 22 * 0.005)
-}
-function getTotalMaintenanceCost() {
-  var total = 0
-  for (var i = 0; i < sim.gameData.maintenanceCosts.length; i++) {
-    total += sim.gameData.maintenanceCosts[i]
-  }
-  return total
-}
-
-const formatter = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-
-  // These options are needed to round to whole numbers if that's what you want.
-  //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
-  //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
-});
-
 /*
 let mapConfig = {
   width: 64,

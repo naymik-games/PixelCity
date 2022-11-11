@@ -119,9 +119,9 @@ class Sim {
     var taxScale = 600;
 
 
-    resRatio = (resRatio - 1) * taxScale + taxRatioEffects[taxModifier];
-    comRatio = (comRatio - 1) * taxScale + taxRatioEffects[taxModifier];
-    indRatio = (indRatio - 1) * taxScale + taxRatioEffects[taxModifier];
+    resRatio = (resRatio - 1) * taxScale + taxRatioEffects[this.gameData.taxRates[0]];
+    comRatio = (comRatio - 1) * taxScale + taxRatioEffects[this.gameData.taxRates[1]];
+    indRatio = (indRatio - 1) * taxScale + taxRatioEffects[this.gameData.taxRates[2]];
 
     //res capicity effect excess housing increases housing demand
     resRatio = resRatio * capacityRatio

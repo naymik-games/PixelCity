@@ -797,7 +797,7 @@ let buildMenu = [
         frames3: [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
         frames4: [15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
         airPollution: 125,
-        airPollutionRadius: 25,
+        airPollutionRadius: 12,
         waterPollution: 125,
         waterPollutionRadius: 6,
         garbage: 100,
@@ -890,8 +890,8 @@ let buildMenu = [
         waterPollutionRadius: 12,
         garbage: 800,
         jobs: 12,
-        globalLV: [-90, -70, -15, -15],//res,com,ind, other
-        localLV: -10,
+        globalLV: [-10, -15, -15, -15],//res,com,ind, other
+        localLV: -25,
         capacity: 6000,
         maintenance: 10000
       },

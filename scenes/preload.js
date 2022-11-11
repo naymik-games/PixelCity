@@ -461,6 +461,10 @@ class preloadGame extends Phaser.Scene {
       margin: 1,
       spacing: 1
     });
+    this.load.spritesheet("modal_tab", "assets/sprites/modal_tab_finance.png", {
+      frameWidth: 900,
+      frameHeight: 117,
+    });
     //this.load.image('selectx1', 'assets/sprites/tiles/selectx1.png');
     this.load.image('slider_track', 'assets/sprites/slider_track.png');
     this.load.image('slider_thumb', 'assets/sprites/slider_thumb.png');
@@ -469,6 +473,7 @@ class preloadGame extends Phaser.Scene {
     this.load.image('modal_top', 'assets/sprites/modal_top.png');
     this.load.image('modal_mid', 'assets/sprites/modal_mid.png');
     this.load.image('modal_bot', 'assets/sprites/modal_bot.png');
+    this.load.image('modal_break', 'assets/sprites/modal_break.png');
     this.load.image('scroll_thumb', 'assets/sprites/scroll_thumb.png');
     this.load.image('scroll_track', 'assets/sprites/scroll_track.png');
     this.load.image('scroll_top', 'assets/sprites/scroll_top.png');

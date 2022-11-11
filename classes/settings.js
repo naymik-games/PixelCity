@@ -80,7 +80,9 @@ let gameStats = {
   zoneCounts: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   rci: [0, 0, 0],
   taxRates: [7, 7, 7],
-  maintenanceCosts: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  maintenanceCosts: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  maintenanceCostsSpending: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  maintenanceCostsPer: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100]
 }
 
 let gameRules = {
@@ -148,4 +150,7 @@ function loadFont(name, url) {
   20'Special', 
   21 'Military', 
   22 'Transportation'
-  ] */
+  ] 
+  Power, water, health, police, fire, Education, parks,gove, trans
+  
+  */

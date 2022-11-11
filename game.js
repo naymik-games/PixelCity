@@ -930,6 +930,7 @@ class playGame extends Phaser.Scene {
     if (this.newTile(mapXY) && this.canContinueRoad(mapXY) && this.canAfford(this.transportType.cost)) {
       console.log('next road')
       sim.gameData.maintenanceCosts[this.transportType.zone] += this.transportType.maintenance
+      sim.gameData.maintenanceCostsSpending[this.transportType.zone] += this.transportType.maintenance
       var value = this.calculatePath(mapXY)
       if (grid[mapXY.y][mapXY.x].terrain == 'water') {
         if (value == 2 || value == 4) {
@@ -1064,6 +1065,7 @@ class playGame extends Phaser.Scene {
       this.setBuilding(mapXY, this.placeData.size)
       sim.gameData.zoneCounts[this.placeData.zone] += 1
       sim.gameData.maintenanceCosts[this.placeData.zone] += this.placeData.maintenance
+      sim.gameData.maintenanceCostsSpending[this.placeData.zone] += this.placeData.maintenance
       addGlobalLandValue(this.placeData)
       addLocalLandValue(mapXY, this.placeData)
       sim.gameData.funds -= this.placeData.cost
