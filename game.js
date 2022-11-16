@@ -162,6 +162,10 @@ class playGame extends Phaser.Scene {
     this.graphics = this.add.graphics(),
       this.graphics.lineStyle(5, 0x262B44, 2);
     this.graphics.fillStyle(0x00ff00, 1)
+    this.graphicsData = this.add.graphics(),
+      this.graphicsData.lineStyle(5, 0x262B44, 2);
+    this.graphicsData.fillStyle(0x00ff00, 1)
+
 
     this.selected = []
     this.dragType = 'place'
@@ -195,7 +199,16 @@ class playGame extends Phaser.Scene {
       this.placeData = data
       console.log(this.placeData)
       var isoXY = this.toIso(mapXY.x, mapXY.y)
-      this.selectCursor = this.add.image(centerX + isoXY.x, centerY + isoXY.y, 'selectx1', 0).setOrigin(.5, 1).setInteractive();
+      if (data.zone < 3) {
+        var zoneIndex = 0
+      } else if (data.zone < 6) {
+        var zoneIndex = 1
+      } else if (data.zone < 9) {
+        var zoneIndex = 2
+      } else {
+        var zoneIndex = 3
+      }
+      this.selectCursor = this.add.image(centerX + isoXY.x, centerY + isoXY.y, 'selectx1', zoneIndex).setOrigin(.5, 1).setInteractive();
       this.selectCursor.setDepth(centerY + isoXY.y + 1000);
       this.input.setDraggable(this.selectCursor);
     }, this);
@@ -333,15 +346,20 @@ class playGame extends Phaser.Scene {
     var tileIMG = gridImage[point.y][point.x]
     if (tileIMG.building) {
       tileIMG.building.destroy()
-      if (tile.zone > 7) {
+      if (tile.zone > 8) {
         sim.gameData.zoneCounts[tile.zone] -= 1
         sim.gameData.maintenanceCosts[tile.zone] -= buildMenu[tile.parentMenu].subMenu[tile.menu].maintenance
         sim.gameData.maintenanceCostsSpending[tile.zone] -= buildMenu[tile.parentMenu].subMenu[tile.menu].maintenance * (sim.gameData.maintenanceCostsPer[tile.zone] / 100)
       }
-      if (tile.zone >= 0 || tile.zone < 8) {
+      if (tile.zone >= 0 || tile.zone < 9) {
         sim.gameData.zoneCounts[tile.zone] -= zoneSizeTable[tile.size]
       }
+      removePollution(point, buildMenu[tile.parentMenu].subMenu[tile.menu])
+      removeGlobalLandValue(buildMenu[tile.parentMenu].subMenu[tile.menu])
+      removeLocalLandValue(point, buildMenu[tile.parentMenu].subMenu[tile.menu])
+      sim.gameData.specialJobs -= buildMenu[tile.parentMenu].subMenu[tile.menu].jobs
       tileIMG.building = null
+
     }
     var tiles = this.getTileArea(point, size)
 
@@ -568,9 +586,10 @@ class playGame extends Phaser.Scene {
 
   }
   buildZone(testSelect) {
-    //actully building the zone. For each tile in selection, check if certain size will fit, builds it, then moves to the next clear tile and checks again.
-    var fixedSize = true
+    //actully building the zone. For each tile 1in selection, check if certain size will fit, builds it, then moves to the next clear tile and checks again.
+    var fixedSize = false
 
+    var sizeTable = [[-1, 1, 1, 1, 1], [-1, 1, 1, 1, 1], [-1, 1, 2, 2, 2], [-1, 1, 2, 3, 3], [-1, 1, 2, 3, 4]] //if size cap is 2, and building size is 4, max would be 2. sizeTable[2][4] = 2
     for (let i = 0; i < testSelect.length; i++) {
       const coord = testSelect[i];
       if (this.fitSize(coord, 4)) {
@@ -579,7 +598,7 @@ class playGame extends Phaser.Scene {
         if (fixedSize) {
           this.buildSize(coord, 4, zone)
         } else {
-          var randSize = Phaser.Math.Between(1, 4)
+          var randSize = Phaser.Math.Between(1, sizeTable[4][sim.gameData.maxPlotSize])
           this.buildSize(coord, randSize, zone)
         }
 
@@ -589,7 +608,7 @@ class playGame extends Phaser.Scene {
         if (fixedSize) {
           this.buildSize(coord, 3, zone)
         } else {
-          var randSize = Phaser.Math.Between(1, 3)
+          var randSize = Phaser.Math.Between(1, sizeTable[3][sim.gameData.maxPlotSize])
           this.buildSize(coord, randSize, zone)
         }
 
@@ -599,7 +618,7 @@ class playGame extends Phaser.Scene {
         if (fixedSize) {
           this.buildSize(coord, 2, zone)
         } else {
-          var randSize = Phaser.Math.Between(1, 2)
+          var randSize = Phaser.Math.Between(1, sizeTable[2][sim.gameData.maxPlotSize])
           this.buildSize(coord, randSize, zone)
         }
 
@@ -987,6 +1006,7 @@ class playGame extends Phaser.Scene {
   }
   tileStop(p) {
     this.selected = []
+    buildingsBright()
     gameMode = GM_INFO
   }
   setRoad(mapXY, value) {
@@ -1072,10 +1092,11 @@ class playGame extends Phaser.Scene {
       addLocalLandValue(mapXY, this.placeData)
       sim.gameData.funds -= this.placeData.cost
       this.events.emit('updateStats')
-      if (this.placeData.zone == 8) {
+      if (this.placeData.zone == 9) {
         addPowerPlant(mapXY, this.placeData.id, sim.gameData.year)
       }
     }
+    buildingsBright()
     gameMode = GM_INFO
     this.graphics.clear()
     //modifile grid tile for building
@@ -1188,45 +1209,100 @@ class playGame extends Phaser.Scene {
 
     return array;
   }
+  drawTrafficGrid() {
+    this.graphicsData.clear()
+    this.graphicsData.lineStyle(1, 0x00ff000, .2);
+    this.graphicsData.fillStyle(0xff0000, .1)
+    for (var y = 0; y < mapConfig.height; y++) {
+      for (var x = 0; x < mapConfig.width; x++) {
+        var point = { x: x, y: y }
+        var trafficVal = gridTrans[point.y][point.x]
+
+        //var polper = airPol / 10000
+        var color1 = perc2color(1)
+        // console.log('color ' + color1)
+        //  var colorTest = Phaser.Display.Color.HexStringToColor(color1).color
+
+        //this.graphics.fillStyle(colorTest, .8)
+        if (trafficVal == 0) {
+          this.graphicsData.fillStyle(0x03FA61, 0)//0x03FA61
+        } else if (trafficVal < 10) {
+          this.graphicsData.fillStyle(perc2color(100 - 1), .5)//0x03FA61
+        } else if (trafficVal < 20) {
+          this.graphicsData.fillStyle(perc2color(100 - 25), .5)//0x03FA61
+        } else if (trafficVal < 30) {
+          this.graphicsData.fillStyle(perc2color(100 - 50), .5)//0x03FA61
+        } else if (trafficVal < 40) {
+          this.graphicsData.fillStyle(perc2color(100 - 60), .5)//0xEFF603
+        } else if (trafficVal < 50) {
+          this.graphicsData.fillStyle(perc2color(100 - 80), .5)//0x03FA61
+        } else {
+          this.graphicsData.fillStyle(perc2color(100 - 100), .5)//0x03FA61
+        }
+        this.drawTileData(point)
+      }
+    }
+  }
   drawMapGrid() {
 
-    this.graphics.clear()
-    this.graphics.lineStyle(1, 0x00ff000, .2);
-    this.graphics.fillStyle(0xff0000, .1)
+    this.graphicsData.clear()
+    this.graphicsData.lineStyle(1, 0x00ff000, .2);
+    this.graphicsData.fillStyle(0xff0000, .1)
     for (var y = 0; y < mapConfig.height; y++) {
       for (var x = 0; x < mapConfig.width; x++) {
         var point = { x: x, y: y }
         var airPol = grid[point.y][point.x].pollution[0]
-
-        var polper = airPol / 10000
-        var color1 = perc2color(polper)
-        var colorTest = Phaser.Display.Color.HexStringToColor(color1).color
-
-        //this.graphics.fillStyle(colorTest, .8)
-        if (airPol < 50) {
-          this.graphics.fillStyle(0x03FA61, .5)
-        } else if (airPol < 100) {
-          this.graphics.fillStyle(0x1DF603, .5)
-        } else if (airPol < 250) {
-          this.graphics.fillStyle(0x6EF603, .5)
-        } else if (airPol < 500) {
-          this.graphics.fillStyle(0xB7F603, .5)
-        } else if (airPol < 750) {
-          this.graphics.fillStyle(0xEFF603, .5)
-        } else if (airPol < 1000) {
-          this.graphics.fillStyle(0xF6D903, .5)
-        } else if (airPol < 2000) {
-          this.graphics.fillStyle(0xF6C603, .5)
-        } else if (airPol < 5000) {
-          this.graphics.fillStyle(0xF6A903, .5)
-        } else if (airPol < 10000) {
-          this.graphics.fillStyle(0xF68003, .5)
-        } else {
-          this.graphics.fillStyle(0xFA0303, .5)
+        if (airPol < 1) {
+          airPol = 1
         }
-        this.drawTile(point)
+        var polper = (airPol / 5000) * 100
+        var color1 = perc2color(100 - polper)
+
+        this.graphicsData.fillStyle(color1, .5)
+
+        this.drawTileData(point)
       }
     }
+  }
+  drawLVGrid() {
+
+    this.graphicsData.clear()
+    this.graphicsData.lineStyle(1, 0x00ff000, .2);
+    this.graphicsData.fillStyle(0xff0000, .1)
+    for (var y = 0; y < mapConfig.height; y++) {
+      for (var x = 0; x < mapConfig.width; x++) {
+        var point = { x: x, y: y }
+        var airPol = getLandValue(point)
+        if (airPol.landvalue < 1) {
+          airPol.landvalue = 1
+        }
+        var polper = (airPol.landvalue / 500) * 100
+        var color1 = perc2color(polper)
+
+        this.graphicsData.fillStyle(color1, .5)
+
+        this.drawTileData(point)
+      }
+    }
+  }
+  drawTileData(mapXY) {
+
+
+    var isoXY = this.toIso(mapXY.x, mapXY.y)
+    //var tile = scene.add.image(scene.centerX + isoXY.x, scene.centerY + isoXY.y, 'tiles', ind).setOrigin(.5, 1);
+    //var point = new Phaser.Geom.Point(centerX + isoXY.x, (centerY + isoXY.y) - 5);
+    //console.log(centerY + isoXY.y)
+    this.graphicsData.setDepth(centerY + isoXY.y + 900);
+
+    this.graphicsData.beginPath();
+    this.graphicsData.moveTo(centerX + isoXY.x, (centerY + isoXY.y));
+    this.graphicsData.lineTo((centerX + isoXY.x) - tileWidthHalf, ((centerY + isoXY.y)) - tileHeightHalf);
+    this.graphicsData.lineTo((centerX + isoXY.x), ((centerY + isoXY.y)) - tileHeight);
+    this.graphicsData.lineTo((centerX + isoXY.x) + tileWidthHalf, ((centerY + isoXY.y)) - tileHeightHalf);
+    this.graphicsData.closePath();
+    this.graphicsData.fillPath()
+    this.graphicsData.strokePath();
+    //this.graphics.fillPointShape(point, 2);
   }
   drawTile(mapXY) {
 
@@ -1349,6 +1425,8 @@ class playGame extends Phaser.Scene {
     grid = this.create2DArray(mapConfig.width, mapConfig.height)
     gridImage = this.create2DArray(mapConfig.width, mapConfig.height)
 
+    //console.log(trans)
+
     var test = new Map2(mapConfig.width, mapConfig.height, mapConfig.seed, mapConfig.divisor, mapConfig.water)//mapConfig.seed 64 888567 389864 219000
     //console.log(test)
     for (var y = 0; y < mapConfig.height; y++) {
@@ -1375,7 +1453,8 @@ class playGame extends Phaser.Scene {
 
     grid = value
     gridImage = this.create2DArray(mapConfig.width, mapConfig.height)
-    console.log(grid)
+
+    // console.log(grid)
     for (var y = 0; y < grid.length; y++) {
       for (var x = 0; x < grid[0].length; x++) {
         //load terrain tile

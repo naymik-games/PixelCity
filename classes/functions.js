@@ -2,58 +2,26 @@
 function isConnectedToRoad() {
 
 }
-function roadInRange(point) {
-  var tiles = getTilesInRange(point, gameRules.roadRange)
-  for (var i = 0; i < tiles.length; i++) {
-    if (tiles[i].type == 'road' || tiles[i].type == 'rail') {
-      return true
-    }
-  }
-  return false
-}
+
 
 //reference
-/* let zoneNames = [
-  0 'Light Residential', 
-  1 'Medium Residential', 
-  2 'Dense Residential', 
-  3 'Light Commercial', 
-  4 'Medium Commercial', 
-  5 'Dense Commercial', 
-  6 'Clean Industry', 
-  7 'Dirty Industry', 
-  8 'Power', 
-  9 'Water', 
-  10 'Waste', 
-  11 'Communication', 
-  12 'Health', 
-  13 'Police', 
-  14 'Fire', 
-  15 'Education', 
-  16 'Culture', 
-  17 'Parks', 
-  18 'Recreation', 
-  19 'Government', 
-  20 'Special', 
-  21 'Military', 
-  22 'Transportation'
-  ] */
+
 //////////////////////////////////////////////////////////////////////////////
 // POWER
 ////////////////////////////////////////////////////////////////////////////
 function getPowerConsumption() {
   var resCapacity = (sim.gameData.zoneCounts[0] * 3) + (sim.gameData.zoneCounts[1] * 12) + (sim.gameData.zoneCounts[2] * 50)
   var comCapacity = (sim.gameData.zoneCounts[3] * 6) + (sim.gameData.zoneCounts[4] * 20) + (sim.gameData.zoneCounts[5] * 80)
-  var indCapacity = (sim.gameData.zoneCounts[6] * 12) + (sim.gameData.zoneCounts[7] * 64)
+  var indCapacity = (sim.gameData.zoneCounts[6] * 12) + (sim.gameData.zoneCounts[7] * 64) + (sim.gameData.zoneCounts[8] * 64)
   var otherCapacity = 0
-  for (i = 8; i < sim.gameData.zoneCounts.length; i++) {
-    if (i == 18) {
+  for (i = 9; i < sim.gameData.zoneCounts.length; i++) {
+    if (i == 19) {
       otherCapacity += sim.gameData.zoneCounts[i] * 5
-    } else if (i == 21) {
-      otherCapacity += sim.gameData.zoneCounts[i] * 1000
     } else if (i == 22) {
+      otherCapacity += sim.gameData.zoneCounts[i] * 1000
+    } else if (i == 23) {
       otherCapacity += sim.gameData.zoneCounts[i] * 1
-    } else if (i == 16 || i == 15) {
+    } else if (i == 17 || i == 16) {
       otherCapacity += sim.gameData.zoneCounts[i] * 20
     } else {
       otherCapacity += sim.gameData.zoneCounts[i] * 100
@@ -67,30 +35,68 @@ function addPowerPlant(mapXY, id, yearAdded) {
   sim.gameData.powerPlants.push([mapXY, id, yearAdded])
 }
 ////////////////////////////////////////////////////////////////////////////////////////
+// HEALTH SAFETY
+//////////////////////////////////////////////////////////////////////////////////////
+function addCrime(point, data) {
+  //air
+  var tiles = this.getTilesInRange(point, data.crimeRadius)
+  for (var i = 0; i < tiles.length; i++) {
+    // var d = Math.round(getDistance(point, tiles[i].xy))
+    var d = getDistanceAlt(point, tiles[i].xy)
+    // console.log(d)
+    var v = data.crimeRadius - (d - 1)
+    var per = v / data.crimeRadius
+    tiles[i].crime += Math.round(data.crime * per)
+  }
+}
+////////////////////////////////////////////////////////////////////////////////////////
 // POLLUTION
 //////////////////////////////////////////////////////////////////////////////////////
 function addPollution(point, data) {
   //air
   var tiles = this.getTilesInRange(point, data.airPollutionRadius)
   for (var i = 0; i < tiles.length; i++) {
-    tiles[i].pollution[0] += data.airPollution
+    if (tiles[i].pollution[0] >= 0) {
+      var d = getDistanceAlt(point, tiles[i].xy)
+      var v = data.airPollutionRadius - (d - 1)
+      var per = v / data.airPollutionRadius
+      tiles[i].pollution[0] = tiles[i].pollution[0] + Math.round(data.airPollution * per)
+    } else {
+      var d = getDistanceAlt(point, tiles[i].xy)
+      var v = data.airPollutionRadius - (d - 1)
+      var per = v / data.airPollutionRadius
+      tiles[i].pollution[0] = tiles[i].pollution[0] - Math.round(data.airPollution * per)
+    }
+
   }
   //water
   var tiles = this.getTilesInRange(point, data.waterPollutionRadius)
   for (var i = 0; i < tiles.length; i++) {
-    tiles[i].pollution[1] += data.waterPollution
+    var d = getDistanceAlt(point, tiles[i].xy)
+    // console.log(d)
+    var v = data.airPollutionRadius - (d - 1)
+    var per = v / data.airPollutionRadius
+    tiles[i].pollution[1] = clamp(tiles[i].pollution[1] + Math.round(data.airPollution * per), 0, 100000)
   }
 }
 function removePollution(point, data) {
   //air
   var tiles = this.getTilesInRange(point, data.airPollutionRadius)
   for (var i = 0; i < tiles.length; i++) {
-    tiles[i].pollution[0] -= data.airPollution
+    var d = getDistanceAlt(point, tiles[i].xy)
+    // console.log(d)
+    var v = data.airPollutionRadius - (d - 1)
+    var per = v / data.airPollutionRadius
+    tiles[i].pollution[0] -= clamp(tiles[i].pollution[0] + Math.round(data.airPollution * per), 0, 100000)
   }
   //water
   var tiles = this.getTilesInRange(point, data.waterPollutionRadius)
   for (var i = 0; i < tiles.length; i++) {
-    tiles[i].pollution[1] -= data.waterPollution
+    var d = getDistanceAlt(point, tiles[i].xy)
+    // console.log(d)
+    var v = data.airPollutionRadius - (d - 1)
+    var per = v / data.airPollutionRadius
+    tiles[i].pollution[1] -= clamp(tiles[i].pollution[1] + Math.round(data.airPollution * per), 0, 100000)
   }
 }
 function updatePollution() {
@@ -139,6 +145,65 @@ function removeLocalLandValue(point, data) {
     tiles[i].localLandValue -= data.localLV
   }
 }
+function getLandValue(point) {
+  var lvObject = {}
+  var tile = grid[point.y][point.x]
+  var distance = getDistanceBonus(tile.xy)
+  var dwater = distanceFromOpenWater(tile.xy, 5)
+  lvObject.distance = distance
+  lvObject.global = sim.gameData.globalLV[0]
+  var landvalue = distance + sim.gameData.globalLV[0]
+  console.log('lv dis glob: ' + landvalue)
+  if (dwater <= 5.1) {
+    var waterBonus = landvalue * (.5 / dwater)
+  } else {
+    var waterBonus = 0
+  }
+  lvObject.waterBonus = Math.round(waterBonus)
+  landvalue = landvalue + Math.round(waterBonus)
+  //landvalue = clamp(landvalue, 0, 255)
+
+  console.log('lv water: ' + landvalue)
+  landvalue += tile.localLandValue
+  lvObject.local = tile.localLandValue
+  console.log('lv local: ' + landvalue + ' (' + tile.localLandValue + ')')
+  var pollutionadder = getAirPollutionEffect(tile.pollution[0], landvalue)
+  landvalue = landvalue + pollutionadder
+  lvObject.airpol = pollutionadder
+  console.log('lv 3: ' + landvalue + ' (' + pollutionadder + ')')
+  var wpolladder = getWaterPollutionEffect(tile.pollution[1], landvalue)
+  landvalue = landvalue + wpolladder
+  console.log('lv 4: ' + landvalue + ' (' + wpolladder + ')')
+  lvObject.waterpol = wpolladder
+  lvObject.landvalue = landvalue
+  return lvObject
+}
+function getAverageLV() {
+  var count = 0
+  var totalLV = 0
+  for (var y = 0; y < mapConfig.height; y++) {
+    for (var x = 0; x < mapConfig.width; x++) {
+      var tile = grid[y][x]
+      if (tile.terrain != 'water') {
+        var distance = getDistanceBonus(tile.xy)
+        var dwater = distanceFromOpenWater(tile.xy, 5)
+        var landvalue = distance + sim.gameData.globalLV[0]
+        if (dwater <= 5.1) {
+          var waterBonus = landvalue * (.5 / dwater)
+        } else {
+          var waterBonus = 0
+        }
+        //  console.log('lv: ' + landvalue + "wb: " + Math.round(waterBonus) + 'tlv: ' + tile.localLandValue)
+        totalLV += landvalue + Math.round(waterBonus) + tile.localLandValue
+        count++
+      }
+
+    }
+  }
+  // console.log('total' + totalLV + 'count ' + count)
+  sim.gameData.averageLV = Math.round(totalLV / count)
+  console.log(sim.gameData.averageLV)
+}
 /* function updateLocalLandValue() {
   for (var y = 0; y < mapConfig.height; y++) {
     for (var x = 0; x < mapConfig.width; x++) {
@@ -177,10 +242,37 @@ function distanceFromOpenWater(point, range) {
     }
   }
   //console.log(distances)
-  const min = Math.min(...distances)
+  var val = clamp(Math.min(...distances), 0, 10)
+  const min = val
 
-  console.log(Math.round(min * 10) / 10)
+  //console.log(Math.round(min * 10) / 10)
   return Math.round(min * 10) / 10
+}
+function getAirPollutionEffect(pollution, landvalue) {
+  if (pollution > gameRules.apNormal) {
+    var p1 = pollution - gameRules.apNormal
+    var p3 = p1 / gameRules.apNormal
+    var pollutionadd = (landvalue * p3) / 4
+    return Math.round(-pollutionadd)
+  } else {
+    var p2 = gameRules.apNormal - pollution
+    var p3 = p2 / gameRules.apNormal
+    var pollutionadd = (landvalue * p3) / 4
+    return Math.round(pollutionadd)
+  }
+}
+function getWaterPollutionEffect(pollution, landvalue) {
+  if (pollution > gameRules.wpNormal) {
+    var p1 = pollution - gameRules.wpNormal
+    var p3 = p1 / gameRules.wpNormal
+    var pollutionadd = landvalue * p3
+    return Math.round(-pollutionadd)
+  } else {
+    var p2 = gameRules.wpNormal - pollution
+    var p3 = p2 / gameRules.wpNormal
+    var pollutionadd = landvalue * p3
+    return Math.round(pollutionadd)
+  }
 }
 function getDistanceBonus(mapxy) {
 
@@ -243,14 +335,19 @@ function buildingsBright() {
 ///////////////////////////////////////////////////////////////////////////////
 function getResTaxIncome() {
   // TR x pop x LV x Modifier x months
-  return Math.round(sim.gameData.taxRates[0] * sim.gameData.population * 22 * 0.0035)
+  if (sim.gameData.averageLV < 1) {
+    var lv = 1
+  } else {
+    var lv = sim.gameData.averageLV
+  }
+  return Math.round(sim.gameData.taxRates[0] * sim.gameData.population * lv * 0.0035)
 }
 function getComTaxIncome() {
   var comCapacity = sim.gameData.zoneCounts[3] * 2 + sim.gameData.zoneCounts[4] * 3 + sim.gameData.zoneCounts[5] * 6
   return Math.round(sim.gameData.taxRates[1] * comCapacity * 22 * 0.0045)
 }
 function getIndTaxIncome() {
-  var indCapacity = sim.gameData.zoneCounts[6] * 3 + sim.gameData.zoneCounts[7] * 6
+  var indCapacity = sim.gameData.zoneCounts[6] * 2 + sim.gameData.zoneCounts[7] * 3 + sim.gameData.zoneCounts[8] * 6
   return Math.round(sim.gameData.taxRates[2] * indCapacity * 22 * 0.005)
 }
 function getTotalMaintenanceCost() {
@@ -263,7 +360,7 @@ function getTotalMaintenanceCost() {
 function getTotalFlexibleMaintenanceCost() {
   var total = 0
   for (var i = 0; i < sim.gameData.maintenanceCostsSpending.length; i++) {
-    if (i == 8 || i == 12 || i == 13 || i == 14 || i == 15 || i == 17 || i == 22) {
+    if (i == 9 || i == 13 || i == 14 || i == 15 || i == 16 || i == 18 || i == 23) {
       total += sim.gameData.maintenanceCostsSpending[i]
     }
   }
@@ -272,7 +369,7 @@ function getTotalFlexibleMaintenanceCost() {
 function getTotalFixedMaintenanceCost() {
   var total = 0
   for (var i = 0; i < sim.gameData.maintenanceCostsSpending.length; i++) {
-    if (i == 9 || i == 10 || i == 11 || i == 16 || i == 18 || i == 19 || i == 20 || i == 21) {
+    if (i == 10 || i == 11 || i == 12 || i == 17 || i == 19 || i == 20 || i == 21 || i == 22) {
       total += sim.gameData.maintenanceCostsSpending[i]
     }
   }
@@ -280,37 +377,37 @@ function getTotalFixedMaintenanceCost() {
 }
 function getPowerMaintenanceCost() {
   var total = 0
-  total += sim.gameData.maintenanceCostsSpending[8]
+  total += sim.gameData.maintenanceCostsSpending[9]
   return total
 }
 function getPoliceMaintenanceCost() {
   var total = 0
-  total += sim.gameData.maintenanceCostsSpending[13]
+  total += sim.gameData.maintenanceCostsSpending[14]
   return total
 }
 function getFireMaintenanceCost() {
   var total = 0
-  total += sim.gameData.maintenanceCostsSpending[14]
+  total += sim.gameData.maintenanceCostsSpending[15]
   return total
 }
 function getHealthMaintenanceCost() {
   var total = 0
-  total += sim.gameData.maintenanceCostsSpending[12]
+  total += sim.gameData.maintenanceCostsSpending[13]
   return total
 }
 function getEducationMaintenanceCost() {
   var total = 0
-  total += sim.gameData.maintenanceCostsSpending[15]
+  total += sim.gameData.maintenanceCostsSpending[16]
   return total
 }
 function getParksMaintenanceCost() {
   var total = 0
-  total += sim.gameData.maintenanceCostsSpending[17]
+  total += sim.gameData.maintenanceCostsSpending[18]
   return total
 }
 function getTransportationMaintenanceCost() {
   var total = 0
-  total += sim.gameData.maintenanceCostsSpending[22]
+  total += sim.gameData.maintenanceCostsSpending[23]
   return total
 }
 const formatter = new Intl.NumberFormat('en-US', {
@@ -321,6 +418,254 @@ const formatter = new Intl.NumberFormat('en-US', {
   //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
   //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
 });
+////////////////////////////////////////////////////////////////////////////////////
+// TRAFFIC
+////////////////////////////////////////////////////////////////////////////////////
+function driveTimes() {
+
+  console.log('drive times')
+  gridTrans = null
+  gridTrans = create2DArrayValue(mapConfig.width, mapConfig.height)
+  failedTripCount = 0
+  successfullTripCount = 0
+  tripsAttempted = 0
+  var com = sim.gameData.zoneCounts[3] + sim.gameData.zoneCounts[4] + sim.gameData.zoneCounts[5]
+  var ind = sim.gameData.zoneCounts[6] + sim.gameData.zoneCounts[7] + sim.gameData.zoneCounts[8]
+  var total = com + ind
+  var comPer = (com / total) - .05
+  var indPer = (ind / total) - .05
+  console.log('com per:' + comPer + ' ind per: ' + indPer)
+  for (var y = 0; y < sim.gameData.mapConfig.height; y++) {
+    for (var x = 0; x < sim.gameData.mapConfig.width; x++) {
+      if (Phaser.Math.Between(1, 100) < 26) {
+        if (grid[y][x].zone == 0 || grid[y][x].zone == 1 || grid[y][x].zone == 2) {
+          var rand = Math.random()
+          var dest
+          if (rand < comPer) {
+            //dest = [3, 4, 5]
+            dest = 'com'
+          } else if (rand < total) {
+            //dest = [6, 7, 8]
+            dest = 'ind'
+          } else {
+            //dest = [0, 1, 2]
+            dest = 'res'
+          }
+          var tr = tryDriveTo({ x: x, y: y }, dest, getDensityMultiplier(grid[y][x].zone))
+          //console.log(tr)
+          if (tr) {
+            // grid[y][x].driveToWork = tr;
+          } else {
+            // grid[y][x].driveToWork = 0
+          }
+        } else if (grid[y][x].zone == 3 || grid[y][x].zone == 4 || grid[y][x].zone == 5) {
+          var rand = Math.random()
+          var dest
+          if (rand < .70) {
+            //dest = [0, 1, 2]
+            dest = 'res'
+          } else if (rand < .9) {
+            //dest = [6, 7, 8]
+            dest = 'ind'
+          } else {
+            // dest = [3, 4, 5]
+            dest = 'com'
+          }
+          var tr = tryDriveTo({ x: x, y: y }, dest, getDensityMultiplier(grid[y][x].zone))
+        } else if (grid[y][x].zone == 6 || grid[y][x].zone == 7 || grid[y][x].zone == 8) {
+          var rand = Math.random()
+          var dest
+          if (rand < .50) {
+            //dest = [0, 1, 2]
+            dest = 'res'
+          } else if (rand < .3) {
+            // dest = [6, 7, 8]
+            dest = 'ind'
+          } else {
+            //. dest = [3, 4, 5]
+            dest = 'com'
+          }
+          var tr = tryDriveTo({ x: x, y: y }, dest, getDensityMultiplier(grid[y][x].zone))
+        }
+      }
+    }
+  }
+  //console.log(gridTrans)
+  console.log('failed ' + failedTripCount)
+  console.log('success ' + successfullTripCount)
+  console.log('attempted ' + tripsAttempted)
+}
+function tryDriveTo(point, target, density) {
+  // console.log(point)
+  tripsAttempted++
+  var road = findRoad(point);
+  //	console.log(road)
+  if (!road) {
+    failedTripCount++
+    return -1;
+  }
+  if (target == 'res') {
+    var target1 = getRandomResTile()
+  } else if (target == 'com') {
+    var target1 = getRandomComTile()
+  } else if (target == 'ind') {
+    var target1 = getRandomIndTile()
+  }
+  var route = [];
+
+  //Maximum steps to try driving to destination
+  var maxDist = 200;
+  var lastPos = null;
+  var currentPos = road;
+  var targetFound = false;
+  var found = -1;
+  for (var distance = 0; distance < maxDist; distance++) {
+    var pos = findNextRoad({ x: currentPos.x, y: currentPos.y }, lastPos);
+
+    //No road found
+    if (pos == null) {
+      //Go back if possible
+      if (lastPos != null) {
+        pos = lastPos;
+        lastPos = currentPos;
+        currentPos = pos;
+        // distance += 3;
+      }
+      else {
+        failedTripCount++
+        return false;
+
+      }
+    }
+    //Found road so go there
+    else {
+      lastPos = currentPos;
+      currentPos = pos;
+      gridTrans[pos.y][pos.x] += density
+      //every other
+      //	if(distance & 1) {
+      route.push(pos);
+      //	}
+      found = findTargetTile(pos, target1)
+      if (found) {
+        targetFound = true;
+        break;
+      }
+    }
+  }
+
+  if (!targetFound) {
+    failedTripCount++
+    return false;
+  } else {
+    // console.log('route length ' + route.length + ' startX ' + point.x + ',startY ' + point.y)
+    //console.log(route)
+    successfullTripCount++
+    return route.length
+  }
+
+
+  //return true;
+}
+function findNextRoad(point, prevPos) {
+  //offsets for up, down, left, right for moving
+  var posX = [-1, 1, 0, 0];
+  var posY = [0, 0, -1, 1];
+
+  if (!prevPos) {
+    prevPos = { x: -1, y: -1 };
+  }
+
+  var directions = [];
+  for (var i = 0; i < 4; i++) {
+    var xx = point.x + posX[i];
+    var yy = point.y + posY[i];
+    //console.log(point)
+    //console.log('xx ' + xx + ', yy ' + yy)
+    if (!(xx == prevPos.x && yy == prevPos.y) && isRoad({ x: xx, y: yy })) {
+      directions.push({ x: xx, y: yy });
+    }
+  }
+
+  var options = directions.length;
+  if (options == 0) {
+    return null;
+  }
+
+  if (options == 1) {
+    return directions[0];
+  }
+
+  return directions[Phaser.Math.Between(0, directions.length - 1)];
+}
+function findTarget(pos, target) {
+  //offsets for up, down, left, right
+  var posX = [-1, 1, 0, 0];
+  var posY = [0, 0, -1, 1];
+  var tiles = getTilesInRange(pos, gameRules.roadRange);
+  for (var i = 0; i < tiles.length; i++) {
+    //var xx = pos.x + posX[i];
+    //var yy = pos.y + posY[i];
+    for (var j = 0; j < target.length; j++) {
+      if (validPoint(tiles[i].xy.x, tiles[i].xy.y) && tiles[i].zone == target[j]) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+function findTargetTile(pos, target) {
+  //offsets for up, down, left, right
+  var posX = [-1, 1, 0, 0];
+  var posY = [0, 0, -1, 1];
+  var tiles = getTilesInRange(pos, gameRules.roadRange);
+  for (var i = 0; i < tiles.length; i++) {
+    //var xx = pos.x + posX[i];
+    //var yy = pos.y + posY[i];
+
+    if (validPoint(tiles[i].xy.x, tiles[i].xy.y) && tiles[i].xy.x == target.x && tiles[i].xy.y == target.y) {
+      return true;
+    }
+
+  }
+
+  return false;
+}
+function roadInRange(point) {
+  var tiles = getTilesInRange(point, gameRules.roadRange)
+  for (var i = 0; i < tiles.length; i++) {
+    if (tiles[i].type == 'road' || tiles[i].type == 'rail') {
+      return true
+    }
+  }
+  return false
+}
+function findRoad(point) {
+  var tiles = getTilesInRange(point, gameRules.roadRange)
+  for (var i = 0; i < tiles.length; i++) {
+    if (tiles[i].type == 'road' || tiles[i].type == 'rail') {
+      return tiles[i].xy
+    }
+  }
+  return false
+}
+function isRoad(point) {
+  if (grid[point.y][point.x].type == 'road' || grid[point.y][point.x].type == 'rail') {
+    return true
+  }
+  return false
+}
+function getDensityMultiplier(zone) {
+  if (zone == 0 || zone == 3 || zone == 6) {
+    return 1
+  } else if (zone == 1 || zone == 4 || zone == 7) {
+    return 2
+  } else if (zone == 2 || zone == 5 || zone == 8) {
+    return 3
+  }
+}
+
 /////////////////////////////////////////////////////////////////////////////////
 // HELPER/UTILITY
 ///////////////////////////////////////////////////////////////////////////////
@@ -337,7 +682,45 @@ function getTilesInRange(point, range) {
   return tilesInRange
 }
 
+function getRandomIndTile() {
 
+  var found = false
+  while (!found) {
+    var ranX = Phaser.Math.Between(0, sim.gameData.mapConfig.width - 1)
+    var ranY = Phaser.Math.Between(0, sim.gameData.mapConfig.height - 1)
+    if (grid[ranY][ranX].zone == 6 || grid[ranY][ranX].zone == 7 || grid[ranY][ranX].zone == 7) {
+      found = true
+      return { x: ranX, y: ranY }
+    }
+  }
+}
+function getRandomResTile() {
+
+  var found = false
+  while (!found) {
+    var ranX = Phaser.Math.Between(0, sim.gameData.mapConfig.width - 1)
+    var ranY = Phaser.Math.Between(0, sim.gameData.mapConfig.height - 1)
+    if (grid[ranY][ranX].zone == 0 || grid[ranY][ranX].zone == 1 || grid[ranY][ranX].zone == 2) {
+      found = true
+      return { x: ranX, y: ranY }
+    }
+  }
+}
+function getRandomComTile() {
+
+  var found = false
+  while (!found) {
+    var ranX = Phaser.Math.Between(0, sim.gameData.mapConfig.width - 1)
+    var ranY = Phaser.Math.Between(0, sim.gameData.mapConfig.height - 1)
+    if (grid[ranY][ranX].zone == 3 || grid[ranY][ranX].zone == 4 || grid[ranY][ranX].zone == 5) {
+      found = true
+      return { x: ranX, y: ranY }
+    }
+  }
+}
+function getDistanceAlt(point1, point2) {
+  return Math.abs(point2.x - point1.x) + Math.abs(point2.y - point1.y)
+}
 function getDistance(point1, point2) {
   var a = point1.x - point2.x;
   var b = point1.y - point2.y;
@@ -346,7 +729,7 @@ function getDistance(point1, point2) {
   return c
 }
 function validPoint(x, y) {
-  return x >= 0 && x < mapConfig.width && y >= 0 && y < mapConfig.height
+  return x >= 0 && x < sim.gameData.mapConfig.width && y >= 0 && y < sim.gameData.mapConfig.height
 }
 function getPoint(x, y) {
   return { x: x, y: y }
@@ -360,6 +743,7 @@ function clamp(value, min, max) {
   return value;
 };
 function perc2color(perc) {
+
   var r, g, b = 0;
   if (perc < 50) {
     r = 255;
@@ -370,8 +754,17 @@ function perc2color(perc) {
     r = Math.round(510 - 5.10 * perc);
   }
   var h = r * 0x10000 + g * 0x100 + b * 0x1;
+  //return ('000000' + h.toString(16)).slice(-6)
+  return '0x' + ('000000' + h.toString(16)).slice(-6);
+}
+function create2DArrayValue(numRows, numColumns) {
+  let array = new Array(numRows);
 
-  return '#' + ('000000' + h.toString(16)).slice(-6);
+  for (let i = 0; i < numColumns; i++) {
+    array[i] = new Array(numColumns).fill(0);
+  }
+
+  return array;
 }
 /*
 let mapConfig = {
@@ -398,19 +791,20 @@ let mapConfig = {
   5 'Dense Commercial', 
   6 'Clean Industry', 
   7 'Dirty Industry', 
-  8 'Power', 
-  9 'Water', 
-  10 'Waste', 
-  11 'Communication', 
-  12 'Health', 
-  13 'Police', 
-  14 'Fire', 
-  15 'Education', 
-  16 'Culture', 
-  17 'Parks', 
-  18 'Recreation', 
-  19 'Government', 
-  20'Special', 
-  21 'Military', 
-  22 'Transportation'
+  8 'Dirty Industry', 
+  9 'Power', 
+  10 'Water', 
+  11 'Waste', 
+  12 'Communication', 
+  13 'Health', 
+  14 'Police', 
+  15 'Fire', 
+  16 'Education', 
+  17 'Culture', 
+  18 'Parks', 
+  19 'Recreation', 
+  20 'Government', 
+  21'Special', 
+  22 'Military', 
+  23 'Transportation'
   ] */

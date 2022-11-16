@@ -27,6 +27,7 @@ class Tile {
     this.zone = -1
     this.localLandValue = 0
     this.pollution = [0, 0, 0]
+    this.crime = 0
     this.xy = {
       x: x,
       y: y

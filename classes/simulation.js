@@ -8,9 +8,10 @@ class Sim {
   }
   endDay() {
     console.log('end day')
-
+    getAverageLV()
     this.updateRCI()
     this.updateFunds()
+    driveTimes()
 
   }
   updateFunds() {
@@ -19,11 +20,11 @@ class Sim {
     var cI = getComTaxIncome()
     var iI = getIndTaxIncome()
     var tI = rI + cI + iI
-    console.log('Total Income: ' + tI)
+    //console.log('Total Income: ' + tI)
     var tM = getTotalMaintenanceCost()
-    console.log('Total Cost: ' + tM)
+    //  console.log('Total Cost: ' + tM)
     var balance = tI - tM
-    console.log('Balance: ' + balance)
+    // console.log('Balance: ' + balance)
     this.gameData.funds += balance
   }
   updateRCI() {
@@ -38,7 +39,7 @@ class Sim {
 
 
     // this.resZoneText = this.add.bitmapText(25, 1010, 'topaz', 'LR: ' + this.gameData.zoneCounts[0] + ' MR: ' + this.gameData.zoneCounts[1] + ' DR: ' + this.gameData.zoneCounts[2] + ' Capacity: ' + totalRCapacity, 40).setOrigin(0, .5).setTint(0x000000).setInteractive();
-    console.log('Res capacity: ' + totalRCapacity)
+    //console.log('Res capacity: ' + totalRCapacity)
     var capacityRatio = this.gameData.population / totalRCapacity
     //commercial capacity
 
@@ -66,22 +67,22 @@ class Sim {
     }
     var laborBase = workers / prevLabor;
     laborBase = clamp(laborBase, 0, 1.3);
-    console.log('labor base: ' + laborBase)
+    //  console.log('labor base: ' + laborBase)
 
     var internalMarket = (totalRCapacity + totalCCapacity + totalICapacity) / 3.7;
-    console.log('internal market: ' + internalMarket)
+    //  console.log('internal market: ' + internalMarket)
 
 
     //how much commercial will be needed in the future
     var projectedComPop = internalMarket * laborBase;
-    console.log('proj com: ' + projectedComPop)
+    //  console.log('proj com: ' + projectedComPop)
 
     //1.2 for easy in original		
     var projectedIndPop = totalICapacity * laborBase * 1.2;
 
     //there's always projectedIndPopMin amount of industrial demand
     projectedIndPop = projectedIndPop > 5 ? projectedIndPop : 5;
-    console.log('proj ind: ' + projectedIndPop)
+    // console.log('proj ind: ' + projectedIndPop)
 
 
 
@@ -127,22 +128,22 @@ class Sim {
     resRatio = resRatio * capacityRatio
 
 
-    console.log('res ratio: ' + resRatio)
-    console.log('com ratio: ' + comRatio)
-    console.log('Ind ratio: ' + indRatio)
+    //console.log('res ratio: ' + resRatio)
+    //console.log('com ratio: ' + comRatio)
+    // console.log('Ind ratio: ' + indRatio)
 
 
-    console.log(clamp(0 + Math.round(resRatio), -2000, 2000))
+    //console.log(clamp(0 + Math.round(resRatio), -2000, 2000))
     this.gameData.rci[0] = clamp(this.gameData.rci[0] + Math.round(resRatio), -2000, 2000)
-    console.log('Res RCI' + this.gameData.rci[0])
+    //console.log('Res RCI' + this.gameData.rci[0])
     this.gameData.rci[1] = clamp(this.gameData.rci[1] + Math.round(comRatio), -1500, 1500)
-    console.log('Com RCI' + this.gameData.rci[1])
+    //console.log('Com RCI' + this.gameData.rci[1])
     this.gameData.rci[2] = clamp(this.gameData.rci[2] + Math.round(indRatio), -1500, 1500)
-    console.log('Ind RCI' + this.gameData.rci[2])
+    //console.log('Ind RCI' + this.gameData.rci[2])
 
     //population adjustment
     // if (capacityRatio < 1) {
-    console.log('new proj pop: ' + newPop)
+    //console.log('new proj pop: ' + newPop)
 
     var availableHousing = totalRCapacity - this.gameData.population
     var r = clamp(newPop, -20, availableHousing)
@@ -150,20 +151,21 @@ class Sim {
     //}
   }
   getTotalResCapacity() {
-    var lrCapacity = this.gameData.zoneCounts[0] * 8 //8 residents per tile
-    var mrCapacity = this.gameData.zoneCounts[1] * 40 //40 residents per tile
-    var drCapacity = this.gameData.zoneCounts[2] * 120 //120 residents per tile
+    var lrCapacity = this.gameData.zoneCounts[0] * 24 //8 residents per tile
+    var mrCapacity = this.gameData.zoneCounts[1] * 74 //40 residents per tile
+    var drCapacity = this.gameData.zoneCounts[2] * 158 //120 residents per tile
     return lrCapacity + mrCapacity + drCapacity
   }
   getTotalComCapacity() {
-    var lcCapacity = this.gameData.zoneCounts[3] * 6 //6jobs per tile
-    var mcCapacity = this.gameData.zoneCounts[4] * 35 //35 jobs per tile
-    var dcCapacity = this.gameData.zoneCounts[5] * 100 //100 jobs per tile
+    var lcCapacity = this.gameData.zoneCounts[3] * 17 //6jobs per tile
+    var mcCapacity = this.gameData.zoneCounts[4] * 59 //35 jobs per tile
+    var dcCapacity = this.gameData.zoneCounts[5] * 123 //100 jobs per tile
     return lcCapacity + mcCapacity + dcCapacity
   }
   getTotalIndCapacity() {
-    var liCapacity = this.gameData.zoneCounts[6] * 6 //six jobs per tile
-    var diCapacity = this.gameData.zoneCounts[7] * 75 //75 jobs per tile
-    return liCapacity + diCapacity
+    var liCapacity = this.gameData.zoneCounts[6] * 17 //six jobs per tile
+    var miCapacity = this.gameData.zoneCounts[7] * 61 //75 jobs per tile
+    var hiCapacity = this.gameData.zoneCounts[8] * 127 //75 jobs per tile
+    return liCapacity + miCapacity + hiCapacity
   }
 }

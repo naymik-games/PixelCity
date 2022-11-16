@@ -74,20 +74,27 @@ let gameStats = {
   year: 1900,
   funds: 100000,
   population: 100,
+  maxPlotSize: 1,
   globalLV: [0, 0, 0, 0],
   specialJobs: 0,
   powerPlants: [],
-  zoneCounts: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  averageLV: 0,
+  zoneCounts: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   rci: [0, 0, 0],
   taxRates: [7, 7, 7],
-  maintenanceCosts: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  maintenanceCostsSpending: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  maintenanceCostsPer: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100]
+  maintenanceCosts: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  maintenanceCostsSpending: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  maintenanceCostsPer: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100]
 }
 
 let gameRules = {
   roadRange: 4,
-  dayLength: 24000
+  dayLength: 24000,
+  apNormal: 1500,
+  wpNormal: 1000,
+  lvLow: 200,
+  lvMed: 350,
+
 }
 
 let zoneSizeTable = [0, 1, 4, 9, 16, 25, 36, 49, 64]
@@ -109,11 +116,15 @@ const GM_RAIL = 7
 
 let gameModeNames = ['Road', 'Pan', 'Place', 'Erase', 'Zone', 'Info', 'Rail']
 let gameMode = GM_INFO;
-let zoneNames = ['Light Residential', 'Medium Residential', 'Dense Residential', 'Light Commercial', 'Medium Commercial', 'Dense Commercial', 'Clean Industry', 'Dirty Industry', 'Power', 'Water', 'Waste', 'Communication', 'Health', 'Police', 'Fire', 'Education', 'Culture', 'Parks', 'Recreation', 'Government', 'Special', 'Military', 'Transportation']
+let zoneNames = ['Light Residential', 'Medium Residential', 'Dense Residential', 'Light Commercial', 'Medium Commercial', 'Dense Commercial', 'Light Industry', 'Medium Industry', 'Dense Industry', 'Power', 'Water', 'Waste', 'Communication', 'Health', 'Police', 'Fire', 'Education', 'Culture', 'Parks', 'Recreation', 'Government', 'Special', 'Military', 'Transportation']
 
 let sim;
 let grid
 let gridImage
+let gridTrans
+let failedTripCount = 0
+let successfullTripCount = 0
+let tripsAttempted = 0
 loadFont("PixelFont", "assets/fonts/QuinqueFive.ttf");
 function loadFont(name, url) {
   var newFont = new FontFace(name, `url(${url})`);
@@ -133,23 +144,24 @@ function loadFont(name, url) {
   3 'Light Commercial', 
   4 'Medium Commercial', 
   5 'Dense Commercial', 
-  6 'Clean Industry', 
-  7 'Dirty Industry', 
-  8 'Power', 
-  9 'Water', 
-  10 'Waste', 
-  11 'Communication', 
-  12 'Health', 
-  13 'Police', 
-  14 'Fire', 
-  15 'Education', 
-  16 'Culture', 
-  17 'Parks', 
-  18 'Recreation', 
-  19 'Government', 
-  20'Special', 
-  21 'Military', 
-  22 'Transportation'
+  6 'Low Industry', 
+  7 'Medium Industry', 
+  8 'Dense Industry', 
+  9 'Power', 
+  10 'Water', 
+  11 'Waste', 
+  12 'Communication', 
+  13 'Health', 
+  14 'Police', 
+  15 'Fire', 
+  16 'Education', 
+  17 'Culture', 
+  18 'Parks', 
+  19 'Recreation', 
+  20 'Government', 
+  21'Special', 
+  22 'Military', 
+  23 'Transportation'
   ] 
   Power, water, health, police, fire, Education, parks,gove, trans
   

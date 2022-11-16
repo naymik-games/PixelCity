@@ -6,7 +6,7 @@ class UI extends Phaser.Scene {
   }
   preload() {
 
-
+    this.load.plugin('rexcircularprogressplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexcircularprogressplugin.min.js', true);
 
   }
   create() {
@@ -16,21 +16,30 @@ class UI extends Phaser.Scene {
     this.Main = this.scene.get('playGame');
 
     //this.Main.drag = true
-    this.headerbg = this.add.image(0, 0, 'blank').setOrigin(0, 0).setTint(0x0060BF)
-    this.headerbg.displayWidth = 50
-    this.headerbg.displayHeight = 230
-    this.progress = this.add.image(5, 70, 'blank').setOrigin(0).setTint(0xe08000)
-    this.progress.displayWidth = 60
-    this.progress.displayHeight = 0
+    this.headerGroup = this.add.container()
+
+
+
 
     this.header = this.add.image(0, 0, 'main_ui').setOrigin(0, 0)
+    this.headerGroup.add(this.header)
     // this.header.displayWidth = 150;
     ///this.header.displayHeight = 200;
 
 
+    this.circularProgress = this.add.rexCircularProgress({
+      x: 100, y: 48 + 197 / 2,
+      radius: 70,
+      thickness: 0.2,
+      trackColor: 0x00203F,
+      barColor: 0xDF8000,
+      centerColor: 0xcccccc,
+      // anticlockwise: true,
 
-
-    this.playpause = this.add.image(110, 220, 'playpause', 0).setScale(4).setOrigin(.5, 1).setInteractive()
+      value: 0
+    })
+    //this.headerGroup.add(this.circularProgress)
+    this.playpause = this.add.image(100, 45 + 197 / 2, 'playpause', 0).setScale(4).setOrigin(.5).setInteractive()
     this.playpause.on('pointerdown', function () {
       if (this.day.paused) {
         this.day.paused = false
@@ -40,33 +49,40 @@ class UI extends Phaser.Scene {
         this.playpause.setFrame(1)
       }
     }, this)
-
+    this.headerGroup.add(this.playpause)
     /*  this.rcibg = this.add.image(150, 150, 'blank').setOrigin(0, .5).setTint(0xfafafa).setAlpha(.7)
      this.rcibg.displayWidth = 150
      this.rcibg.displayHeight = 200 */
 
-    this.res = this.add.image(200, 150, 'blank').setOrigin(.5, 1).setTint(0x529345)
+    this.res = this.add.image(225, 150, 'blank').setOrigin(.5, 1).setTint(0x529345)
     this.res.displayWidth = 25
     this.res.displayHeight = -75
+    this.headerGroup.add(this.res)
 
-    this.com = this.add.image(250, 150, 'blank').setOrigin(.5, 1).setTint(0x45a0c6)
+    this.com = this.add.image(275, 150, 'blank').setOrigin(.5, 1).setTint(0x45a0c6)
     this.com.displayWidth = 25
     this.com.displayHeight = -75
+    this.headerGroup.add(this.com)
 
-    this.ind = this.add.image(300, 150, 'blank').setOrigin(.5, 1).setTint(0xc6c245)
+    this.ind = this.add.image(325, 150, 'blank').setOrigin(.5, 1).setTint(0xc6c245)
     this.ind.displayWidth = 25
     this.ind.displayHeight = -75
+    this.headerGroup.add(this.ind)
 
-    this.rci = this.add.image(250, 150, 'blank').setOrigin(.5, 1).setTint(0x000000)
+    this.rci = this.add.image(275, 150, 'blank').setOrigin(.5, 1).setTint(0x000000)
     this.rci.displayWidth = 150
     this.rci.displayHeight = 5
+    this.headerGroup.add(this.rci)
 
-
+    this.month = ['--', 'Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
     //sim.gameData.day
-    this.scoreText = this.add.bitmapText(110, 100, 'topaz', sim.gameData.day, 72).setOrigin(.5).setTint(0xCAD4D8).setAlpha(1);
-    this.fundsText = this.add.bitmapText(370, 85, 'topaz', '$' + sim.gameData.funds, 42).setOrigin(0, .5).setTint(0xCAD4D8).setAlpha(1);
-    this.popText = this.add.bitmapText(370, 145, 'topaz', 'P: ' + sim.gameData.population, 42).setOrigin(0, .5).setTint(0xCAD4D8).setAlpha(1);
-    this.yearText = this.add.bitmapText(370, 205, 'topaz', 'Y: ' + sim.gameData.year, 42).setOrigin(0, .5).setTint(0xCAD4D8).setAlpha(1);
+    // this.scoreText = this.add.bitmapText(100, 40 + 197 / 2, 'topaz', sim.gameData.day, 65).setOrigin(.5).setTint(0xCAD4D8).setAlpha(1);
+    this.fundsText = this.add.bitmapText(420, 85, 'topaz', formatter.format(sim.gameData.funds), 42).setOrigin(0, .5).setTint(0xCAD4D8).setAlpha(1);
+    this.headerGroup.add(this.fundsText)
+    this.popText = this.add.bitmapText(420, 145, 'topaz', 'P: ' + sim.gameData.population, 42).setOrigin(0, .5).setTint(0xCAD4D8).setAlpha(1);
+    this.headerGroup.add(this.popText)
+    this.yearText = this.add.bitmapText(420, 205, 'topaz', this.month[sim.gameData.day] + ' ' + sim.gameData.year, 42).setOrigin(0, .5).setTint(0xCAD4D8).setAlpha(1);
+    this.headerGroup.add(this.yearText)
 
     this.modeLabelText = this.add.bitmapText(600, 25, 'topaz', 'Mode:', 50).setOrigin(0, .5).setTint(0xffffff).setInteractive();
     this.modeText = this.add.bitmapText(750, 25, 'topaz', '', 50).setOrigin(0, .5).setTint(0xffffff);
@@ -84,7 +100,7 @@ class UI extends Phaser.Scene {
 
     }, this)
 
-
+    this.advisorGroup = this.add.container()
     var peopleIcon = this.add.image(850, 300, 'icons', 38).setOrigin(1, .5).setScale(2).setInteractive()
     peopleIcon.on('pointerdown', function () {
       this.scene.launch('People')
@@ -92,7 +108,7 @@ class UI extends Phaser.Scene {
       this.scene.pause('playGame')
       this.scene.pause('Menu')
     }, this)
-
+    this.advisorGroup.add(peopleIcon)
 
     var rciIcon = this.add.image(850, 400, 'icons', 40).setOrigin(1, .5).setScale(2).setInteractive()
     rciIcon.on('pointerdown', function () {
@@ -101,11 +117,51 @@ class UI extends Phaser.Scene {
       this.scene.pause('playGame')
       this.scene.pause('Menu')
     }, this)
+    this.advisorGroup.add(rciIcon)
+
+    var powerIcon = this.add.image(850, 500, 'icons', 3).setOrigin(1, .5).setScale(2).setInteractive()
+    powerIcon.on('pointerdown', function () {
+      this.scene.launch('Power')
+      this.scene.pause()
+      this.scene.pause('playGame')
+      this.scene.pause('Menu')
+    }, this)
+    this.advisorGroup.add(powerIcon)
+
+    var financeIcon = this.add.image(850, 600, 'icons', 30).setOrigin(1, .5).setScale(2).setInteractive()
+    financeIcon.on('pointerdown', function () {
+      this.scene.launch('Finance')
+      this.scene.pause()
+      this.scene.pause('playGame')
+      this.scene.pause('Menu')
+    }, this)
+    this.advisorGroup.add(financeIcon)
+
+
+    this.dataGroup = this.add.container()
+    var traflON = false
+    var trafIcon = this.add.image(50, 700, 'icons', 44).setOrigin(0, .5).setScale(2).setInteractive()
+    trafIcon.on('pointerdown', function () {
+      if (traflON) {
+        this.Main.graphicsData.clear()
+        traflON = false
+      } else {
+        //updateTraffic()
+        this.Main.drawTrafficGrid()
+        traflON = true
+      }
+
+      /*  this.scene.launch('Rci')
+       this.scene.pause()
+       this.scene.pause('playGame')
+       this.scene.pause('Menu') */
+    }, this)
+    this.dataGroup.add(trafIcon)
     var polON = false
-    var polIcon = this.add.image(850, 500, 'icons', 42).setOrigin(1, .5).setScale(2).setInteractive()
+    var polIcon = this.add.image(50, 800, 'icons', 42).setOrigin(0, .5).setScale(2).setInteractive()
     polIcon.on('pointerdown', function () {
       if (polON) {
-        this.Main.graphics.clear()
+        this.Main.graphicsData.clear()
         polON = false
       } else {
         updatePollution()
@@ -118,23 +174,87 @@ class UI extends Phaser.Scene {
        this.scene.pause('playGame')
        this.scene.pause('Menu') */
     }, this)
-    var powerIcon = this.add.image(850, 600, 'icons', 3).setOrigin(1, .5).setScale(2).setInteractive()
-    powerIcon.on('pointerdown', function () {
+    this.dataGroup.add(polIcon)
+    var lvON = false
+    var lvIcon = this.add.image(50, 900, 'icons', 52).setOrigin(0, .5).setScale(2).setInteractive()
+    lvIcon.on('pointerdown', function () {
+      if (lvON) {
+        this.Main.graphicsData.clear()
+        lvON = false
+      } else {
+
+        this.Main.drawLVGrid()
+        lvON = true
+      }
+
+      /*  this.scene.launch('Rci')
+       this.scene.pause()
+       this.scene.pause('playGame')
+       this.scene.pause('Menu') */
+    }, this)
+    this.dataGroup.add(lvIcon)
 
 
-      this.scene.launch('Power')
-      this.scene.pause()
-      this.scene.pause('playGame')
-      this.scene.pause('Menu')
+    this.dataGroup.setPosition(-150, 0)
+    var dataOn = false
+    var dataIcon = this.add.image(25, 275, 'icons', 51).setOrigin(0).setScale(3).setInteractive()
+    dataIcon.on('pointerdown', function () {
+      if (dataOn) {
+        //this.Main.graphics.clear()
+        //this.dataGroup.setPosition(-150, 0)
+        //this.headerGroup.setPosition(0, 0)
+        this.Main.graphicsData.clear()
+        var tween = this.tweens.add({
+          targets: this.advisorGroup,
+          x: 0,
+          duration: 300
+        })
+        var tween = this.tweens.add({
+          targets: this.headerGroup,
+          y: 0,
+          duration: 300
+        })
+        var tween = this.tweens.add({
+          targets: this.dataGroup,
+          x: -150,
+          duration: 300
+        })
+        dataOn = false
+      } else {
+        //updateTraffic()
+        //this.Main.drawTrafficGrid()
+        //this.dataGroup.setPosition(0, 0)
+        //this.headerGroup.setPosition(0, -500)
+        var tween = this.tweens.add({
+          targets: this.advisorGroup,
+          x: 200,
+          duration: 300
+        })
+        var tween = this.tweens.add({
+          targets: this.headerGroup,
+          y: -500,
+          duration: 300
+        })
+        var tween = this.tweens.add({
+          targets: this.dataGroup,
+          x: 0,
+          duration: 300
+        })
+        dataOn = true
+      }
+
+      /*  this.scene.launch('Rci')
+       this.scene.pause()
+       this.scene.pause('playGame')
+       this.scene.pause('Menu') */
     }, this)
 
-    var financeIcon = this.add.image(850, 700, 'icons', 30).setOrigin(1, .5).setScale(2).setInteractive()
-    financeIcon.on('pointerdown', function () {
-      this.scene.launch('Finance')
-      this.scene.pause()
-      this.scene.pause('playGame')
-      this.scene.pause('Menu')
-    }, this)
+
+
+
+
+
+
 
 
     var homeIcon = this.add.image(825, 1525, 'home').setOrigin(.5).setScale(3).setInteractive();
@@ -177,11 +297,12 @@ class UI extends Phaser.Scene {
         this.popText.setText('P: ' + sim.gameData.population)
         if (sim.gameData.day == 13) {
           sim.gameData.year++
-          this.yearText.setText('Y: ' + sim.gameData.year)
+
           sim.gameData.day = 1
         }
-        this.scoreText.setText(sim.gameData.day);
-        this.fundsText.setText(sim.gameData.funds)
+        this.yearText.setText(this.month[sim.gameData.day] + ' ' + sim.gameData.year)
+        // this.scoreText.setText(sim.gameData.day);
+        this.fundsText.setText(formatter.format(sim.gameData.funds))
         //this.saveStats()
         this.Main.saveMap()
       },
@@ -205,7 +326,8 @@ class UI extends Phaser.Scene {
   }
 
   update() {
-    this.progress.displayHeight = 160 * (this.day.getElapsed() / gameRules.dayLength)
+    // this.progress.displayHeight = 160 * (this.day.getElapsed() / gameRules.dayLength)
+    this.circularProgress.setValue(this.day.getElapsed() / gameRules.dayLength)
     this.modeText.setText(gameModeNames[gameMode])
 
 

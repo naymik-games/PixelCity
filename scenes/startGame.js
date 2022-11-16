@@ -245,7 +245,7 @@ class startGame extends Phaser.Scene {
     loadGameButton.on('pointerdown', this.clickHandler2, this);
 
     var day = this.add.bitmapText(50, 1450, 'topaz', 'Day: ' + d, 50).setOrigin(0, .5).setTint(0xF0B060);
-    var funds = this.add.bitmapText(450, 1450, 'topaz', '$' + f, 50).setOrigin(.5, .5).setTint(0xF0B060);
+    var funds = this.add.bitmapText(450, 1450, 'topaz', formatter.format(f), 50).setOrigin(.5, .5).setTint(0xF0B060);
     var pop = this.add.bitmapText(850, 1450, 'topaz', 'Pop: ' + p, 50).setOrigin(1, .5).setTint(0xF0B060);
 
 

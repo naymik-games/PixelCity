@@ -95,16 +95,16 @@ class Info extends Phaser.Scene {
 
     this.airPollutionText = this.add.bitmapText(450, 1175, 'topaz', 'Air P: ' + tile.pollution[0], 40).setOrigin(0, .5).setTint(0xA6CAF0)
     this.airPollutionText = this.add.bitmapText(450, 1275, 'topaz', 'Water P: ' + tile.pollution[1], 40).setOrigin(0, .5).setTint(0xA6CAF0)
-    var landvalue = distance + sim.gameData.globalLV[0]
-
-    if (dwater <= 5.1) {
-      var waterBonus = landvalue * (.5 / dwater)
+    this.crimeText = this.add.bitmapText(450, 1375, 'topaz', 'Crime: ' + 0, 40).setOrigin(0, .5).setTint(0xA6CAF0)
+    var lv = getLandValue(this.mapXY)
+    if (lv.landvalue < gameRules.lvLow) {
+      var t = 'low'
+    } else if (lv.landvalue < gameRules.lvMed) {
+      var t = 'med'
     } else {
-      var waterBonus = 0
+      var t = 'high'
     }
-    console.log('Global LV: ' + landvalue + ' LV Water Bon: ' + Math.round(waterBonus) + ' local LV: ' + tile.localLandValue)
-    var finalLV = Math.round(landvalue + waterBonus + tile.localLandValue)
-    this.lvText = this.add.bitmapText(450, 1375, 'topaz', 'LV: ' + finalLV, 40).setOrigin(0, .5).setTint(0x000000)
+    this.lvText = this.add.bitmapText(450, 1475, 'topaz', 'LV: ' + lv.landvalue + ' (' + t + ')', 40).setOrigin(0, .5).setTint(0x000000)
     //console.log(roadInRange(tile.xy))
     /* if (tile.hasBuilding) {
       console.log(tile.building.frame.name)

@@ -71,7 +71,7 @@ class Finance extends Phaser.Scene {
     var rIText = this.add.bitmapText(625, 525, 'topaz', getResTaxIncome(), 35).setOrigin(0, .5).setTint(0xC0D7E2)
     this.incomeGroup.add(rIText)
     var minz = 0,
-      maxz = 12,
+      maxz = 20,
       rangez = maxz - minz,
       gap = 1;
     var rtSlider = this.rexUI.add.slider({
@@ -180,7 +180,7 @@ class Finance extends Phaser.Scene {
     //var powerSLabel = this.add.bitmapText(25, 525, 'topaz', 'P: ', 35).setOrigin(0, .5).setTint(0xC0D7E2)
     var powerIcon = this.add.image(12, 525, 'icons', 3).setOrigin(0, .5).setScale(2).setInteractive().setAlpha(1);
     this.expendituresGroup.add(powerIcon)
-    var powerSText = this.add.bitmapText(75, 525, 'topaz', sim.gameData.maintenanceCostsPer[8], 35).setOrigin(0, .5).setTint(0xC0D7E2)
+    var powerSText = this.add.bitmapText(75, 525, 'topaz', sim.gameData.maintenanceCostsPer[9], 35).setOrigin(0, .5).setTint(0xC0D7E2)
     this.expendituresGroup.add(powerSText)
 
     var powerSDollarText = this.add.bitmapText(625, 525, 'topaz', formatter.format(getPowerMaintenanceCost()), 35).setOrigin(0, .5).setTint(0xC0D7E2)
@@ -198,19 +198,19 @@ class Finance extends Phaser.Scene {
 
       track: this.add.image(0, 0, 'slider_track'),
       thumb: this.add.image(0, 0, 'slider_thumb'),
-      value: (sim.gameData.maintenanceCostsPer[8] - min) / range,
+      value: (sim.gameData.maintenanceCostsPer[9] - min) / range,
       gap: gap / range,
       valuechangeCallback: function (value) {
         value = (value * range) + min;
         powerSText.setText(Math.round(value) + '%')
         if (value <= 100) {
-          var newspend = (sim.gameData.maintenanceCosts[8] * (value / 100))
+          var newspend = (sim.gameData.maintenanceCosts[9] * (value / 100))
         } else {
-          var newspend = sim.gameData.maintenanceCosts[8] + (sim.gameData.maintenanceCosts[8] * ((value - 100) / 100))
+          var newspend = sim.gameData.maintenanceCosts[9] + (sim.gameData.maintenanceCosts[9] * ((value - 100) / 100))
         }
 
-        sim.gameData.maintenanceCostsPer[8] = Math.round(value)
-        sim.gameData.maintenanceCostsSpending[8] = Math.round(newspend)
+        sim.gameData.maintenanceCostsPer[9] = Math.round(value)
+        sim.gameData.maintenanceCostsSpending[9] = Math.round(newspend)
 
         powerSDollarText.setText(formatter.format(getPowerMaintenanceCost()))
 
@@ -228,7 +228,7 @@ class Finance extends Phaser.Scene {
     //var policeSLabel = this.add.bitmapText(25, 600, 'topaz', 'P: ', 35).setOrigin(0, .5).setTint(0xC0D7E2)
     var policeIcon = this.add.image(12, 600, 'icons', 48).setOrigin(0, .5).setScale(2).setInteractive().setAlpha(1);
     this.expendituresGroup.add(policeIcon)
-    var policeSText = this.add.bitmapText(75, 600, 'topaz', sim.gameData.maintenanceCostsPer[13], 35).setOrigin(0, .5).setTint(0xC0D7E2)
+    var policeSText = this.add.bitmapText(75, 600, 'topaz', sim.gameData.maintenanceCostsPer[14], 35).setOrigin(0, .5).setTint(0xC0D7E2)
     this.expendituresGroup.add(policeSText)
 
     var policeSDollarText = this.add.bitmapText(625, 600, 'topaz', formatter.format(getPoliceMaintenanceCost()), 35).setOrigin(0, .5).setTint(0xC0D7E2)
@@ -252,13 +252,13 @@ class Finance extends Phaser.Scene {
         value = (value * range) + min;
         policeSText.setText(Math.round(value) + '%')
         if (value <= 100) {
-          var newspend = (sim.gameData.maintenanceCosts[13] * (value / 100))
+          var newspend = (sim.gameData.maintenanceCosts[14] * (value / 100))
         } else {
-          var newspend = sim.gameData.maintenanceCosts[13] + (sim.gameData.maintenanceCosts[13] * ((value - 100) / 100))
+          var newspend = sim.gameData.maintenanceCosts[14] + (sim.gameData.maintenanceCosts[14] * ((value - 100) / 100))
         }
 
-        sim.gameData.maintenanceCostsPer[13] = Math.round(value)
-        sim.gameData.maintenanceCostsSpending[13] = Math.round(newspend)
+        sim.gameData.maintenanceCostsPer[14] = Math.round(value)
+        sim.gameData.maintenanceCostsSpending[14] = Math.round(newspend)
 
         policeSDollarText.setText(formatter.format(getPoliceMaintenanceCost()))
 
@@ -276,7 +276,7 @@ class Finance extends Phaser.Scene {
     //var fireSLabel = this.add.bitmapText(25, 675, 'topaz', 'F: ', 35).setOrigin(0, .5).setTint(0xC0D7E2)
     var fireIcon = this.add.image(12, 675, 'icons', 49).setOrigin(0, .5).setScale(2).setInteractive().setAlpha(1);
     this.expendituresGroup.add(fireIcon)
-    var firePerSText = this.add.bitmapText(75, 675, 'topaz', sim.gameData.maintenanceCostsPer[14], 35).setOrigin(0, .5).setTint(0xC0D7E2)
+    var firePerSText = this.add.bitmapText(75, 675, 'topaz', sim.gameData.maintenanceCostsPer[15], 35).setOrigin(0, .5).setTint(0xC0D7E2)
     this.expendituresGroup.add(firePerSText)
 
     var fireSDollarText = this.add.bitmapText(625, 675, 'topaz', formatter.format(getFireMaintenanceCost()), 35).setOrigin(0, .5).setTint(0xC0D7E2)
@@ -300,13 +300,13 @@ class Finance extends Phaser.Scene {
         value = (value * range) + min;
         firePerSText.setText(Math.round(value) + '%')
         if (value <= 100) {
-          var newspend = (sim.gameData.maintenanceCosts[14] * (value / 100))
+          var newspend = (sim.gameData.maintenanceCosts[15] * (value / 100))
         } else {
-          var newspend = sim.gameData.maintenanceCosts[14] + (sim.gameData.maintenanceCosts[14] * ((value - 100) / 100))
+          var newspend = sim.gameData.maintenanceCosts[15] + (sim.gameData.maintenanceCosts[15] * ((value - 100) / 100))
         }
 
-        sim.gameData.maintenanceCostsPer[14] = Math.round(value)
-        sim.gameData.maintenanceCostsSpending[14] = Math.round(newspend)
+        sim.gameData.maintenanceCostsPer[15] = Math.round(value)
+        sim.gameData.maintenanceCostsSpending[15] = Math.round(newspend)
 
         fireSDollarText.setText(formatter.format(getFireMaintenanceCost()))
 
@@ -324,7 +324,7 @@ class Finance extends Phaser.Scene {
     //var healthSLabel = this.add.bitmapText(25, 750, 'topaz', 'H: ', 35).setOrigin(0, .5).setTint(0xC0D7E2)
     var healthIcon = this.add.image(12, 750, 'icons', 50).setOrigin(0, .5).setScale(2).setInteractive().setAlpha(1);
     this.expendituresGroup.add(healthIcon)
-    var healthPerSText = this.add.bitmapText(75, 750, 'topaz', sim.gameData.maintenanceCostsPer[12], 35).setOrigin(0, .5).setTint(0xC0D7E2)
+    var healthPerSText = this.add.bitmapText(75, 750, 'topaz', sim.gameData.maintenanceCostsPer[13], 35).setOrigin(0, .5).setTint(0xC0D7E2)
     this.expendituresGroup.add(healthPerSText)
 
     var healthSDollarText = this.add.bitmapText(625, 750, 'topaz', formatter.format(getHealthMaintenanceCost()), 35).setOrigin(0, .5).setTint(0xC0D7E2)
@@ -348,13 +348,13 @@ class Finance extends Phaser.Scene {
         value = (value * range) + min;
         healthPerSText.setText(Math.round(value) + '%')
         if (value <= 100) {
-          var newspend = (sim.gameData.maintenanceCosts[12] * (value / 100))
+          var newspend = (sim.gameData.maintenanceCosts[13] * (value / 100))
         } else {
-          var newspend = sim.gameData.maintenanceCosts[12] + (sim.gameData.maintenanceCosts[12] * ((value - 100) / 100))
+          var newspend = sim.gameData.maintenanceCosts[13] + (sim.gameData.maintenanceCosts[13] * ((value - 100) / 100))
         }
 
-        sim.gameData.maintenanceCostsPer[12] = Math.round(value)
-        sim.gameData.maintenanceCostsSpending[12] = Math.round(newspend)
+        sim.gameData.maintenanceCostsPer[13] = Math.round(value)
+        sim.gameData.maintenanceCostsSpending[13] = Math.round(newspend)
 
         healthSDollarText.setText(formatter.format(getHealthMaintenanceCost()))
 
@@ -373,7 +373,7 @@ class Finance extends Phaser.Scene {
     var educationIcon = this.add.image(12, 825, 'icons', 24).setOrigin(0, .5).setScale(2).setInteractive().setAlpha(1);
     this.expendituresGroup.add(educationIcon)
 
-    var educationPerSText = this.add.bitmapText(75, 825, 'topaz', sim.gameData.maintenanceCostsPer[15], 35).setOrigin(0, .5).setTint(0xC0D7E2)
+    var educationPerSText = this.add.bitmapText(75, 825, 'topaz', sim.gameData.maintenanceCostsPer[16], 35).setOrigin(0, .5).setTint(0xC0D7E2)
     this.expendituresGroup.add(educationPerSText)
 
     var educationSDollarText = this.add.bitmapText(625, 825, 'topaz', formatter.format(getEducationMaintenanceCost()), 35).setOrigin(0, .5).setTint(0xC0D7E2)
@@ -397,13 +397,13 @@ class Finance extends Phaser.Scene {
         value = (value * range) + min;
         educationPerSText.setText(Math.round(value) + '%')
         if (value <= 100) {
-          var newspend = (sim.gameData.maintenanceCosts[15] * (value / 100))
+          var newspend = (sim.gameData.maintenanceCosts[16] * (value / 100))
         } else {
-          var newspend = sim.gameData.maintenanceCosts[15] + (sim.gameData.maintenanceCosts[15] * ((value - 100) / 100))
+          var newspend = sim.gameData.maintenanceCosts[16] + (sim.gameData.maintenanceCosts[16] * ((value - 100) / 100))
         }
 
-        sim.gameData.maintenanceCostsPer[15] = Math.round(value)
-        sim.gameData.maintenanceCostsSpending[15] = Math.round(newspend)
+        sim.gameData.maintenanceCostsPer[16] = Math.round(value)
+        sim.gameData.maintenanceCostsSpending[16] = Math.round(newspend)
         educationSDollarText.setText(formatter.format(getEducationMaintenanceCost()))
 
       },
@@ -421,7 +421,7 @@ class Finance extends Phaser.Scene {
     var parkIcon = this.add.image(12, 900, 'icons', 32).setOrigin(0, .5).setScale(2).setInteractive().setAlpha(1);
     this.expendituresGroup.add(parkIcon)
 
-    var parksPerSText = this.add.bitmapText(75, 900, 'topaz', sim.gameData.maintenanceCostsPer[17], 35).setOrigin(0, .5).setTint(0xC0D7E2)
+    var parksPerSText = this.add.bitmapText(75, 900, 'topaz', sim.gameData.maintenanceCostsPer[18], 35).setOrigin(0, .5).setTint(0xC0D7E2)
     this.expendituresGroup.add(parksPerSText)
 
     var parksSDollarText = this.add.bitmapText(625, 900, 'topaz', formatter.format(getParksMaintenanceCost()), 35).setOrigin(0, .5).setTint(0xC0D7E2)
@@ -445,13 +445,13 @@ class Finance extends Phaser.Scene {
         value = (value * range) + min;
         parksPerSText.setText(Math.round(value) + '%')
         if (value <= 100) {
-          var newspend = (sim.gameData.maintenanceCosts[17] * (value / 100))
+          var newspend = (sim.gameData.maintenanceCosts[18] * (value / 100))
         } else {
-          var newspend = sim.gameData.maintenanceCosts[17] + (sim.gameData.maintenanceCosts[17] * ((value - 100) / 100))
+          var newspend = sim.gameData.maintenanceCosts[18] + (sim.gameData.maintenanceCosts[18] * ((value - 100) / 100))
         }
 
-        sim.gameData.maintenanceCostsPer[17] = Math.round(value)
-        sim.gameData.maintenanceCostsSpending[17] = Math.round(newspend)
+        sim.gameData.maintenanceCostsPer[18] = Math.round(value)
+        sim.gameData.maintenanceCostsSpending[18] = Math.round(newspend)
         parksSDollarText.setText(formatter.format(getParksMaintenanceCost()))
 
       },
@@ -469,7 +469,7 @@ class Finance extends Phaser.Scene {
     var transIcon = this.add.image(12, 975, 'icons', 5).setOrigin(0, .5).setScale(2).setInteractive().setAlpha(1);
     this.expendituresGroup.add(transIcon)
 
-    var transportationPerSText = this.add.bitmapText(75, 975, 'topaz', sim.gameData.maintenanceCostsPer[22], 35).setOrigin(0, .5).setTint(0xC0D7E2)
+    var transportationPerSText = this.add.bitmapText(75, 975, 'topaz', sim.gameData.maintenanceCostsPer[23], 35).setOrigin(0, .5).setTint(0xC0D7E2)
     this.expendituresGroup.add(transportationPerSText)
 
     var transportationSDollarText = this.add.bitmapText(625, 975, 'topaz', formatter.format(getTransportationMaintenanceCost()), 35).setOrigin(0, .5).setTint(0xC0D7E2)
@@ -493,13 +493,13 @@ class Finance extends Phaser.Scene {
         value = (value * range) + min;
         transportationPerSText.setText(Math.round(value) + '%')
         if (value <= 100) {
-          var newspend = (sim.gameData.maintenanceCosts[22] * (value / 100))
+          var newspend = (sim.gameData.maintenanceCosts[23] * (value / 100))
         } else {
-          var newspend = sim.gameData.maintenanceCosts[22] + (sim.gameData.maintenanceCosts[22] * ((value - 100) / 100))
+          var newspend = sim.gameData.maintenanceCosts[23] + (sim.gameData.maintenanceCosts[23] * ((value - 100) / 100))
         }
 
-        sim.gameData.maintenanceCostsPer[22] = Math.round(value)
-        sim.gameData.maintenanceCostsSpending[22] = Math.round(newspend)
+        sim.gameData.maintenanceCostsPer[23] = Math.round(value)
+        sim.gameData.maintenanceCostsSpending[23] = Math.round(newspend)
         transportationSDollarText.setText(formatter.format(getTransportationMaintenanceCost()))
 
       },
@@ -540,8 +540,8 @@ class Finance extends Phaser.Scene {
     this.incomeTotalText = this.add.bitmapText(625, 1375, 'topaz', '--', 35).setOrigin(0, .5).setTint(0xC0D7E2)
     //this.incomeGroup.add(this.incomeTotalText)
 
-    var balanceLabel = this.add.bitmapText(575, 1495, 'topaz', 'Balance:  ', 40).setOrigin(1, .5).setTint(0xC0D7E2)
-    this.balanceText = this.add.bitmapText(625, 1495, 'topaz', '--', 40).setOrigin(0, .5).setTint(0xC0D7E2)
+    var balanceLabel = this.add.bitmapText(575, 1495, 'topaz', 'Balance:  ', 35).setOrigin(1, .5).setTint(0xC0D7E2)
+    this.balanceText = this.add.bitmapText(625, 1495, 'topaz', '--', 35).setOrigin(0, .5).setTint(0xC0D7E2)
 
     this.plusminus = this.add.image(625, 1565, 'arrows', 0).setOrigin(1, .5).setScale(1.5)
     var newFundsLabel = this.add.bitmapText(575, 1565, 'topaz', 'Projected Funds:  ', 40).setOrigin(1, .5).setTint(0xC0D7E2)
