@@ -246,7 +246,7 @@ class Finance extends Phaser.Scene {
 
       track: this.add.image(0, 0, 'slider_track'),
       thumb: this.add.image(0, 0, 'slider_thumb'),
-      value: (sim.gameData.maintenanceCostsPer[13] - min) / range,
+      value: (sim.gameData.maintenanceCostsPer[14] - min) / range,
       gap: gap / range,
       valuechangeCallback: function (value) {
         value = (value * range) + min;

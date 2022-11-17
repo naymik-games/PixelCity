@@ -79,6 +79,7 @@ let gameStats = {
   specialJobs: 0,
   powerPlants: [],
   waterPlants: [],
+  policeStations: [],
   averageLV: 0,
   zoneCounts: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   rci: [0, 0, 0],

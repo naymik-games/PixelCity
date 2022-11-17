@@ -101,7 +101,7 @@ class UI extends Phaser.Scene {
     }, this)
 
     this.advisorGroup = this.add.container()
-    var peopleIcon = this.add.image(850, 300, 'icons', 38).setOrigin(1, .5).setScale(2).setInteractive()
+    var peopleIcon = this.add.image(75, 425, 'icons', 38).setOrigin(.5).setScale(2).setInteractive()
     peopleIcon.on('pointerdown', function () {
       this.scene.launch('People')
       this.scene.pause()
@@ -110,7 +110,7 @@ class UI extends Phaser.Scene {
     }, this)
     this.advisorGroup.add(peopleIcon)
 
-    var rciIcon = this.add.image(850, 400, 'icons', 40).setOrigin(1, .5).setScale(2).setInteractive()
+    var rciIcon = this.add.image(75, 500, 'icons', 40).setOrigin(.5).setScale(2).setInteractive()
     rciIcon.on('pointerdown', function () {
       this.scene.launch('Rci')
       this.scene.pause()
@@ -119,7 +119,7 @@ class UI extends Phaser.Scene {
     }, this)
     this.advisorGroup.add(rciIcon)
 
-    var powerIcon = this.add.image(850, 500, 'icons', 3).setOrigin(1, .5).setScale(2).setInteractive()
+    var powerIcon = this.add.image(75, 575, 'icons', 3).setOrigin(.5).setScale(2).setInteractive()
     powerIcon.on('pointerdown', function () {
       this.scene.launch('Power')
       this.scene.pause()
@@ -128,7 +128,7 @@ class UI extends Phaser.Scene {
     }, this)
     this.advisorGroup.add(powerIcon)
 
-    var financeIcon = this.add.image(850, 600, 'icons', 30).setOrigin(1, .5).setScale(2).setInteractive()
+    var financeIcon = this.add.image(75, 650, 'icons', 30).setOrigin(.5).setScale(2).setInteractive()
     financeIcon.on('pointerdown', function () {
       this.scene.launch('Finance')
       this.scene.pause()
@@ -136,11 +136,11 @@ class UI extends Phaser.Scene {
       this.scene.pause('Menu')
     }, this)
     this.advisorGroup.add(financeIcon)
-
-
+    this.advisorGroup.setPosition(-150, 0)
+    ///////////////////////////////////////////////////////
     this.dataGroup = this.add.container()
     var traflON = false
-    var trafIcon = this.add.image(50, 700, 'icons', 44).setOrigin(0, .5).setScale(2).setInteractive()
+    var trafIcon = this.add.image(75, 425, 'icons', 44).setOrigin(.5).setScale(2).setInteractive()
     trafIcon.on('pointerdown', function () {
       if (traflON) {
         this.Main.graphicsData.clear()
@@ -159,7 +159,7 @@ class UI extends Phaser.Scene {
     }, this)
     this.dataGroup.add(trafIcon)
     var polON = false
-    var polIcon = this.add.image(50, 800, 'icons', 42).setOrigin(0, .5).setScale(2).setInteractive()
+    var polIcon = this.add.image(75, 500, 'icons', 42).setOrigin(.5).setScale(2).setInteractive()
     polIcon.on('pointerdown', function () {
       if (polON) {
         this.Main.graphicsData.clear()
@@ -178,7 +178,7 @@ class UI extends Phaser.Scene {
     }, this)
     this.dataGroup.add(polIcon)
     var lvON = false
-    var lvIcon = this.add.image(50, 900, 'icons', 52).setOrigin(0, .5).setScale(2).setInteractive()
+    var lvIcon = this.add.image(75, 575, 'icons', 52).setOrigin(.5).setScale(2).setInteractive()
     lvIcon.on('pointerdown', function () {
       if (lvON) {
         this.Main.graphicsData.clear()
@@ -196,7 +196,7 @@ class UI extends Phaser.Scene {
     }, this)
     this.dataGroup.add(lvIcon)
     var waterON = false
-    var waterIcon = this.add.image(50, 1000, 'icons', 53).setOrigin(0, .5).setScale(2).setInteractive()
+    var waterIcon = this.add.image(75, 650, 'icons', 53).setOrigin(.5).setScale(2).setInteractive()
     waterIcon.on('pointerdown', function () {
       if (waterON) {
         this.Main.graphicsData.clear()
@@ -216,7 +216,7 @@ class UI extends Phaser.Scene {
     this.dataGroup.add(waterIcon)
 
     var powerON = false
-    var powerDIcon = this.add.image(50, 1100, 'icons', 3).setOrigin(0, .5).setScale(2).setInteractive()
+    var powerDIcon = this.add.image(75, 725, 'icons', 3).setOrigin(.5).setScale(2).setInteractive()
     powerDIcon.on('pointerdown', function () {
       if (powerON) {
         this.Main.graphicsData.clear()
@@ -236,7 +236,7 @@ class UI extends Phaser.Scene {
     this.dataGroup.add(powerDIcon)
 
     var crimeON = false
-    var crimeIcon = this.add.image(50, 1200, 'icons', 48).setOrigin(0, .5).setScale(2).setInteractive()
+    var crimeIcon = this.add.image(75, 800, 'icons', 48).setOrigin(.5).setScale(2).setInteractive()
     crimeIcon.on('pointerdown', function () {
       if (crimeON) {
         this.Main.graphicsData.clear()
@@ -257,19 +257,20 @@ class UI extends Phaser.Scene {
 
     this.dataGroup.setPosition(-150, 0)
     var dataOn = false
-    var dataIcon = this.add.image(25, 275, 'icons', 51).setOrigin(0).setScale(3).setInteractive()
+    var dataIcon = this.add.image(75, 275, 'icons', 51).setOrigin(.5, 0).setScale(3).setInteractive()
     dataIcon.on('pointerdown', function () {
       if (dataOn) {
         //this.Main.graphics.clear()
         //this.dataGroup.setPosition(-150, 0)
         //this.headerGroup.setPosition(0, 0)
+        dataIcon.setFrame(51)
         this.Main.graphicsData.clear()
         this.Main.graphicsBorder.clear()
-        var tween = this.tweens.add({
-          targets: this.advisorGroup,
-          x: 0,
-          duration: 300
-        })
+        /*  var tween = this.tweens.add({
+           targets: this.advisorGroup,
+           x: 0,
+           duration: 300
+         }) */
         var tween = this.tweens.add({
           targets: this.headerGroup,
           y: 0,
@@ -286,9 +287,12 @@ class UI extends Phaser.Scene {
         //this.Main.drawTrafficGrid()
         //this.dataGroup.setPosition(0, 0)
         //this.headerGroup.setPosition(0, -500)
+        dataIcon.setFrame(56)
+        advisorIcon.setFrame(54)
+        advisorOn = false
         var tween = this.tweens.add({
           targets: this.advisorGroup,
-          x: 200,
+          x: -150,
           duration: 300
         })
         var tween = this.tweens.add({
@@ -309,6 +313,66 @@ class UI extends Phaser.Scene {
        this.scene.pause('playGame')
        this.scene.pause('Menu') */
     }, this)
+
+
+    var advisorOn = false
+    var advisorIcon = this.add.image(200, 275, 'icons', 54).setOrigin(.5, 0).setScale(3).setInteractive()
+    advisorIcon.on('pointerdown', function () {
+      if (advisorOn) {
+        //this.Main.graphics.clear()
+        //this.dataGroup.setPosition(-150, 0)
+        //this.headerGroup.setPosition(0, 0)
+        advisorIcon.setFrame(54)
+        this.Main.graphicsData.clear()
+        this.Main.graphicsBorder.clear()
+        var tween = this.tweens.add({
+          targets: this.advisorGroup,
+          x: -150,
+          duration: 300
+        })
+        var tween = this.tweens.add({
+          targets: this.headerGroup,
+          y: 0,
+          duration: 300
+        })
+        /*  var tween = this.tweens.add({
+           targets: this.dataGroup,
+           x: -150,
+           duration: 300
+         }) */
+        advisorOn = false
+      } else {
+        //updateTraffic()
+        //this.Main.drawTrafficGrid()
+        //this.dataGroup.setPosition(0, 0)
+        //this.headerGroup.setPosition(0, -500)
+        advisorIcon.setFrame(55)
+        dataIcon.setFrame(51)
+        dataOn = false
+        var tween = this.tweens.add({
+          targets: this.advisorGroup,
+          x: 0,
+          duration: 300
+        })
+        var tween = this.tweens.add({
+          targets: this.headerGroup,
+          y: -500,
+          duration: 300
+        })
+        var tween = this.tweens.add({
+          targets: this.dataGroup,
+          x: -150,
+          duration: 300
+        })
+        advisorOn = true
+      }
+
+      /*  this.scene.launch('Rci')
+       this.scene.pause()
+       this.scene.pause('playGame')
+       this.scene.pause('Menu') */
+    }, this)
+
 
 
 

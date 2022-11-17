@@ -37,6 +37,7 @@ function addPowerPlant(mapXY, id, yearAdded) {
 function addWaterPlant(mapXY, id, yearAdded) {
   sim.gameData.waterPlants.push([mapXY, id, yearAdded])
 }
+
 function waterInRange(point) {
   //0 1 5
   var smallTower = false
@@ -137,7 +138,6 @@ function addCrime(point, data) {
       tiles[i].crime = tiles[i].crime + data.crime
     }
   }
-
 }
 function removeCrime(point, data) {
   //crime
@@ -156,6 +156,9 @@ function removeCrime(point, data) {
     }
   }
 
+}
+function addPoliceStation(mapXY, id, yearAdded) {
+  sim.gameData.policeStations.push([mapXY, id, yearAdded])
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 // POLLUTION
@@ -825,6 +828,27 @@ function getRandomComTile() {
       return { x: ranX, y: ranY }
     }
   }
+}
+function getCovSub(per) {
+  var sub = 0
+  if (per > 110) {
+    sub = -3
+  } else if (per > 100) {
+    sub = -2
+  } else if (per == 100) {
+    sub = 0
+  } else if (per < 60) {
+    sub = 5
+  } else if (per < 70) {
+    sub = 4
+  } else if (per < 80) {
+    sub = 3
+  } else if (per < 90) {
+    sub = 2
+  } else if (per < 100) {
+    sub = 1
+  }
+  return sub
 }
 function getDistanceAlt(point1, point2) {
   return Math.abs(point2.x - point1.x) + Math.abs(point2.y - point1.y)

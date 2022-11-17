@@ -1108,6 +1108,11 @@ class playGame extends Phaser.Scene {
           addWaterPlant(mapXY, this.placeData.id, sim.gameData.year)
         }
       }
+      if (this.placeData.zone == 14) {
+        if (this.placeData.id == 2 || this.placeData.id == 5) {
+          addPoliceStation(mapXY, this.placeData.id, sim.gameData.year)
+        }
+      }
     }
     buildingsBright()
     gameMode = GM_INFO
@@ -1297,7 +1302,30 @@ class playGame extends Phaser.Scene {
         this.drawTileData(point)
       }
     }
+    if (sim.gameData.policeStations.length > 0) {
+      var policePer = sim.gameData.maintenanceCostsPer[14]
+      this.graphicsBorder.clear()
+      this.graphicsBorder.lineStyle(3, 0x0000ff, 1);
+      this.graphicsBorder.fillStyle(0x0000ff, 0)
+      for (var i = 0; i < sim.gameData.policeStations.length; i++) {
+        console.log(sim.gameData.policeStations)
+        var plantID = sim.gameData.policeStations[i][1]
+        var plant = buildMenu[2].subMenu[plantID]
+        if (plantID == 2) {
+          var rad = 10 - getCovSub(policePer)
+        } else if (plantID == 5) {
+          var rad = 15 - getCovSub(policePer)
+        }
+        console.log(rad)
+        this.drawDataTileSize(sim.gameData.policeStations[i][0], rad)
+
+      }
+    }
+
+
+
   }
+
   drawLVGrid() {
 
     this.graphicsData.clear()
@@ -1334,8 +1362,6 @@ class playGame extends Phaser.Scene {
       for (var j = 0; j < tiles.length; j++) {
         var tile = tiles[j]
         var point = tile.xy
-
-
         this.drawTileData(point)
       }
     }
