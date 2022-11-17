@@ -7,7 +7,7 @@ function isConnectedToRoad() {
 //reference
 
 //////////////////////////////////////////////////////////////////////////////
-// POWER
+// POWER/WATER
 ////////////////////////////////////////////////////////////////////////////
 function getPowerConsumption() {
   var resCapacity = (sim.gameData.zoneCounts[0] * 3) + (sim.gameData.zoneCounts[1] * 12) + (sim.gameData.zoneCounts[2] * 50)
@@ -34,49 +34,154 @@ function getPowerConsumption() {
 function addPowerPlant(mapXY, id, yearAdded) {
   sim.gameData.powerPlants.push([mapXY, id, yearAdded])
 }
-////////////////////////////////////////////////////////////////////////////////////////
-// HEALTH SAFETY
-//////////////////////////////////////////////////////////////////////////////////////
-function addCrime(point, data) {
-  //air
-  var tiles = this.getTilesInRange(point, data.crimeRadius)
+function addWaterPlant(mapXY, id, yearAdded) {
+  sim.gameData.waterPlants.push([mapXY, id, yearAdded])
+}
+function waterInRange(point) {
+  //0 1 5
+  var smallTower = false
+  var waterPump = false
+  var largeTower = false
+
+  var tiles = getTilesInRange(point, buildMenu[2].subMenu[0].waterRange)
   for (var i = 0; i < tiles.length; i++) {
-    // var d = Math.round(getDistance(point, tiles[i].xy))
-    var d = getDistanceAlt(point, tiles[i].xy)
-    // console.log(d)
-    var v = data.crimeRadius - (d - 1)
-    var per = v / data.crimeRadius
-    tiles[i].crime += Math.round(data.crime * per)
+    if (tiles[i].menu == 0 && tiles[i].parentMenu == 2) {
+      smallTower = true
+    }
+  }
+  var tiles = getTilesInRange(point, buildMenu[2].subMenu[1].waterRange)
+  for (var i = 0; i < tiles.length; i++) {
+    if (tiles[i].menu == 1 && tiles[i].parentMenu == 2) {
+      waterPump = true
+    }
+  }
+  var tiles = getTilesInRange(point, buildMenu[2].subMenu[5].waterRange)
+  for (var i = 0; i < tiles.length; i++) {
+    if (tiles[i].menu == 5 && tiles[i].parentMenu == 2) {
+      largeTower = true
+    }
+  }
+  if (smallTower || largeTower || waterPump) {
+    return true
+  } else {
+    return false
+  }
+}
+function powerInRange(point) {
+  //0 1 5
+  var coal = false //3
+  var wind = false //6
+  var solar = false //7
+  var gas = false //9
+  var fusion = false //10
+  var nuclear = false //11
+
+  var tiles = getTilesInRange(point, buildMenu[2].subMenu[3].powerRange)
+  for (var i = 0; i < tiles.length; i++) {
+    if (tiles[i].menu == 3 && tiles[i].parentMenu == 2) {
+      coal = true
+    }
+  }
+  var tiles = getTilesInRange(point, buildMenu[2].subMenu[6].powerRange)
+  for (var i = 0; i < tiles.length; i++) {
+    if (tiles[i].menu == 6 && tiles[i].parentMenu == 2) {
+      wind = true
+    }
+  }
+  var tiles = getTilesInRange(point, buildMenu[2].subMenu[7].powerRange)
+  for (var i = 0; i < tiles.length; i++) {
+    if (tiles[i].menu == 7 && tiles[i].parentMenu == 2) {
+      solar = true
+    }
+  }
+  var tiles = getTilesInRange(point, buildMenu[2].subMenu[9].powerRange)
+  for (var i = 0; i < tiles.length; i++) {
+    if (tiles[i].menu == 9 && tiles[i].parentMenu == 2) {
+      gas = true
+    }
+  }
+  var tiles = getTilesInRange(point, buildMenu[2].subMenu[10].powerRange)
+  for (var i = 0; i < tiles.length; i++) {
+    if (tiles[i].menu == 10 && tiles[i].parentMenu == 2) {
+      fusion = true
+    }
+  }
+  var tiles = getTilesInRange(point, buildMenu[2].subMenu[11].powerRange)
+  for (var i = 0; i < tiles.length; i++) {
+    if (tiles[i].menu == 11 && tiles[i].parentMenu == 2) {
+      nuclear = true
+    }
+  }
+  if (coal || wind || solar || gas || fusion || nuclear) {
+    return true
+  } else {
+    return false
   }
 }
 ////////////////////////////////////////////////////////////////////////////////////////
+// HEALTH SAFETY
+////////////////////////////////////////////////////////////////////////////////////////
+function addCrime(point, data) {
+  //crime
+  if (data.crime == 0) { return }
+  if (data.zone < 9) {
+    var lv = getLandValue(point)
+    var tiles = this.getTilesInRange(point, data.crimeRadius[lv.lvIndex])
+    for (var i = 0; i < tiles.length; i++) {
+      tiles[i].crime = tiles[i].crime + data.crime[lv.lvIndex]
+    }
+  } else {
+    var tiles = this.getTilesInRange(point, data.crimeRadius)
+    for (var i = 0; i < tiles.length; i++) {
+      // var d = Math.round(getDistance(point, tiles[i].xy))
+      tiles[i].crime = tiles[i].crime + data.crime
+    }
+  }
+
+}
+function removeCrime(point, data) {
+  //crime
+  if (data.crime == 0) { return }
+  if (data.zone < 9) {
+    var lv = getLandValue(point)
+    var tiles = this.getTilesInRange(point, data.crimeRadius[lv.lvIndex])
+    for (var i = 0; i < tiles.length; i++) {
+      tiles[i].crime = tiles[i].crime - data.crime[lv.lvIndex]
+    }
+  } else {
+    var tiles = this.getTilesInRange(point, data.crimeRadius)
+    for (var i = 0; i < tiles.length; i++) {
+      // var d = Math.round(getDistance(point, tiles[i].xy))
+      tiles[i].crime = tiles[i].crime - data.crime
+    }
+  }
+
+}
+////////////////////////////////////////////////////////////////////////////////////////
 // POLLUTION
-//////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 function addPollution(point, data) {
   //air
+
   var tiles = this.getTilesInRange(point, data.airPollutionRadius)
   for (var i = 0; i < tiles.length; i++) {
-    if (tiles[i].pollution[0] >= 0) {
-      var d = getDistanceAlt(point, tiles[i].xy)
-      var v = data.airPollutionRadius - (d - 1)
-      var per = v / data.airPollutionRadius
-      tiles[i].pollution[0] = tiles[i].pollution[0] + Math.round(data.airPollution * per)
-    } else {
-      var d = getDistanceAlt(point, tiles[i].xy)
-      var v = data.airPollutionRadius - (d - 1)
-      var per = v / data.airPollutionRadius
-      tiles[i].pollution[0] = tiles[i].pollution[0] - Math.round(data.airPollution * per)
-    }
+
+    var d = getDistanceAlt(point, tiles[i].xy)
+    var v = data.airPollutionRadius - (d - 1)
+    var per = v / data.airPollutionRadius
+    tiles[i].pollution[0] = tiles[i].pollution[0] + Math.round(data.airPollution * per)
+
 
   }
   //water
   var tiles = this.getTilesInRange(point, data.waterPollutionRadius)
   for (var i = 0; i < tiles.length; i++) {
     var d = getDistanceAlt(point, tiles[i].xy)
-    // console.log(d)
-    var v = data.airPollutionRadius - (d - 1)
-    var per = v / data.airPollutionRadius
-    tiles[i].pollution[1] = clamp(tiles[i].pollution[1] + Math.round(data.airPollution * per), 0, 100000)
+    var v = data.waterPollutionRadius - (d - 1)
+    var per = v / data.waterPollutionRadius
+    tiles[i].pollution[1] = tiles[i].pollution[1] + Math.round(data.waterPollution * per)
+
+
   }
 }
 function removePollution(point, data) {
@@ -153,7 +258,7 @@ function getLandValue(point) {
   lvObject.distance = distance
   lvObject.global = sim.gameData.globalLV[0]
   var landvalue = distance + sim.gameData.globalLV[0]
-  console.log('lv dis glob: ' + landvalue)
+  //console.log('lv dis glob: ' + landvalue)
   if (dwater <= 5.1) {
     var waterBonus = landvalue * (.5 / dwater)
   } else {
@@ -163,19 +268,20 @@ function getLandValue(point) {
   landvalue = landvalue + Math.round(waterBonus)
   //landvalue = clamp(landvalue, 0, 255)
 
-  console.log('lv water: ' + landvalue)
+  // console.log('lv water: ' + landvalue)
   landvalue += tile.localLandValue
   lvObject.local = tile.localLandValue
-  console.log('lv local: ' + landvalue + ' (' + tile.localLandValue + ')')
+  //console.log('lv local: ' + landvalue + ' (' + tile.localLandValue + ')')
   var pollutionadder = getAirPollutionEffect(tile.pollution[0], landvalue)
   landvalue = landvalue + pollutionadder
   lvObject.airpol = pollutionadder
-  console.log('lv 3: ' + landvalue + ' (' + pollutionadder + ')')
+  //console.log('lv 3: ' + landvalue + ' (' + pollutionadder + ')')
   var wpolladder = getWaterPollutionEffect(tile.pollution[1], landvalue)
   landvalue = landvalue + wpolladder
-  console.log('lv 4: ' + landvalue + ' (' + wpolladder + ')')
+  //console.log('lv 4: ' + landvalue + ' (' + wpolladder + ')')
   lvObject.waterpol = wpolladder
   lvObject.landvalue = landvalue
+  lvObject.lvIndex = getLVIndex(landvalue)
   return lvObject
 }
 function getAverageLV() {
@@ -185,16 +291,8 @@ function getAverageLV() {
     for (var x = 0; x < mapConfig.width; x++) {
       var tile = grid[y][x]
       if (tile.terrain != 'water') {
-        var distance = getDistanceBonus(tile.xy)
-        var dwater = distanceFromOpenWater(tile.xy, 5)
-        var landvalue = distance + sim.gameData.globalLV[0]
-        if (dwater <= 5.1) {
-          var waterBonus = landvalue * (.5 / dwater)
-        } else {
-          var waterBonus = 0
-        }
-        //  console.log('lv: ' + landvalue + "wb: " + Math.round(waterBonus) + 'tlv: ' + tile.localLandValue)
-        totalLV += landvalue + Math.round(waterBonus) + tile.localLandValue
+        var temp = getLandValue(tile.xy)
+        totalLV += temp.landvalue
         count++
       }
 
@@ -203,6 +301,16 @@ function getAverageLV() {
   // console.log('total' + totalLV + 'count ' + count)
   sim.gameData.averageLV = Math.round(totalLV / count)
   console.log(sim.gameData.averageLV)
+}
+function getLVIndex(value) {
+  if (value < gameRules.lvLow) {
+    var t = 0
+  } else if (value < gameRules.lvMed) {
+    var t = 1
+  } else {
+    var t = 2
+  }
+  return t
 }
 /* function updateLocalLandValue() {
   for (var y = 0; y < mapConfig.height; y++) {

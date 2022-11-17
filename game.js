@@ -165,7 +165,9 @@ class playGame extends Phaser.Scene {
     this.graphicsData = this.add.graphics(),
       this.graphicsData.lineStyle(5, 0x262B44, 2);
     this.graphicsData.fillStyle(0x00ff00, 1)
-
+    this.graphicsBorder = this.add.graphics(),
+      this.graphicsBorder.lineStyle(5, 0x262B44, 2);
+    this.graphicsBorder.fillStyle(0x00ff00, 0)
 
     this.selected = []
     this.dragType = 'place'
@@ -357,6 +359,7 @@ class playGame extends Phaser.Scene {
       removePollution(point, buildMenu[tile.parentMenu].subMenu[tile.menu])
       removeGlobalLandValue(buildMenu[tile.parentMenu].subMenu[tile.menu])
       removeLocalLandValue(point, buildMenu[tile.parentMenu].subMenu[tile.menu])
+      removeCrime(point, buildMenu[tile.parentMenu].subMenu[tile.menu])
       sim.gameData.specialJobs -= buildMenu[tile.parentMenu].subMenu[tile.menu].jobs
       tileIMG.building = null
 
@@ -489,6 +492,7 @@ class playGame extends Phaser.Scene {
       this.scene.pause('Menu')
     } else {
       console.log(grid[mapXY.y][mapXY.x])
+      console.log(getLandValue(mapXY))
     }
 
     //this.getTileArea(mapXY, 4)
@@ -640,6 +644,8 @@ class playGame extends Phaser.Scene {
       grid[tile.y][tile.x].partOf = area[area.length - 1]
       addGlobalLandValue(this.zoneData)
       addLocalLandValue(tile, this.zoneData)
+      var temp = getLandValue(grid[tile.y][tile.x].partOf)
+      var lvIndex = getLVIndex(temp.landvalue)
       if (i < area.length - 1) {
 
       } else {
@@ -658,11 +664,12 @@ class playGame extends Phaser.Scene {
           var buildFrame = this.zoneData.frames2[rand]
           var sheet = this.zoneData.size2
         } else {
-          var rand = Phaser.Math.Between(0, this.zoneData.frames1.length - 1)
-          var buildFrame = this.zoneData.frames1[rand]
+          var rand = Phaser.Math.Between(0, this.zoneData.frames1[lvIndex].length - 1)
+          var buildFrame = this.zoneData.frames1[lvIndex][rand]
           var sheet = this.zoneData.size1
         }
         addPollution(tile, this.zoneData)
+        addCrime(tile, this.zoneData)
         var build = this.add.image(centerX + isoXY.x, centerY + isoXY.y, sheet, buildFrame).setOrigin(.5, 1);
         build.setDepth(centerY + isoXY.y);
         gameMode = GM_INFO
@@ -1074,6 +1081,7 @@ class playGame extends Phaser.Scene {
       var building = this.add.image(centerX + isoXY.x, centerY + isoXY.y, this.placeData.sheet, this.placeData.index).setOrigin(.5, 1);
       building.setDepth(centerY + isoXY.y);
       addPollution(mapXY, this.placeData)
+      addCrime(mapXY, this.placeData)
       grid[mapXY.y][mapXY.x].building = { sheet: this.placeData.sheet, frame: this.placeData.index, flipX: false }
       gridImage[mapXY.y][mapXY.x].building = building
       grid[mapXY.y][mapXY.x].zone = this.placeData.zone
@@ -1094,6 +1102,11 @@ class playGame extends Phaser.Scene {
       this.events.emit('updateStats')
       if (this.placeData.zone == 9) {
         addPowerPlant(mapXY, this.placeData.id, sim.gameData.year)
+      }
+      if (this.placeData.zone == 10) {
+        if (this.placeData.id == 0 || this.placeData.id == 1 || this.placeData.id == 5) {
+          addWaterPlant(mapXY, this.placeData.id, sim.gameData.year)
+        }
       }
     }
     buildingsBright()
@@ -1264,6 +1277,27 @@ class playGame extends Phaser.Scene {
       }
     }
   }
+  drawCrimeGrid() {
+
+    this.graphicsData.clear()
+    this.graphicsData.lineStyle(1, 0x0000ff, .2);
+    this.graphicsData.fillStyle(0xff0000, .3)
+    for (var y = 0; y < mapConfig.height; y++) {
+      for (var x = 0; x < mapConfig.width; x++) {
+        var point = { x: x, y: y }
+        var airPol = grid[point.y][point.x].crime
+        if (airPol < 1) {
+          airPol = 1
+        }
+        var polper = (airPol / 50) * 100
+        var color1 = perc2color(100 - polper)
+
+        this.graphicsData.fillStyle(color1, .5)
+
+        this.drawTileData(point)
+      }
+    }
+  }
   drawLVGrid() {
 
     this.graphicsData.clear()
@@ -1284,6 +1318,49 @@ class playGame extends Phaser.Scene {
         this.drawTileData(point)
       }
     }
+  }
+  drawWaterGrid() {
+    console.log('drawing water grid ' + sim.gameData.waterPlants.length)
+    if (sim.gameData.waterPlants.length == 0) { return }
+    this.graphicsData.clear()
+    this.graphicsData.lineStyle(1, 0x0000ff, .2);
+    this.graphicsData.fillStyle(0x0000ff, .1)
+    for (var i = 0; i < sim.gameData.waterPlants.length; i++) {
+      console.log(sim.gameData.waterPlants)
+      var plantID = sim.gameData.waterPlants[i][1]
+      var plant = buildMenu[2].subMenu[plantID]
+      var tiles = getTilesInRange(sim.gameData.waterPlants[i][0], plant.waterRange)
+      this.drawDataTileSize(sim.gameData.waterPlants[i][0], plant.waterRange)
+      for (var j = 0; j < tiles.length; j++) {
+        var tile = tiles[j]
+        var point = tile.xy
+
+
+        this.drawTileData(point)
+      }
+    }
+
+  }
+  drawPowerGrid() {
+    console.log('drawing power grid ' + sim.gameData.powerPlants.length)
+    if (sim.gameData.powerPlants.length == 0) { return }
+    this.graphicsData.clear()
+    this.graphicsData.lineStyle(1, 0xDF8000, .2);
+    this.graphicsData.fillStyle(0xDF8000, .3)
+    for (var i = 0; i < sim.gameData.powerPlants.length; i++) {
+      console.log(sim.gameData.powerPlants)
+      var plantID = sim.gameData.powerPlants[i][1]
+      var plant = buildMenu[2].subMenu[plantID]
+      var tiles = getTilesInRange(sim.gameData.powerPlants[i][0], plant.powerRange)
+      for (var j = 0; j < tiles.length; j++) {
+        var tile = tiles[j]
+        var point = tile.xy
+
+
+        this.drawTileData(point)
+      }
+    }
+
   }
   drawTileData(mapXY) {
 
@@ -1344,6 +1421,33 @@ class playGame extends Phaser.Scene {
     this.graphics.closePath();
     this.graphics.fillPath()
     this.graphics.strokePath();
+    //this.graphics.fillPointShape(point, 2);
+  }
+  drawDataTileSize(point, range) {
+
+    var isoXY = this.toIso(point.x + range, point.y + range)
+    var isoXYUp = this.toIso(point.x - range, point.y - range)
+    var isoXYUpL = this.toIso(point.x - range, point.y + range)
+    var isoXYUpR = this.toIso(point.x + range, point.y - range)
+
+    /*  var isoXY = this.toIso(mapXY.x, mapXY.y)
+     var isoXYUp = this.toIso(mapXY.x - diff, mapXY.y - diff)
+     var isoXYUpL = this.toIso(mapXY.x - diff, mapXY.y)
+     var isoXYUpR = this.toIso(mapXY.x, mapXY.y - diff) */
+    //var tile = scene.add.image(scene.centerX + isoXY.x, scene.centerY + isoXY.y, 'tiles', ind).setOrigin(.5, 1);
+    //var point = new Phaser.Geom.Point(centerX + isoXY.x, (centerY + isoXY.y) - 5);
+    //console.log(centerY + isoXY.y)
+
+    this.graphicsBorder.setDepth(centerY + isoXY.y + 900);
+
+    this.graphicsBorder.beginPath();
+    this.graphicsBorder.moveTo(centerX + isoXY.x, (centerY + isoXY.y));
+    this.graphicsBorder.lineTo((centerX + isoXYUpL.x) - tileWidthHalf, ((centerY + isoXYUpL.y)) - tileHeightHalf);
+    this.graphicsBorder.lineTo((centerX + isoXYUp.x), ((centerY + isoXYUp.y)) - tileHeight);
+    this.graphicsBorder.lineTo((centerX + isoXYUpR.x) + tileWidthHalf, ((centerY + isoXYUpR.y)) - tileHeightHalf);
+    this.graphicsBorder.closePath();
+    this.graphicsBorder.fillPath()
+    this.graphicsBorder.strokePath();
     //this.graphics.fillPointShape(point, 2);
   }
   redrawTiles() {

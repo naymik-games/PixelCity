@@ -144,6 +144,7 @@ class UI extends Phaser.Scene {
     trafIcon.on('pointerdown', function () {
       if (traflON) {
         this.Main.graphicsData.clear()
+        this.Main.graphicsBorder.clear()
         traflON = false
       } else {
         //updateTraffic()
@@ -162,6 +163,7 @@ class UI extends Phaser.Scene {
     polIcon.on('pointerdown', function () {
       if (polON) {
         this.Main.graphicsData.clear()
+        this.Main.graphicsBorder.clear()
         polON = false
       } else {
         updatePollution()
@@ -193,7 +195,65 @@ class UI extends Phaser.Scene {
        this.scene.pause('Menu') */
     }, this)
     this.dataGroup.add(lvIcon)
+    var waterON = false
+    var waterIcon = this.add.image(50, 1000, 'icons', 53).setOrigin(0, .5).setScale(2).setInteractive()
+    waterIcon.on('pointerdown', function () {
+      if (waterON) {
+        this.Main.graphicsData.clear()
+        this.Main.graphicsBorder.clear()
+        waterON = false
+      } else {
 
+        this.Main.drawWaterGrid()
+        waterON = true
+      }
+
+      /*  this.scene.launch('Rci')
+       this.scene.pause()
+       this.scene.pause('playGame')
+       this.scene.pause('Menu') */
+    }, this)
+    this.dataGroup.add(waterIcon)
+
+    var powerON = false
+    var powerDIcon = this.add.image(50, 1100, 'icons', 3).setOrigin(0, .5).setScale(2).setInteractive()
+    powerDIcon.on('pointerdown', function () {
+      if (powerON) {
+        this.Main.graphicsData.clear()
+        this.Main.graphicsBorder.clear()
+        powerON = false
+      } else {
+
+        this.Main.drawPowerGrid()
+        powerON = true
+      }
+
+      /*  this.scene.launch('Rci')
+       this.scene.pause()
+       this.scene.pause('playGame')
+       this.scene.pause('Menu') */
+    }, this)
+    this.dataGroup.add(powerDIcon)
+
+    var crimeON = false
+    var crimeIcon = this.add.image(50, 1200, 'icons', 48).setOrigin(0, .5).setScale(2).setInteractive()
+    crimeIcon.on('pointerdown', function () {
+      if (crimeON) {
+        this.Main.graphicsData.clear()
+        this.Main.graphicsBorder.clear()
+        crimeON = false
+      } else {
+
+        this.Main.drawCrimeGrid()
+        crimeON = true
+      }
+
+      /*  this.scene.launch('Rci')
+       this.scene.pause()
+       this.scene.pause('playGame')
+       this.scene.pause('Menu') */
+    }, this)
+    this.dataGroup.add(crimeIcon)
 
     this.dataGroup.setPosition(-150, 0)
     var dataOn = false
@@ -204,6 +264,7 @@ class UI extends Phaser.Scene {
         //this.dataGroup.setPosition(-150, 0)
         //this.headerGroup.setPosition(0, 0)
         this.Main.graphicsData.clear()
+        this.Main.graphicsBorder.clear()
         var tween = this.tweens.add({
           targets: this.advisorGroup,
           x: 0,

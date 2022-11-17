@@ -85,21 +85,33 @@ class Info extends Phaser.Scene {
     }
     this.transportationText = this.add.bitmapText(25, 1175, 'topaz', 'Connected: ' + answer, 40).setOrigin(0, .5).setTint(0xA6CAF0)
     this.jobsText = this.add.bitmapText(25, 1275, 'topaz', 'Jobs: ' + tile.buildingData.jobs, 40).setOrigin(0, .5).setTint(0xA6CAF0)
+    if (waterInRange(tile.xy)) {
+      var answer = 'Yes'
+    } else {
+      var answer = 'No'
+    }
+    this.waterText = this.add.bitmapText(25, 1375, 'topaz', 'Watered: ' + answer, 40).setOrigin(0, .5).setTint(0xA6CAF0)
 
+    if (powerInRange(tile.xy)) {
+      var answer = 'Yes'
+    } else {
+      var answer = 'No'
+    }
+    this.powerText = this.add.bitmapText(25, 1475, 'topaz', 'Powered: ' + answer, 40).setOrigin(0, .5).setTint(0xA6CAF0)
 
     var distance = getDistanceBonus(this.mapXY)
 
-    this.distanceText = this.add.bitmapText(25, 1375, 'topaz', 'D Bonus: ' + distance, 40).setOrigin(0, .5).setTint(0x000000)
+    this.distanceText = this.add.bitmapText(450, 1575, 'topaz', 'D Bonus: ' + distance, 40).setOrigin(0, .5).setTint(0x000000)
     var dwater = distanceFromOpenWater(this.mapXY, 5)
-    this.nearWaterText = this.add.bitmapText(25, 1475, 'topaz', 'Near Water: ' + dwater, 40).setOrigin(0, .5).setTint(0x000000)
+    this.nearWaterText = this.add.bitmapText(25, 1575, 'topaz', 'Near Water: ' + dwater, 40).setOrigin(0, .5).setTint(0x000000)
 
     this.airPollutionText = this.add.bitmapText(450, 1175, 'topaz', 'Air P: ' + tile.pollution[0], 40).setOrigin(0, .5).setTint(0xA6CAF0)
     this.airPollutionText = this.add.bitmapText(450, 1275, 'topaz', 'Water P: ' + tile.pollution[1], 40).setOrigin(0, .5).setTint(0xA6CAF0)
-    this.crimeText = this.add.bitmapText(450, 1375, 'topaz', 'Crime: ' + 0, 40).setOrigin(0, .5).setTint(0xA6CAF0)
+    this.crimeText = this.add.bitmapText(450, 1375, 'topaz', 'Crime: ' + tile.crime, 40).setOrigin(0, .5).setTint(0xA6CAF0)
     var lv = getLandValue(this.mapXY)
-    if (lv.landvalue < gameRules.lvLow) {
+    if (lv.lvIndex == 0) {
       var t = 'low'
-    } else if (lv.landvalue < gameRules.lvMed) {
+    } else if (lv.lvIndex == 1) {
       var t = 'med'
     } else {
       var t = 'high'
