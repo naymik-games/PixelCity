@@ -622,6 +622,7 @@ function tryDriveTo(point, target, density) {
   } else if (target == 'ind') {
     var target1 = getRandomIndTile()
   }
+  if (target1 == null) { return }
   var route = [];
 
   //Maximum steps to try driving to destination
@@ -795,6 +796,10 @@ function getTilesInRange(point, range) {
 
 function getRandomIndTile() {
 
+  var ind = sim.gameData.zoneCounts[6] + sim.gameData.zoneCounts[7] + sim.gameData.zoneCounts[8]
+  if (ind == 0) {
+    return null
+  }
   var found = false
   while (!found) {
     var ranX = Phaser.Math.Between(0, sim.gameData.mapConfig.width - 1)
@@ -807,6 +812,10 @@ function getRandomIndTile() {
 }
 function getRandomResTile() {
 
+  var res = sim.gameData.zoneCounts[0] + sim.gameData.zoneCounts[1] + sim.gameData.zoneCounts[2]
+  if (res == 0) {
+    return null
+  }
   var found = false
   while (!found) {
     var ranX = Phaser.Math.Between(0, sim.gameData.mapConfig.width - 1)
@@ -818,7 +827,10 @@ function getRandomResTile() {
   }
 }
 function getRandomComTile() {
-
+  var com = sim.gameData.zoneCounts[3] + sim.gameData.zoneCounts[4] + sim.gameData.zoneCounts[5]
+  if (com == 0) {
+    return null
+  }
   var found = false
   while (!found) {
     var ranX = Phaser.Math.Between(0, sim.gameData.mapConfig.width - 1)
