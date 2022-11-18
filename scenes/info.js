@@ -123,7 +123,10 @@ class Info extends Phaser.Scene {
     this.airPollutionText = this.add.bitmapText(450, 1175, 'topaz', 'Air P: ' + tile.pollution[0], 40).setOrigin(0, .5).setTint(0xA6CAF0)
     this.airPollutionText = this.add.bitmapText(450, 1275, 'topaz', 'Water P: ' + tile.pollution[1], 40).setOrigin(0, .5).setTint(0xA6CAF0)
     this.crimeText = this.add.bitmapText(450, 1375, 'topaz', 'Crime: ' + tile.crime, 40).setOrigin(0, .5).setTint(0xA6CAF0)
+    var pir = policeInRange(tile.xy)
+    console.log(pir)
     var lv = getLandValue(this.mapXY)
+    console.log(lv)
     if (lv.lvIndex == 0) {
       var t = 'low'
     } else if (lv.lvIndex == 1) {

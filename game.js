@@ -14,10 +14,11 @@ window.onload = function () {
     //pixelArt: true,
     // roundPixels: true,
 
+
     dom: {
       createContainer: true
     },
-    scene: [preloadGame, startGame, playGame, UI, Menu, Info, People, Rci, Power, Finance]
+    scene: [preloadGame, startGame, playGame, UI, Menu, Info, People, Rci, Power, Finance, Settings]
   }
   game = new Phaser.Game(gameConfig);
   window.focus();

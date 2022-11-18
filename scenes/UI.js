@@ -382,9 +382,9 @@ class UI extends Phaser.Scene {
 
 
 
-    var homeIcon = this.add.image(825, 1525, 'home').setOrigin(.5).setScale(3).setInteractive();
+    var homeIcon = this.add.image(825, 1575, 'settings').setOrigin(.5).setScale(3.5).setInteractive();
     homeIcon.on('pointerdown', function () {
-      this.scene.launch('Power')
+      this.scene.launch('Settings')
       this.scene.pause()
       this.scene.pause('playGame')
       this.scene.pause('Menu')

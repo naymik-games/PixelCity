@@ -58,7 +58,7 @@ class startGame extends Phaser.Scene {
     //////////////////////////////////////////////////////////////////
 
 
-    this.sizeRadioContainer = this.add.container(0, 150)
+    this.sizeRadioContainer = this.add.container(0, 125)
     this.sizeRadios = []
 
     var sizeRadioLabel = this.add.text(100, 0, 'City Size', { fontFamily: 'PixelFont', fontSize: '30px', fontStyle: 'bold', color: '#CAD4D8', align: 'left' }).setOrigin(0, .5).setInteractive();
@@ -112,7 +112,7 @@ class startGame extends Phaser.Scene {
     this.water = 1
 
 
-    this.waterRadioContainer = this.add.container(0, 400)
+    this.waterRadioContainer = this.add.container(0, 425)
     this.waterRadios = []
 
     var waterRadioLabel = this.add.text(100, 0, 'Water Amount', { fontFamily: 'PixelFont', fontSize: '30px', fontStyle: 'bold', color: '#CAD4D8', align: 'left' }).setOrigin(0, .5).setInteractive();
@@ -159,7 +159,7 @@ class startGame extends Phaser.Scene {
     //////////////////////////////////////////////////////////////////
     this.seed = 3990765355
     this.terrainRadios = []
-    this.seedContainer = this.add.container(0, 650)
+    this.seedContainer = this.add.container(0, 750)
     var seedLabel = this.add.text(100, 0, 'Terrain Seed', { fontFamily: 'PixelFont', fontSize: '30px', fontStyle: 'bold', color: '#CAD4D8', align: 'left' }).setOrigin(0, .5).setInteractive();
     this.seedContainer.add(seedLabel)
 
@@ -203,12 +203,46 @@ class startGame extends Phaser.Scene {
     radioDText.on('pointerdown', function () {
       this.seedHandler(2)
     }, this);
-
+    //////////////////////////////////////////////////
+    // difficulty
+    //////////////////////////////////////////////////
+    this.diffRadios = []
+    this.diff = 1
+    this.diffContainer = this.add.container(0, 1050)
+    var diffLabel = this.add.text(100, 0, 'Difficulty', { fontFamily: 'PixelFont', fontSize: '30px', fontStyle: 'bold', color: '#CAD4D8', align: 'left' }).setOrigin(0, .5).setInteractive();
+    this.diffContainer.add(diffLabel)
+    //
+    var radioD1 = this.add.image(50, 75, 'radio', 3)
+    this.diffContainer.add(radioD1)
+    this.diffRadios.push(radioD1)
+    var radioD1Text = this.add.text(radioD1.x + 50, 75, 'Easy', { fontFamily: 'PixelFont', fontSize: '30px', color: '#CAD4D8', align: 'left' }).setOrigin(0, .5).setInteractive();
+    this.diffContainer.add(radioD1Text)
+    radioD1Text.on('pointerdown', function () {
+      this.diffHandler(0)
+    }, this);
+    //
+    var radioD2 = this.add.image(325, 75, 'radio', 2)
+    this.diffContainer.add(radioD2)
+    this.diffRadios.push(radioD2)
+    var radioD2Text = this.add.text(radioD2.x + 50, 75, 'Medium', { fontFamily: 'PixelFont', fontSize: '30px', color: '#CAD4D8', align: 'left' }).setOrigin(0, .5).setInteractive();
+    this.diffContainer.add(radioD2Text)
+    radioD2Text.on('pointerdown', function () {
+      this.diffHandler(1)
+    }, this);
+    //
+    var radioD3 = this.add.image(660, 75, 'radio', 3)
+    this.diffContainer.add(radioD3)
+    this.diffRadios.push(radioD3)
+    var radioD3Text = this.add.text(radioD3.x + 50, 75, 'Hard', { fontFamily: 'PixelFont', fontSize: '30px', color: '#CAD4D8', align: 'left' }).setOrigin(0, .5).setInteractive();
+    this.diffContainer.add(radioD3Text)
+    radioD3Text.on('pointerdown', function () {
+      this.diffHandler(2)
+    }, this);
     //////////////////////////////////////////////////////////////////
     // NEW GAME
     //////////////////////////////////////////////////////////////////
 
-    var newGameButton = this.add.image(game.config.width / 2, 925, 'start_buttons', 0).setScale(1.5)
+    var newGameButton = this.add.image(game.config.width / 2, 1225, 'start_buttons', 0).setScale(1.5)
     //var newGameButton = this.add.text(game.config.width / 2, 1025, 'New Game', { fontFamily: 'PixelFont', fontSize: '50px', color: '#CAD4D8', align: 'center' }).setOrigin(.5);
     newGameButton.setInteractive();
     newGameButton.on('pointerdown', this.clickHandler, this);
@@ -302,15 +336,26 @@ class startGame extends Phaser.Scene {
     }
     //this.water = radio
   }
+  diffHandler(radio) {
+    for (var i = 0; i < this.diffRadios.length; i++) {
+      this.diffRadios[i].setFrame(3)
+    }
+    this.diffRadios[radio].setFrame(2)
+    this.diff = radio
+  }
   clickHandler() {
     mapLoad = 'new'
     mapConfig.water = this.water
     mapConfig.seed = this.seed
+    gameStats.funds = fundsLevel[this.diff]
+    gameStats.difficulty = this.diff
+    this.scene.stop()
     this.scene.start('playGame');
     this.scene.launch('Menu');
   }
   clickHandler2() {
     mapLoad = 'load'
+    this.scene.stop()
     this.scene.start('playGame');
     this.scene.launch('Menu');
   }

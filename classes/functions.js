@@ -160,6 +160,34 @@ function removeCrime(point, data) {
 function addPoliceStation(mapXY, id, yearAdded) {
   sim.gameData.policeStations.push([mapXY, id, yearAdded])
 }
+function policeInRange(point) {
+  //0 1 5
+  var ps = 0
+  // var ph = 0
+  var policePer = sim.gameData.maintenanceCostsPer[14]
+  var radPS = 10 - getCovSub(policePer)
+
+  var radPH = 15 - getCovSub(policePer)
+
+  var tiles = getTilesInRange(point, radPS)
+  for (var i = 0; i < tiles.length; i++) {
+    if (tiles[i].menu == 2 && tiles[i].parentMenu == 3) {
+      ps++
+    }
+  }
+  var tiles = getTilesInRange(point, radPH)
+  for (var i = 0; i < tiles.length; i++) {
+    if (tiles[i].menu == 5 && tiles[i].parentMenu == 3) {
+      ps += 2
+    }
+  }
+  return ps
+  /* if (ps || ph) {
+    return true
+  } else {
+    return false
+  } */
+}
 ////////////////////////////////////////////////////////////////////////////////////////
 // POLLUTION
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -258,28 +286,43 @@ function getLandValue(point) {
   var tile = grid[point.y][point.x]
   var distance = getDistanceBonus(tile.xy)
   var dwater = distanceFromOpenWater(tile.xy, 5)
+  //BASE
+  lvObject.base = gameRules.baseLV
   lvObject.distance = distance
   lvObject.global = sim.gameData.globalLV[0]
-  var landvalue = distance + sim.gameData.globalLV[0]
+  //START
+  var landvalueStart = distance + sim.gameData.globalLV[0] + gameRules.baseLV
   //console.log('lv dis glob: ' + landvalue)
   if (dwater <= 5.1) {
-    var waterBonus = landvalue * (.5 / dwater)
+    var waterBonus = landvalueStart * (.5 / dwater)
   } else {
     var waterBonus = 0
   }
   lvObject.waterBonus = Math.round(waterBonus)
-  landvalue = landvalue + Math.round(waterBonus)
+
+  //ADD WATER
+  var landvalue = landvalueStart + Math.round(waterBonus)
   //landvalue = clamp(landvalue, 0, 255)
 
   // console.log('lv water: ' + landvalue)
+  //ADD LOCAL
   landvalue += tile.localLandValue
   lvObject.local = tile.localLandValue
+
+  var finalCrime = tile.crime - policeInRange(tile.xy)
+  var crimeAdder = getCrimeEffect(finalCrime)
+  //ADD CRIME
+  landvalue += crimeAdder
+  lvObject.crimeadder = crimeAdder
   //console.log('lv local: ' + landvalue + ' (' + tile.localLandValue + ')')
-  /* var pollutionadder = getAirPollutionEffect(tile.pollution[0], landvalue)
+  var pollutionadder = getAirPollutionEffect(tile.pollution[0], landvalueStart)
+
+  //ADD AIR POLLUTION
   landvalue = landvalue + pollutionadder
-  lvObject.airpol = pollutionadder */
+  lvObject.airpol = pollutionadder
   //console.log('lv 3: ' + landvalue + ' (' + pollutionadder + ')')
-  var wpolladder = getWaterPollutionEffect(tile.pollution[1], landvalue)
+  var wpolladder = getWaterPollutionEffect(tile.pollution[1], landvalueStart)
+  //ADD WATER POLLUTION
   landvalue = landvalue + wpolladder
   lvObject.waterpol = wpolladder
   //console.log('lv 4: ' + landvalue + ' (' + wpolladder + ')')
@@ -375,6 +418,15 @@ function getAirPollutionEffect(pollution, landvalue) {
     var p3 = p2 / gameRules.apNormal
     var pollutionadd = (landvalue * p3) / 4
     return Math.round(pollutionadd)
+  }
+}
+function getCrimeEffect(crime) {
+  if (gameRules.crimeNormal >= crime) {
+    var diff = gameRules.crimeNormal - crime
+    return diff * 10
+  } else {
+    var diff = crime - gameRules.crimeNormal
+    return (diff * 10) * -1
   }
 }
 function getWaterPollutionEffect(pollution, landvalue) {

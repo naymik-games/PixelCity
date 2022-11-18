@@ -75,6 +75,7 @@ let gameStats = {
   funds: 100000,
   population: 100,
   maxPlotSize: 1,
+  difficulty: 0,
   globalLV: [0, 0, 0, 0],
   specialJobs: 0,
   powerPlants: [],
@@ -91,14 +92,19 @@ let gameStats = {
 
 let gameRules = {
   roadRange: 4,
+  startingFunds: 100000,
   dayLength: 24000,
   apNormal: 1500,
   wpNormal: 1000,
+  crimeNormal: 8,
   lvLow: 200,
   lvMed: 350,
+  baseLV: 50
+
+
 
 }
-
+let fundsLevel = [100000, 75000, 50000]
 let zoneSizeTable = [0, 1, 4, 9, 16, 25, 36, 49, 64]
 let GM = {
   road: 0,
