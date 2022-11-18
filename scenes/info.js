@@ -42,6 +42,21 @@ class Info extends Phaser.Scene {
       console.log(tile)
     }
 
+
+    /*  var color1 = {
+       red: 19, green: 233, blue: 19
+     };
+     var color3 = {
+       red: 255, green: 0, blue: 0
+     };
+     var color2 = {
+       red: 255, green: 255, blue: 0
+     };
+     var col = colorGradient(.99, color3, color2, color1)
+     console.log(col)
+ 
+     var tescolor = this.add.image(850, 1100, 'blank').setTint(col) */
+
     console.log(tile.buildingData.name)
     //thumb
     this.thumbIcon = this.add.image(25, 1100, tile.building.sheet, tile.building.frame).setOrigin(0, 1)

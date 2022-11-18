@@ -895,20 +895,21 @@ let buildMenu = [
         index: 0,
         sheet: 'utilitiesx1',
         size: 1,
-        cost: 100,
+        cost: 1000,
         action: 'place',
         zone: 10,
         parentMenu: 2,
         airPollution: 0,
-        airPollutionRadius: 0,
-        waterPollution: 0,
-        waterPollutionRadius: 0,
+        airPollutionRadius: 1,
+        waterPollution: 5,
+        waterPollutionRadius: 1,
         garbage: 0,
         jobs: 0,
-        globalLV: [-5, -2, 0, 0],//res,com,ind, other
-        localLV: 0,
-        maintenance: 100,
+        globalLV: [-1, -1, 0, 0],//res,com,ind, other
+        localLV: -5,
+        capacity: 6000,
         waterRange: 7,
+        maintenance: 1000,
         crime: 0,
         crimeRadius: 0
       },
@@ -918,20 +919,21 @@ let buildMenu = [
         index: 1,
         sheet: 'utilitiesx1',
         size: 1,
-        cost: 100,
+        cost: 1500,
         action: 'place',
         zone: 10,
         parentMenu: 2,
         airPollution: 8,
         airPollutionRadius: 3,
         waterPollution: 0,
-        waterPollutionRadius: 0,
+        waterPollutionRadius: 1,
         garbage: 0,
-        jobs: 0,
-        globalLV: [-10, 0, 0, 0],//res,com,ind, other
-        localLV: 0,
-        maintenance: 150,
-        waterRange: 11,
+        jobs: 1,
+        globalLV: [-1, -1, 0, 0],//res,com,ind, other
+        localLV: -10,
+        capacity: 1000,
+        waterRange: 10,
+        maintenance: 1000,
         crime: 0,
         crimeRadius: 0
       },
@@ -946,9 +948,9 @@ let buildMenu = [
         zone: 12,
         parentMenu: 2,
         airPollution: 0,
-        airPollutionRadius: 0,
+        airPollutionRadius: 1,
         waterPollution: 0,
-        waterPollutionRadius: 0,
+        waterPollutionRadius: 1,
         garbage: 0,
         jobs: 0,
         globalLV: [-10, 3, 0, 0],//res,com,ind, other
@@ -1004,25 +1006,26 @@ let buildMenu = [
         crimeRadius: 0
       },
       {
-        name: 'Large Water Tower',
+        name: 'Water Pump',
         id: 5,
         index: 3,
         sheet: 'utilitiesx2',
         size: 2,
-        cost: 1000,
+        cost: 2500,
         action: 'place',
         zone: 10,
         parentMenu: 2,
-        airPollution: 0,
-        airPollutionRadius: 0,
+        airPollution: 8,
+        airPollutionRadius: 3,
         waterPollution: 0,
-        waterPollutionRadius: 0,
+        waterPollutionRadius: 1,
         garbage: 0,
-        jobs: 0,
-        globalLV: [-10, -4, 0, 0],//res,com,ind, other
-        localLV: 0,
-        maintenance: 125,
-        waterRange: 12,
+        jobs: 1,
+        globalLV: [-1, -1, 0, 0],//res,com,ind, other
+        localLV: -20,
+        capacity: 2000,
+        waterRange: 13,
+        maintenance: 1500,
         crime: 0,
         crimeRadius: 0
       },
@@ -1037,9 +1040,9 @@ let buildMenu = [
         zone: 9,
         parentMenu: 2,
         airPollution: 0,
-        airPollutionRadius: 0,
+        airPollutionRadius: 1,
         waterPollution: 0,
-        waterPollutionRadius: 0,
+        waterPollutionRadius: 1,
         garbage: 0,
         jobs: 1,
         globalLV: [0, 0, 0, 0],//res,com,ind, other
@@ -1061,9 +1064,9 @@ let buildMenu = [
         zone: 9,
         parentMenu: 2,
         airPollution: 0,
-        airPollutionRadius: 0,
+        airPollutionRadius: 1,
         waterPollution: 0,
-        waterPollutionRadius: 0,
+        waterPollutionRadius: 1,
         garbage: 0,
         jobs: 1,
         globalLV: [0, 0, 0, 0],//res,com,ind, other
@@ -1628,14 +1631,15 @@ let buildMenu = [
         action: 'place',
         zone: 21,
         parentMenu: 5,
-        airPollution: 0,
-        airPollutionRadius: 0,
-        waterPollution: 0,
-        waterPollutionRadius: 0,
+        airPollution: 1,
+        airPollutionRadius: 1,
+        waterPollution: 5,
+        waterPollutionRadius: 2,
         garbage: 1,
         jobs: 1,
         globalLV: [12, 25, 0, 0],//res,com,ind, other
         localLV: 5,
+        maintenance: 0,
         crime: 0,
         crimeRadius: 0
       },
@@ -1650,13 +1654,14 @@ let buildMenu = [
         zone: 21,
         parentMenu: 5,
         airPollution: 0,
-        airPollutionRadius: 0,
+        airPollutionRadius: 1,
         waterPollution: 0,
-        waterPollutionRadius: 0,
+        waterPollutionRadius: 1,
         garbage: 1,
         jobs: 1,
         globalLV: [12, 25, 0, 0],//res,com,ind, other
         localLV: 5,
+        maintenance: 100,
         crime: 1,
         crimeRadius: 2
       },
@@ -1678,6 +1683,7 @@ let buildMenu = [
         jobs: 10,
         globalLV: [5, 55, 0, 15],//res,com,ind, other
         localLV: 25,
+        maintenance: 100,
         crime: 2,
         crimeRadius: 3
 
@@ -1700,6 +1706,7 @@ let buildMenu = [
         jobs: 8,
         globalLV: [5, 40, 0, 15],//res,com,ind, other
         localLV: 15,
+        maintenance: 100,
         crime: 2,
         crimeRadius: 3
 
@@ -1722,6 +1729,7 @@ let buildMenu = [
         jobs: 1,
         globalLV: [3, 15, 0, 10],//res,com,ind, other
         localLV: 10,
+        maintenance: 100,
         crime: 1,
         crimeRadius: 1
 
@@ -1744,6 +1752,7 @@ let buildMenu = [
         jobs: 50,
         globalLV: [10, 25, 5, 20],//res,com,ind, other
         localLV: 15,
+        maintenance: 100,
         crime: 1,
         crimeRadius: 2
 
@@ -1766,6 +1775,7 @@ let buildMenu = [
         jobs: 4,
         globalLV: [5, 10, 0, 10],//res,com,ind, other
         localLV: 25,
+        maintenance: 100,
         crime: 0,
         crimeRadius: 0
 
@@ -1781,13 +1791,14 @@ let buildMenu = [
         zone: 21,
         parentMenu: 5,
         airPollution: 0,
-        airPollutionRadius: 0,
+        airPollutionRadius: 1,
         waterPollution: 0,
-        waterPollutionRadius: 0,
+        waterPollutionRadius: 1,
         garbage: 0,
         jobs: 3,
         globalLV: [15, 15, 15, 15],//res,com,ind, other
         localLV: 35,
+        maintenance: 100,
         crime: 0,
         crimeRadius: 0
 
@@ -1803,13 +1814,14 @@ let buildMenu = [
         zone: 21,
         parentMenu: 5,
         airPollution: 0,
-        airPollutionRadius: 0,
+        airPollutionRadius: 1,
         waterPollution: 0,
-        waterPollutionRadius: 0,
+        waterPollutionRadius: 1,
         garbage: 0,
         jobs: 0,
         globalLV: [15, 15, 0, 15],//res,com,ind, other
         localLV: 45,
+        maintenance: 100,
         crime: 4,
         crimeRadius: 5
 
@@ -1825,9 +1837,9 @@ let buildMenu = [
         zone: 21,
         parentMenu: 5,
         airPollution: 0,
-        airPollutionRadius: 0,
+        airPollutionRadius: 1,
         waterPollution: 0,
-        waterPollutionRadius: 0,
+        waterPollutionRadius: 1,
         garbage: 0,
         jobs: 4,
         globalLV: [20, 20, 0, 20],//res,com,ind, other
@@ -1847,13 +1859,14 @@ let buildMenu = [
         zone: 21,
         parentMenu: 5,
         airPollution: 0,
-        airPollutionRadius: 0,
+        airPollutionRadius: 1,
         waterPollution: 0,
-        waterPollutionRadius: 0,
+        waterPollutionRadius: 1,
         garbage: 0,
         jobs: 2,
         globalLV: [10, 10, 0, 5],//res,com,ind, other
         localLV: 17,
+        maintenance: 0,
         crime: 0,
         crimeRadius: 0
 
@@ -1876,6 +1889,7 @@ let buildMenu = [
         jobs: 8,
         globalLV: [0, 30, 0, 5],//res,com,ind, other
         localLV: 5,
+        maintenance: 500,
         crime: 4,
         crimeRadius: 7
 
@@ -1891,13 +1905,14 @@ let buildMenu = [
         zone: 21,
         parentMenu: 5,
         airPollution: 0,
-        airPollutionRadius: 0,
+        airPollutionRadius: 1,
         waterPollution: 0,
-        waterPollutionRadius: 0,
+        waterPollutionRadius: 1,
         garbage: 10,
         jobs: 45,
         globalLV: [70, 13, 70, 5],//res,com,ind, other
         localLV: 20,
+        maintenance: 0,
         crime: 5,
         crimeRadius: 9
 
@@ -1913,13 +1928,14 @@ let buildMenu = [
         zone: 21,
         parentMenu: 5,
         airPollution: 0,
-        airPollutionRadius: 0,
+        airPollutionRadius: 1,
         waterPollution: 0,
-        waterPollutionRadius: 0,
+        waterPollutionRadius: 1,
         garbage: 0,
         jobs: 2,
         globalLV: [10, 10, 0, 5],//res,com,ind, other
         localLV: 17,
+        maintenance: 0,
         crime: 0,
         crimeRadius: 0
 
@@ -1934,8 +1950,17 @@ let buildMenu = [
         action: 'place',
         zone: 21,
         parentMenu: 5,
-        crime: 0,
-        crimeRadius: 0
+        airPollution: -100,
+        airPollutionRadius: 5,
+        waterPollution: 100,
+        waterPollutionRadius: 4,
+        garbage: 100,
+        jobs: 4,
+        globalLV: [25, 25, 0, 10],//res,com,ind, other
+        localLV: 50,
+        maintenance: 175,
+        crime: 1,
+        crimeRadius: 2
 
       },
       {

@@ -20,11 +20,11 @@ class Sim {
     var cI = getComTaxIncome()
     var iI = getIndTaxIncome()
     var tI = rI + cI + iI
-    //console.log('Total Income: ' + tI)
+    console.log('Total Income: ' + tI)
     var tM = getTotalMaintenanceCost()
-    //  console.log('Total Cost: ' + tM)
+    console.log('Total Cost: ' + tM)
     var balance = tI - tM
-    // console.log('Balance: ' + balance)
+    console.log('Balance: ' + balance)
     this.gameData.funds += balance
   }
   updateRCI() {
