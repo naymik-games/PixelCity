@@ -99,7 +99,9 @@ let gameRules = {
   crimeNormal: 8,
   lvLow: 200,
   lvMed: 350,
-  baseLV: 50
+  baseLV: 50,
+  psRadius: 10,
+  phRadius: 15
 
 
 

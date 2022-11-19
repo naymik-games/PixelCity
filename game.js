@@ -361,6 +361,15 @@ class playGame extends Phaser.Scene {
       removeGlobalLandValue(buildMenu[tile.parentMenu].subMenu[tile.menu])
       removeLocalLandValue(point, buildMenu[tile.parentMenu].subMenu[tile.menu])
       removeCrime(point, buildMenu[tile.parentMenu].subMenu[tile.menu])
+      if (tile.zone == 14) {
+        removePoliceStation(point)
+      }
+      if (tile.zone == 10) {
+        removeWaterPlant(point)
+      }
+      if (tile.zone == 9) {
+        removePowerPlant(point)
+      }
       sim.gameData.specialJobs -= buildMenu[tile.parentMenu].subMenu[tile.menu].jobs
       tileIMG.building = null
 
@@ -1313,9 +1322,9 @@ class playGame extends Phaser.Scene {
         var plantID = sim.gameData.policeStations[i][1]
         var plant = buildMenu[2].subMenu[plantID]
         if (plantID == 2) {
-          var rad = 10 - getCovSub(policePer)
+          var rad = gameRules.psRadius - getCovSub(policePer)
         } else if (plantID == 5) {
-          var rad = 15 - getCovSub(policePer)
+          var rad = gameRules.phRadius - getCovSub(policePer)
         }
         console.log(rad)
         this.drawDataTileSize(sim.gameData.policeStations[i][0], rad)

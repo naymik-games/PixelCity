@@ -37,7 +37,30 @@ function addPowerPlant(mapXY, id, yearAdded) {
 function addWaterPlant(mapXY, id, yearAdded) {
   sim.gameData.waterPlants.push([mapXY, id, yearAdded])
 }
-
+function removePowerPlant(mapxy) {
+  var ind = -1
+  for (var i = 0; i < sim.gameData.powerPlants.length; i++) {
+    var station = sim.gameData.powerPlants[i][0]
+    if (station.x == mapxy.x && station.y == mapxy.y) {
+      ind = i
+    }
+  }
+  if (ind > -1) {
+    sim.gameData.powerPlants.splice(ind, 1)
+  }
+}
+function removeWaterPlant(mapxy) {
+  var ind = -1
+  for (var i = 0; i < sim.gameData.waterPlants.length; i++) {
+    var station = sim.gameData.waterPlants[i][0]
+    if (station.x == mapxy.x && station.y == mapxy.y) {
+      ind = i
+    }
+  }
+  if (ind > -1) {
+    sim.gameData.waterPlants.splice(ind, 1)
+  }
+}
 function waterInRange(point) {
   //0 1 5
   var smallTower = false
@@ -160,14 +183,26 @@ function removeCrime(point, data) {
 function addPoliceStation(mapXY, id, yearAdded) {
   sim.gameData.policeStations.push([mapXY, id, yearAdded])
 }
+function removePoliceStation(mapxy) {
+  var ind = -1
+  for (var i = 0; i < sim.gameData.policeStations.length; i++) {
+    var station = sim.gameData.policeStations[i][0]
+    if (station.x == mapxy.x && station.y == mapxy.y) {
+      ind = i
+    }
+  }
+  if (ind > -1) {
+    sim.gameData.policeStations.splice(ind, 1)
+  }
+}
 function policeInRange(point) {
   //0 1 5
   var ps = 0
   // var ph = 0
   var policePer = sim.gameData.maintenanceCostsPer[14]
-  var radPS = 10 - getCovSub(policePer)
+  var radPS = gameRules.phRadius - getCovSub(policePer)
 
-  var radPH = 15 - getCovSub(policePer)
+  var radPH = gameRules.phRadius - getCovSub(policePer)
 
   var tiles = getTilesInRange(point, radPS)
   for (var i = 0; i < tiles.length; i++) {
@@ -181,12 +216,27 @@ function policeInRange(point) {
       ps += 2
     }
   }
+  //console.log(ps)
   return ps
   /* if (ps || ph) {
     return true
   } else {
     return false
   } */
+}
+function getCrimeAfterCoverage(point, crime) {
+  var crimefighting = policeInRange(point)
+  var finalCrime = 0
+  if (crimefighting == 0) {
+    finalCrime = crime
+  } else if (crimefighting == 1) {
+    finalCrime = crime * .75
+  } else if (crimefighting == 2) {
+    finalCrime = crime * .5
+  } else if (crimefighting >= 3) {
+    finalCrime = crime * .25
+  }
+  return finalCrime
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 // POLLUTION
@@ -308,10 +358,12 @@ function getLandValue(point) {
   //ADD LOCAL
   landvalue += tile.localLandValue
   lvObject.local = tile.localLandValue
-
-  var finalCrime = tile.crime - policeInRange(tile.xy)
-  var crimeAdder = getCrimeEffect(finalCrime)
   //ADD CRIME
+
+  var finalCrime = getCrimeAfterCoverage(tile.xy, tile.crime)
+  lvObject.finalCrime = finalCrime
+  var crimeAdder = getCrimeEffect(finalCrime)
+
   landvalue += crimeAdder
   lvObject.crimeadder = crimeAdder
   //console.log('lv local: ' + landvalue + ' (' + tile.localLandValue + ')')
