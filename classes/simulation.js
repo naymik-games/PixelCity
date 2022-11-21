@@ -51,8 +51,11 @@ class Sim {
 
     var employment = (totalCCapacity + totalICapacity + specialJobs) / workers //availble jobs to workers ratio
     var migration = Math.floor((workers * (employment - 1)) * 2) //works times ratio to project new jobs. times 2 for residents
-    var births = this.gameData.population * 0.02 //new pop from births
+
+    var rand = Phaser.Math.Between(0, birthRates.length - 1)
+    var births = Math.round(this.gameData.population * birthRates[rand]) //new pop from births
     var newPop = migration + births
+    console.log('births: ' + births + ' migration: ' + migration)
     var projectedPop = this.gameData.population + migration + births // projected population
     // var employmentText = this.add.bitmapText(25, 1310, 'topaz', 'Employment: ' + employment + ' Migration: ' + migration + ' \nBirths: ' + births + ' Projected pop: ' + projectedPop, 40).setOrigin(0, .5).setTint(0x000000).setInteractive();
 
@@ -146,8 +149,12 @@ class Sim {
     //console.log('new proj pop: ' + newPop)
 
     var availableHousing = totalRCapacity - this.gameData.population
-    var r = clamp(newPop, -20, availableHousing)
-    this.gameData.population += Math.ceil(r)
+
+    var r = clamp(migration, -20, availableHousing + births)
+    console.log('births: ' + births + ' migration: ' + migration + ' migration adj: ' + r)
+
+    this.gameData.population += Math.ceil(r + births)
+    this.updatePopulation(births, r)
     //}
   }
   getTotalResCapacity() {
@@ -167,5 +174,21 @@ class Sim {
     var miCapacity = this.gameData.zoneCounts[7] * 61 //75 jobs per tile
     var hiCapacity = this.gameData.zoneCounts[8] * 127 //75 jobs per tile
     return liCapacity + miCapacity + hiCapacity
+  }
+  updatePopulation(births, migration) {
+    var EQ = getEq()
+    var wEQ = EQ.wfEQ
+    this.gameData.generations.pop()
+    var born = {
+      added: this.gameData.year,
+      count: 2,
+      HQ: 80.10,
+      EQ: wEQ / 5,
+    }
+
+    this.gameData.generations.unshift(born)
+
+    eqDecay()
+    parentalEducation()
   }
 }

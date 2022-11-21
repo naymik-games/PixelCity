@@ -1209,7 +1209,7 @@ let buildMenu = [
         index: 0,
         sheet: 'healthx1',
         size: 1,
-        cost: 100,
+        cost: 175,
         action: 'place',
         zone: 13,
         parentMenu: 3,
@@ -1221,9 +1221,10 @@ let buildMenu = [
         jobs: 8,
         globalLV: [5, 5, 5, 5],
         localLV: 7,
-        maintenance: 400,
+        maintenance: 300,
         crime: 1,
-        crimeRadius: 2
+        crimeRadius: 2,
+        patients: 500
       },
       {
         name: 'Hospital',
@@ -1231,21 +1232,22 @@ let buildMenu = [
         index: 1,
         sheet: 'healthx2',
         size: 2,
-        cost: 100,
+        cost: 500,
         action: 'place',
         zone: 13,
         parentMenu: 3,
-        airPollution: 100,
-        airPollutionRadius: 10,
+        airPollution: 200,
+        airPollutionRadius: 5,
         waterPollution: 720,
-        waterPollutionRadius: 5,
+        waterPollutionRadius: 3,
         garbage: 216,
         jobs: 12,
         globalLV: [0, 5, 5, 5],
         localLV: 10,
-        maintenance: 1200,
+        maintenance: 600,
         crime: 2,
-        crimeRadius: 2
+        crimeRadius: 2,
+        patients: 1500
       },
       {
         name: 'Police Station',
@@ -1297,21 +1299,22 @@ let buildMenu = [
         index: 1,
         sheet: 'healthx4',
         size: 4,
-        cost: 100,
+        cost: 3000,
         action: 'place',
         zone: 13,
         parentMenu: 3,
         airPollution: 400,
-        airPollutionRadius: 15,
+        airPollutionRadius: 7,
         waterPollution: 1000,
         waterPollutionRadius: 8,
         garbage: 500,
         jobs: 24,
         globalLV: [15, 15, 5, 5],
         localLV: 10,
-        maintenance: 11000,
+        maintenance: 1100,
         crime: 2,
-        crimeRadius: 3
+        crimeRadius: 3,
+        patients: 4500
       },
       {
         name: 'Police Headquarters',
@@ -1393,7 +1396,7 @@ let buildMenu = [
         index: 0,
         sheet: 'E_tilesx3',
         size: 3,
-        cost: 100,
+        cost: 500,
         action: 'place',
         zone: 16,
         parentMenu: 4,
@@ -1405,9 +1408,10 @@ let buildMenu = [
         jobs: 11,
         globalLV: [10, 10, 0, 0],
         localLV: 15,
-        maintenance: 400,
+        maintenance: 360,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capacity: 3000
       },
       {
         name: 'High School',
@@ -1415,7 +1419,7 @@ let buildMenu = [
         index: 2,
         sheet: 'E_tilesx4',
         size: 4,
-        cost: 100,
+        cost: 1500,
         action: 'place',
         zone: 16,
         parentMenu: 4,
@@ -1429,7 +1433,8 @@ let buildMenu = [
         localLV: 15,
         maintenance: 1050,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capacity: 7000
       },
       {
         name: 'Library',

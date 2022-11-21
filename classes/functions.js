@@ -238,6 +238,26 @@ function getCrimeAfterCoverage(point, crime) {
   }
   return finalCrime
 }
+function getAverageCrime() {
+  var count = 0
+  var totalC = 0
+  for (var y = 0; y < mapConfig.height; y++) {
+    for (var x = 0; x < mapConfig.width; x++) {
+      var tile = grid[y][x]
+      if (tile.hasBuilding) {
+
+        totalC += tile.crime
+        count++
+      }
+
+    }
+  }
+  console.log('total' + totalC + 'count ' + count)
+  /*  if (totalC < 1) {
+     totalC = 1
+   } */
+  return Math.round(totalC / count)
+}
 ////////////////////////////////////////////////////////////////////////////////////////
 // POLLUTION
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -886,7 +906,60 @@ function getDensityMultiplier(zone) {
     return 3
   }
 }
+////////////////////////////////////////////////////////////////////////////////////////
+// EDUCATION
+////////////////////////////////////////////////////////////////////////////////////////
+function addSchool(capacity) {
+  sim.gameData.schoolCapacity += capacity
+}
+function removeSchool(capacity) {
+  sim.gameData.schoolCapacity -= capacity
+}
+function getEq() {
 
+  var wfEqTotal = 0
+  var pEqTotal = 0
+  for (var i = 0; i < sim.gameData.generations.length; i++) {
+    if (i > 4 && i < 13) {
+      wfEqTotal += sim.gameData.generations[i].EQ
+    }
+    pEqTotal += sim.gameData.generations[i].EQ
+  }
+  return { pEQ: Math.round(pEqTotal / sim.gameData.generations.length), wfEQ: Math.round(wfEqTotal / 8) }
+}
+function eqDecay() {
+  for (var i = 0; i < sim.gameData.generations.length; i++) {
+    if (i > 4) {
+      sim.gameData.generations[i].EQ -= sim.gameData.generations[i].EQ * 0.019
+    }
+
+  }
+}
+function parentalEducation() {
+  var eq = getEq()
+
+  sim.gameData.generations[1].EQ += eq.wfEQ / 5
+  sim.gameData.generations[2].EQ += eq.wfEQ / 5
+
+  var numOf10 = Math.ceil(sim.gameData.population * (sim.gameData.generations[1].count / 100))
+  var numOf15 = Math.ceil(sim.gameData.population * (sim.gameData.generations[2].count / 100))
+  var numOf20 = Math.ceil(sim.gameData.population * (sim.gameData.generations[3].count / 100))
+  var numOf25 = Math.ceil(sim.gameData.population * (sim.gameData.generations[4].count / 100))
+
+  var numInSchool = numOf10 + numOf15 + numOf20
+  if (sim.gameData.schoolCapacity == 0) {
+    var eqAdd = 0
+  }
+  else if (numInSchool <= sim.gameData.schoolCapacity) {
+    sim.gameData.generations[1].EQ += sim.gameData.generations[1].EQ * .0126
+    sim.gameData.generations[2].EQ += sim.gameData.generations[2].EQ * .0126
+    sim.gameData.generations[3].EQ += sim.gameData.generations[3].EQ * .0126
+  }
+
+  console.log('count up to 10 ' + numOf10 + 'count up to 15 ' + numOf15)
+
+
+}
 /////////////////////////////////////////////////////////////////////////////////
 // HELPER/UTILITY
 ///////////////////////////////////////////////////////////////////////////////

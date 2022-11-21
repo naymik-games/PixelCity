@@ -81,15 +81,17 @@ let gameStats = {
   powerPlants: [],
   waterPlants: [],
   policeStations: [],
+  schoolCapacity: 0,
   averageLV: 0,
   zoneCounts: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   rci: [0, 0, 0],
   taxRates: [7, 7, 7],
   maintenanceCosts: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   maintenanceCostsSpending: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  maintenanceCostsPer: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100]
+  maintenanceCostsPer: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
+  generations: null
 }
-
+let birthRates = [.0075, .0085, .01, .0125, .015, .0175, .02]
 let gameRules = {
   roadRange: 4,
   startingFunds: 100000,
@@ -144,8 +146,117 @@ function loadFont(name, url) {
     return error;
   });
 }
-
-
+//7.5
+let ages = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90]
+let generations = [
+  {
+    added: 1900,
+    count: 2,
+    HQ: 80.10,
+    EQ: 12,
+  },
+  {
+    added: 1900,
+    count: 5,
+    HQ: 0,
+    EQ: 20,
+  },
+  {
+    added: 1900,
+    count: 6,
+    HQ: 0,
+    EQ: 28,
+  },
+  {
+    added: 1900,
+    count: 7,
+    HQ: 0,
+    EQ: 36,
+  }, {
+    added: 1900,
+    count: 8,
+    HQ: 0,
+    EQ: 44,
+  },
+  {
+    added: 1900,
+    count: 11,
+    HQ: 0,
+    EQ: 62,
+  },
+  {
+    added: 1900,
+    count: 8,
+    HQ: 0,
+    EQ: 61,
+  },
+  {
+    added: 1900,
+    count: 8,
+    HQ: 0,
+    EQ: 60,
+  },
+  {
+    added: 1900,
+    count: 8,
+    HQ: 0,
+    EQ: 59,
+  },
+  {
+    added: 1900,
+    count: 8,
+    HQ: 0,
+    EQ: 57,
+  },
+  {
+    added: 1900,
+    count: 8,
+    HQ: 0,
+    EQ: 56,
+  },
+  {
+    added: 1900,
+    count: 8,
+    HQ: 0,
+    EQ: 55,
+  },
+  {
+    added: 1900,
+    count: 8,
+    HQ: 0,
+    EQ: 54,
+  },
+  {
+    added: 1900,
+    count: 5,
+    HQ: 0,
+    EQ: 50,
+  },
+  {
+    added: 1900,
+    count: 0,
+    HQ: 0,
+    EQ: 48,
+  },
+  {
+    added: 1900,
+    count: 0,
+    HQ: 0,
+    EQ: 46,
+  },
+  {
+    added: 1900,
+    count: 0,
+    HQ: 0,
+    EQ: 5,
+  },
+  {
+    added: 1900,
+    count: 0,
+    HQ: 0,
+    EQ: 5,
+  }
+]
 //reference
 /* let zoneNames = [
   0 'Light Residential', 

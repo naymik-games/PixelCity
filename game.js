@@ -18,7 +18,7 @@ window.onload = function () {
     dom: {
       createContainer: true
     },
-    scene: [preloadGame, startGame, playGame, UI, Menu, Info, People, Rci, Power, Finance, Settings]
+    scene: [preloadGame, startGame, playGame, UI, Menu, Info, People, Rci, Power, Finance, Settings, Police]
   }
   game = new Phaser.Game(gameConfig);
   window.focus();
@@ -65,7 +65,7 @@ class playGame extends Phaser.Scene {
       localforage.getItem('PixelCityGrid1').then(function (value) {
         // This code runs once the value has been loaded
         // from the offline store.
-        console.log(value);
+        //console.log(value);
 
         temp.loadMap(value)
       }).catch(function (err) {
@@ -91,7 +91,7 @@ class playGame extends Phaser.Scene {
       tileHeightHalf = 8;
       centerX = (mapConfig.width / 2) * tileWidth;
       centerY = 600;
-
+      sim.gameData.generations = generations
 
       this.createMap()
     }
@@ -369,6 +369,9 @@ class playGame extends Phaser.Scene {
       }
       if (tile.zone == 9) {
         removePowerPlant(point)
+      }
+      if (tile.zone == 16) {
+        removeSchool(buildMenu[tile.parentMenu].subMenu[tile.menu].capacity)
       }
       sim.gameData.specialJobs -= buildMenu[tile.parentMenu].subMenu[tile.menu].jobs
       tileIMG.building = null
@@ -1121,6 +1124,11 @@ class playGame extends Phaser.Scene {
       if (this.placeData.zone == 14) {
         if (this.placeData.id == 2 || this.placeData.id == 5) {
           addPoliceStation(mapXY, this.placeData.id, sim.gameData.year)
+        }
+      }
+      if (this.placeData.zone == 16) {
+        if (this.placeData.id == 0 || this.placeData.id == 1) {
+          addSchool(this.placeData.capacity)
         }
       }
     }
