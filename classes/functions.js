@@ -183,6 +183,7 @@ function removeCrime(point, data) {
 function addPoliceStation(mapXY, id, yearAdded) {
   sim.gameData.policeStations.push([mapXY, id, yearAdded])
 }
+
 function removePoliceStation(mapxy) {
   var ind = -1
   for (var i = 0; i < sim.gameData.policeStations.length; i++) {
@@ -257,6 +258,29 @@ function getAverageCrime() {
      totalC = 1
    } */
   return Math.round(totalC / count)
+}
+function addHospital(capacity) {
+  sim.gameData.hospitalCapacity += capacity
+}
+function removeHospital(capacity) {
+  sim.gameData.hospitalCapacity -= capacity
+}
+function getHq() {
+
+  var wfHqTotal = 0
+  var pHqTotal = 0
+  for (var i = 0; i < sim.gameData.generations.length; i++) {
+    if (i > 4 && i < 13) {
+      wfHqTotal += sim.gameData.generations[i].HQ
+    }
+    pHqTotal += sim.gameData.generations[i].HQ
+  }
+  return { pHQ: Math.round(pHqTotal / sim.gameData.generations.length), wfHQ: Math.round(wfHqTotal / 8) }
+}
+function hqDecay() {
+  for (var i = 0; i < sim.gameData.generations.length; i++) {
+    sim.gameData.generations[i].HQ -= sim.gameData.generations[i].HQ * .015
+  }
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 // POLLUTION
@@ -945,8 +969,8 @@ function parentalEducation() {
 
   var eq = getEq()
 
-  sim.gameData.generations[1].EQ += eq.wfEQ / 20
-  sim.gameData.generations[2].EQ += eq.wfEQ / 20
+  sim.gameData.generations[1].EQ += eq.wfEQ / 50
+  sim.gameData.generations[2].EQ += eq.wfEQ / 50
 
   var numOf10 = Math.ceil(sim.gameData.population * (sim.gameData.generations[1].count / 100))
   var numOf15 = Math.ceil(sim.gameData.population * (sim.gameData.generations[2].count / 100))
@@ -958,16 +982,16 @@ function parentalEducation() {
     var eqAdd = 0
   }
   else if (numInSchool <= sim.gameData.schoolCapacity) {
-    sim.gameData.generations[1].EQ += .105//1.26
-    sim.gameData.generations[2].EQ += .105
-    sim.gameData.generations[3].EQ += .105
+    sim.gameData.generations[1].EQ += .105 - getEduSub(sim.gameData.maintenanceCostsPer[16])
+    sim.gameData.generations[2].EQ += .105 - getEduSub(sim.gameData.maintenanceCostsPer[16])
+    sim.gameData.generations[3].EQ += .105 - getEduSub(sim.gameData.maintenanceCostsPer[16])
   }
 
   if (sim.gameData.collegeCapacity == 0) {
     var eqAdd = 0
   }
   else if (numOf25 <= sim.gameData.collegeCapacity) {
-    sim.gameData.generations[4].EQ += 3//1.26
+    sim.gameData.generations[4].EQ += 3 - getEduSub(sim.gameData.maintenanceCostsPer[16])
   }
   console.log('count up to 10 ' + numOf10 + 'count up to 15 ' + numOf15)
 
@@ -1054,6 +1078,27 @@ function getCovSub(per) {
     sub = 2
   } else if (per < 100) {
     sub = 1
+  }
+  return sub
+}
+function getEduSub(per) {
+  var sub = 0
+  if (per > 110) {
+    sub = -.05
+  } else if (per > 100) {
+    sub = -.025
+  } else if (per == 100) {
+    sub = 0
+  } else if (per < 60) {
+    sub = .025
+  } else if (per < 70) {
+    sub = .05
+  } else if (per < 80) {
+    sub = .075
+  } else if (per < 90) {
+    sub = .1
+  } else if (per < 100) {
+    sub = .125
   }
   return sub
 }

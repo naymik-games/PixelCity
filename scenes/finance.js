@@ -294,7 +294,7 @@ class Finance extends Phaser.Scene {
 
       track: this.add.image(0, 0, 'slider_track'),
       thumb: this.add.image(0, 0, 'slider_thumb'),
-      value: (sim.gameData.maintenanceCostsPer[14] - min) / range,
+      value: (sim.gameData.maintenanceCostsPer[15] - min) / range,
       gap: gap / range,
       valuechangeCallback: function (value) {
         value = (value * range) + min;
@@ -342,7 +342,7 @@ class Finance extends Phaser.Scene {
 
       track: this.add.image(0, 0, 'slider_track'),
       thumb: this.add.image(0, 0, 'slider_thumb'),
-      value: (sim.gameData.maintenanceCostsPer[12] - min) / range,
+      value: (sim.gameData.maintenanceCostsPer[13] - min) / range,
       gap: gap / range,
       valuechangeCallback: function (value) {
         value = (value * range) + min;
@@ -391,7 +391,7 @@ class Finance extends Phaser.Scene {
 
       track: this.add.image(0, 0, 'slider_track'),
       thumb: this.add.image(0, 0, 'slider_thumb'),
-      value: (sim.gameData.maintenanceCostsPer[15] - min) / range,
+      value: (sim.gameData.maintenanceCostsPer[16] - min) / range,
       gap: gap / range,
       valuechangeCallback: function (value) {
         value = (value * range) + min;
@@ -439,7 +439,7 @@ class Finance extends Phaser.Scene {
 
       track: this.add.image(0, 0, 'slider_track'),
       thumb: this.add.image(0, 0, 'slider_thumb'),
-      value: (sim.gameData.maintenanceCostsPer[17] - min) / range,
+      value: (sim.gameData.maintenanceCostsPer[18] - min) / range,
       gap: gap / range,
       valuechangeCallback: function (value) {
         value = (value * range) + min;
@@ -487,7 +487,7 @@ class Finance extends Phaser.Scene {
 
       track: this.add.image(0, 0, 'slider_track'),
       thumb: this.add.image(0, 0, 'slider_thumb'),
-      value: (sim.gameData.maintenanceCostsPer[22] - min) / range,
+      value: (sim.gameData.maintenanceCostsPer[23] - min) / range,
       gap: gap / range,
       valuechangeCallback: function (value) {
         value = (value * range) + min;

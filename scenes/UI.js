@@ -145,6 +145,15 @@ class UI extends Phaser.Scene {
       this.scene.pause('Menu')
     }, this)
     this.advisorGroup.add(policeIcon)
+
+    var lawIcon = this.add.image(75, 800, 'icons', 48).setOrigin(.5).setScale(2).setInteractive()
+    lawIcon.on('pointerdown', function () {
+      this.scene.launch('Laws')
+      this.scene.pause()
+      this.scene.pause('playGame')
+      this.scene.pause('Menu')
+    }, this)
+    this.advisorGroup.add(lawIcon)
     this.advisorGroup.setPosition(-150, 0)
     ///////////////////////////////////////////////////////
     this.dataGroup = this.add.container()

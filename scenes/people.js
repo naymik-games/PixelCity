@@ -107,9 +107,11 @@ class People extends Phaser.Scene {
       var text = this.add.bitmapText(65 + i * 43, 1555, 'topaz', ages[i], 35).setOrigin(0).setTint(0xCAD4D8);
       this.hqGroup.add(text)
     }
-    var wfhq = Math.round(wfHqTotal / 8)
-    var hqTitle = this.add.bitmapText(25, 1050, 'topaz', 'HQ: ' + wfhq, 40).setOrigin(0, 1).setTint(0xCAD4D8);
+    var HQ = getHq()
+    var hqTitle = this.add.bitmapText(25, 1025, 'topaz', 'EQ - ' + 'Pop: ' + HQ.pHQ + ' WF: ' + HQ.wfHQ, 40).setOrigin(0, 1).setTint(0xCAD4D8);
     this.hqGroup.add(hqTitle)
+    var hosCap = this.add.bitmapText(600, 1025, 'topaz', 'Capacity ' + sim.gameData.hospitalCapacity, 40).setOrigin(0, 1).setTint(0xCAD4D8);
+    this.hqGroup.add(hosCap)
     this.hqGroup.setAlpha(0)
 
     this.closeIcon.on('pointerdown', function () {

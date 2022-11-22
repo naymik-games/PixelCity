@@ -18,7 +18,7 @@ window.onload = function () {
     dom: {
       createContainer: true
     },
-    scene: [preloadGame, startGame, playGame, UI, Menu, Info, People, Rci, Power, Finance, Settings, Police]
+    scene: [preloadGame, startGame, playGame, UI, Menu, Info, People, Rci, Power, Finance, Settings, Police, Laws]
   }
   game = new Phaser.Game(gameConfig);
   window.focus();
@@ -363,6 +363,9 @@ class playGame extends Phaser.Scene {
       removeCrime(point, buildMenu[tile.parentMenu].subMenu[tile.menu])
       if (tile.zone == 14) {
         removePoliceStation(point)
+      }
+      if (tile.zone == 13) {
+        removeHospital(buildMenu[tile.parentMenu].subMenu[tile.menu].capacity)
       }
       if (tile.zone == 10) {
         removeWaterPlant(point)
@@ -1125,6 +1128,11 @@ class playGame extends Phaser.Scene {
         if (this.placeData.id == 0 || this.placeData.id == 1 || this.placeData.id == 5) {
           addWaterPlant(mapXY, this.placeData.id, sim.gameData.year)
         }
+      }
+      if (this.placeData.zone == 13) {
+
+        addHospital(this.placeData.patients)
+
       }
       if (this.placeData.zone == 14) {
         if (this.placeData.id == 2 || this.placeData.id == 5) {

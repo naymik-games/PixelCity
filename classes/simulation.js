@@ -189,6 +189,7 @@ class Sim {
 
       this.gameData.generations.unshift(born)
       eqDecay()
+      hqDecay()
     }
     if (fiveYear) {
 

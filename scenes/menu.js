@@ -1221,7 +1221,7 @@ let buildMenu = [
         jobs: 8,
         globalLV: [5, 5, 5, 5],
         localLV: 7,
-        maintenance: 300,
+        maintenance: 50,
         crime: 1,
         crimeRadius: 2,
         patients: 500
@@ -1244,7 +1244,7 @@ let buildMenu = [
         jobs: 12,
         globalLV: [0, 5, 5, 5],
         localLV: 10,
-        maintenance: 600,
+        maintenance: 150,
         crime: 2,
         crimeRadius: 2,
         patients: 1500

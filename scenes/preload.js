@@ -443,6 +443,12 @@ class preloadGame extends Phaser.Scene {
       // margin: 1,
       // spacing: 1
     });
+    this.load.spritesheet("checkbox", "assets/sprites/checkbox.png", {
+      frameWidth: 40,
+      frameHeight: 40,
+      margin: 1,
+      spacing: 1
+    });
     this.load.spritesheet("selectx1", "assets/sprites/tiles/selectx1.png", {
       frameWidth: 64,
       frameHeight: 31,
