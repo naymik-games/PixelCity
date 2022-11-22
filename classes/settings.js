@@ -82,6 +82,7 @@ let gameStats = {
   waterPlants: [],
   policeStations: [],
   schoolCapacity: 0,
+  collegeCapacity: 0,
   averageLV: 0,
   zoneCounts: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   rci: [0, 0, 0],
@@ -95,7 +96,7 @@ let birthRates = [.0075, .0085, .01, .0125, .015, .0175, .02]
 let gameRules = {
   roadRange: 4,
   startingFunds: 100000,
-  dayLength: 24000,
+  dayLength: 1000,
   apNormal: 1500,
   wpNormal: 1000,
   crimeNormal: 8,

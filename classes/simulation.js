@@ -6,13 +6,13 @@ class Sim {
     this.gameData = data
     this.gameData.mapConfig = config
   }
-  endDay() {
+  endDay(newYear, fiveYear) {
     console.log('end day')
     getAverageLV()
     this.updateRCI()
     this.updateFunds()
     driveTimes()
-
+    this.updatePopulation(newYear, fiveYear)
   }
   updateFunds() {
     //income
@@ -154,7 +154,7 @@ class Sim {
     console.log('births: ' + births + ' migration: ' + migration + ' migration adj: ' + r)
 
     this.gameData.population += Math.ceil(r + births)
-    this.updatePopulation(births, r)
+
     //}
   }
   getTotalResCapacity() {
@@ -175,20 +175,26 @@ class Sim {
     var hiCapacity = this.gameData.zoneCounts[8] * 127 //75 jobs per tile
     return liCapacity + miCapacity + hiCapacity
   }
-  updatePopulation(births, migration) {
-    var EQ = getEq()
-    var wEQ = EQ.wfEQ
-    this.gameData.generations.pop()
-    var born = {
-      added: this.gameData.year,
-      count: 2,
-      HQ: 80.10,
-      EQ: wEQ / 5,
+  updatePopulation(newYear, fiveYear) {
+    if (newYear) {
+      var EQ = getEq()
+      var wEQ = EQ.wfEQ
+      this.gameData.generations.pop()
+      var born = {
+        added: this.gameData.year,
+        count: 2,
+        HQ: 80.10,
+        EQ: wEQ / 5,
+      }
+
+      this.gameData.generations.unshift(born)
+      eqDecay()
+    }
+    if (fiveYear) {
+
     }
 
-    this.gameData.generations.unshift(born)
 
-    eqDecay()
     parentalEducation()
   }
 }

@@ -371,6 +371,11 @@ class playGame extends Phaser.Scene {
         removePowerPlant(point)
       }
       if (tile.zone == 16) {
+        if (tile.menu == 0 || tile.menu == 1) {
+          removeSchool(buildMenu[tile.parentMenu].subMenu[tile.menu].capacity)
+        } else if (tile.menu == 8 || tile.menu == 5) {
+          removeCollege(buildMenu[tile.parentMenu].subMenu[tile.menu].capacity)
+        }
         removeSchool(buildMenu[tile.parentMenu].subMenu[tile.menu].capacity)
       }
       sim.gameData.specialJobs -= buildMenu[tile.parentMenu].subMenu[tile.menu].jobs
@@ -1129,6 +1134,8 @@ class playGame extends Phaser.Scene {
       if (this.placeData.zone == 16) {
         if (this.placeData.id == 0 || this.placeData.id == 1) {
           addSchool(this.placeData.capacity)
+        } else if (this.placeData.id == 8 || this.placeData.id == 5) {
+          addCollege(this.placeData.capacity)
         }
       }
     }

@@ -417,23 +417,29 @@ class UI extends Phaser.Scene {
 
 
     this.coordText = this.add.bitmapText(game.config.width / 2, 150, 'topaz', '--', 50).setOrigin(.5).setTint(0x000000).setAlpha(0);
-
+    var yeargoal = 1905
     ///////////////////////////////
     // Day Counter
     //////////////////////////////
     this.day = this.time.addEvent({
       delay: gameRules.dayLength,
       callback: function () {
-        this.events.emit('endDay');
-        sim.endDay()
-        sim.gameData.day++
 
+        sim.gameData.day++
+        var newYear = false
+        var fiveYear = false
         this.popText.setText('P: ' + sim.gameData.population)
         if (sim.gameData.day == 13) {
           sim.gameData.year++
-
+          newYear = true
           sim.gameData.day = 1
         }
+        if (sim.gameData.year == yeargoal) {
+          fiveYear = true
+          yeargoal += 5
+        }
+        this.events.emit('endDay');
+        sim.endDay(newYear, fiveYear)
         this.yearText.setText(this.month[sim.gameData.day] + ' ' + sim.gameData.year)
         // this.scoreText.setText(sim.gameData.day);
         this.fundsText.setText(formatter.format(sim.gameData.funds))

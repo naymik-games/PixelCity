@@ -1509,7 +1509,7 @@ let buildMenu = [
         index: 0,
         sheet: 'E_tilesx8',
         size: 8,
-        cost: 100,
+        cost: 25000,
         action: 'place',
         zone: 16,
         parentMenu: 4,
@@ -1522,9 +1522,10 @@ let buildMenu = [
         jobs: 125,
         globalLV: [5, 15, 0, 0],
         localLV: 10,
-        maintenance: 12000,
+        maintenance: 7000,
         crime: 15,
-        crimeRadius: 10
+        crimeRadius: 10,
+        capacity: 15000
       },
       {
         name: 'Private School',
@@ -1578,7 +1579,7 @@ let buildMenu = [
         index: 0,
         sheet: 'E_tilesx5',
         size: 5,
-        cost: 100,
+        cost: 3000,
         action: 'place',
         zone: 16,
         parentMenu: 4,
@@ -1592,9 +1593,10 @@ let buildMenu = [
         jobs: 10,
         globalLV: [10, 10, 0, 0],
         localLV: 10,
-        maintenance: 3000,
+        maintenance: 1500,
         crime: 5,
-        crimeRadius: 5
+        crimeRadius: 5,
+        capacity: 7500
       },
       {
         name: 'Science Center',

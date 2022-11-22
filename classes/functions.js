@@ -915,6 +915,12 @@ function addSchool(capacity) {
 function removeSchool(capacity) {
   sim.gameData.schoolCapacity -= capacity
 }
+function addCollege(capacity) {
+  sim.gameData.collegeCapacity += capacity
+}
+function removeCollege(capacity) {
+  sim.gameData.collegeCapacity -= capacity
+}
 function getEq() {
 
   var wfEqTotal = 0
@@ -930,16 +936,17 @@ function getEq() {
 function eqDecay() {
   for (var i = 0; i < sim.gameData.generations.length; i++) {
     if (i > 4) {
-      sim.gameData.generations[i].EQ -= sim.gameData.generations[i].EQ * 0.019
+      sim.gameData.generations[i].EQ -= sim.gameData.generations[i].EQ * .0191
     }
 
   }
 }
 function parentalEducation() {
+
   var eq = getEq()
 
-  sim.gameData.generations[1].EQ += eq.wfEQ / 5
-  sim.gameData.generations[2].EQ += eq.wfEQ / 5
+  sim.gameData.generations[1].EQ += eq.wfEQ / 20
+  sim.gameData.generations[2].EQ += eq.wfEQ / 20
 
   var numOf10 = Math.ceil(sim.gameData.population * (sim.gameData.generations[1].count / 100))
   var numOf15 = Math.ceil(sim.gameData.population * (sim.gameData.generations[2].count / 100))
@@ -951,11 +958,17 @@ function parentalEducation() {
     var eqAdd = 0
   }
   else if (numInSchool <= sim.gameData.schoolCapacity) {
-    sim.gameData.generations[1].EQ += sim.gameData.generations[1].EQ * .0126
-    sim.gameData.generations[2].EQ += sim.gameData.generations[2].EQ * .0126
-    sim.gameData.generations[3].EQ += sim.gameData.generations[3].EQ * .0126
+    sim.gameData.generations[1].EQ += .105//1.26
+    sim.gameData.generations[2].EQ += .105
+    sim.gameData.generations[3].EQ += .105
   }
 
+  if (sim.gameData.collegeCapacity == 0) {
+    var eqAdd = 0
+  }
+  else if (numOf25 <= sim.gameData.collegeCapacity) {
+    sim.gameData.generations[4].EQ += 3//1.26
+  }
   console.log('count up to 10 ' + numOf10 + 'count up to 15 ' + numOf15)
 
 
