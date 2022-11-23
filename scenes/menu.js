@@ -1,6 +1,4 @@
-const COLOR_PRIMARY = 0xffffff;
-const COLOR_LIGHT = 0x7b5e57;
-const COLOR_DARK = 0x260e04;
+
 
 class Menu extends Phaser.Scene {
 
