@@ -518,7 +518,7 @@ let buildMenu = [
         index: 0,
         sheet: 'T_tilesx4',
         size: 4,
-        cost: 200,
+        cost: 8000,
         action: 'place',
         zone: 23,
         parentMenu: 0,
@@ -532,7 +532,8 @@ let buildMenu = [
         localLV: -10,
         maintenance: 250,
         crime: 25,
-        crimeRadius: 4
+        crimeRadius: 4,
+        capRelief: [5000, 10000, 0]
       },
       {
         name: 'Bus System Depot',
@@ -554,7 +555,8 @@ let buildMenu = [
         localLV: -10,
         maintenance: 1000,
         crime: 1,
-        crimeRadius: 2
+        crimeRadius: 2,
+        capRelief: [5000, 5000, 5000]
       }
 
     ]
@@ -618,7 +620,7 @@ let buildMenu = [
         size3: 'R_tilesx3MED',
         size2: 'R_tilesx2MED',
         size1: 'R_tilesx1MED',
-        frames1: [0, 1, 2, 3, 4, 5],
+        frames1: [[0, 1, 2, 3, 4, 5], [10, 11, 12, 13, 14, 15], [20, 21, 22, 23, 24, 25]],
         frames2: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 38, 39, 40, 41, 42],
         frames3: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
         frames4: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
@@ -653,7 +655,7 @@ let buildMenu = [
         size3: 'R_tilesx3DEN',
         size2: 'R_tilesx2DEN',
         size1: 'R_tilesx1DEN',
-        frames1: [0, 1, 2, 3, 4, 5, 10, 11, 12, 13, 14, 15, 20, 21, 22, 23, 24, 25],
+        frames1: [[0, 1, 2, 3, 4, 5], [10, 11, 12, 13, 14, 15], [20, 21, 22, 23, 24, 25]],
         frames2: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
         frames3: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22],
         frames4: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29],
@@ -909,7 +911,8 @@ let buildMenu = [
         waterRange: 7,
         maintenance: 1000,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'Water Pump',
@@ -933,7 +936,8 @@ let buildMenu = [
         waterRange: 10,
         maintenance: 1000,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'Cell Tower',
@@ -955,7 +959,8 @@ let buildMenu = [
         localLV: 0,
         maintenance: 75,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'Coal Plant',
@@ -979,7 +984,8 @@ let buildMenu = [
         powerRange: 15,
         maintenance: 1000,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'Garbage Dump',
@@ -1001,7 +1007,8 @@ let buildMenu = [
         localLV: -10,
         maintenance: 100,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'Water Pump',
@@ -1025,7 +1032,8 @@ let buildMenu = [
         waterRange: 13,
         maintenance: 1500,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'Wind Turbine',
@@ -1049,7 +1057,8 @@ let buildMenu = [
         powerRange: 6,
         maintenance: 50,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'Solar Plant',
@@ -1073,7 +1082,8 @@ let buildMenu = [
         powerRange: 7,
         maintenance: 200,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'Water Filtration Plant',
@@ -1095,7 +1105,8 @@ let buildMenu = [
         localLV: -20,
         maintenance: 900,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'Fusion Plant',
@@ -1119,7 +1130,8 @@ let buildMenu = [
         powerRange: 17,
         maintenance: 20000,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'Gas Power Plant',
@@ -1143,7 +1155,8 @@ let buildMenu = [
         powerRange: 10,
         maintenance: 9000,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'Nuclear Plant',
@@ -1167,7 +1180,8 @@ let buildMenu = [
         powerRange: 16,
         maintenance: 17000,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'Recycling Center',
@@ -1190,7 +1204,8 @@ let buildMenu = [
         maintenance: 0,
         maintenance: 230,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
       },
 
     ]
@@ -1222,7 +1237,8 @@ let buildMenu = [
         maintenance: 50,
         crime: 1,
         crimeRadius: 2,
-        patients: 500
+        patients: 500,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'Hospital',
@@ -1245,7 +1261,8 @@ let buildMenu = [
         maintenance: 150,
         crime: 2,
         crimeRadius: 2,
-        patients: 1500
+        patients: 1500,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'Police Station',
@@ -1267,7 +1284,8 @@ let buildMenu = [
         localLV: 10,
         maintenance: 125,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'Fire Station',
@@ -1289,7 +1307,8 @@ let buildMenu = [
         localLV: 8,
         maintenance: 125,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'Metro Hospital',
@@ -1312,7 +1331,8 @@ let buildMenu = [
         maintenance: 1100,
         crime: 2,
         crimeRadius: 3,
-        patients: 4500
+        patients: 4500,
+        capRelief: [5000, 0, 0]
       },
       {
         name: 'Police Headquarters',
@@ -1334,7 +1354,8 @@ let buildMenu = [
         localLV: 10,
         maintenance: 3000,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [5000, 0, 0]
       },
       {
         name: 'Fire Headquarters',
@@ -1356,7 +1377,8 @@ let buildMenu = [
         localLV: 8,
         maintenance: 3000,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [5000, 0, 0]
       },
       {
         name: 'Prison',
@@ -1378,7 +1400,8 @@ let buildMenu = [
         localLV: -100,
         maintenance: 9000,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
       }
     ]
   },
@@ -1409,7 +1432,8 @@ let buildMenu = [
         maintenance: 360,
         crime: 0,
         crimeRadius: 0,
-        capacity: 3000
+        capacity: 3000,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'High School',
@@ -1432,7 +1456,8 @@ let buildMenu = [
         maintenance: 1050,
         crime: 0,
         crimeRadius: 0,
-        capacity: 7000
+        capacity: 7000,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'Library',
@@ -1454,7 +1479,8 @@ let buildMenu = [
         localLV: 15,
         maintenance: 1000,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'Museum',
@@ -1476,7 +1502,8 @@ let buildMenu = [
         localLV: 15,
         maintenance: 1500,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'Performing Arts Center',
@@ -1499,7 +1526,8 @@ let buildMenu = [
         localLV: 15,
         maintenance: 2000,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'University',
@@ -1523,7 +1551,8 @@ let buildMenu = [
         maintenance: 7000,
         crime: 15,
         crimeRadius: 10,
-        capacity: 15000
+        capacity: 15000,
+        capRelief: [10000, 10000, 0]
       },
       {
         name: 'Private School',
@@ -1545,7 +1574,8 @@ let buildMenu = [
         localLV: 15,
         maintenance: 8000,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'MOMA',
@@ -1569,7 +1599,8 @@ let buildMenu = [
         localLV: 10,
         maintenance: 1700,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'Community College',
@@ -1594,7 +1625,8 @@ let buildMenu = [
         maintenance: 1500,
         crime: 5,
         crimeRadius: 5,
-        capacity: 7500
+        capacity: 7500,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'Science Center',
@@ -1616,7 +1648,8 @@ let buildMenu = [
         localLV: 15,
         maintenance: 1900,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
       }
     ]
   },
@@ -1646,7 +1679,8 @@ let buildMenu = [
         localLV: 5,
         maintenance: 0,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [6000, 0, 0]
       },
       {
         name: 'Big Ben',
@@ -1668,7 +1702,8 @@ let buildMenu = [
         localLV: 5,
         maintenance: 100,
         crime: 1,
-        crimeRadius: 2
+        crimeRadius: 2,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'CN Tower',
@@ -1690,7 +1725,8 @@ let buildMenu = [
         localLV: 25,
         maintenance: 100,
         crime: 2,
-        crimeRadius: 3
+        crimeRadius: 3,
+        capRelief: [0, 10000, 0]
 
       },
       {
@@ -1713,7 +1749,8 @@ let buildMenu = [
         localLV: 15,
         maintenance: 100,
         crime: 2,
-        crimeRadius: 3
+        crimeRadius: 3,
+        capRelief: [0, 0, 0]
 
       },
       {
@@ -1736,7 +1773,8 @@ let buildMenu = [
         localLV: 10,
         maintenance: 100,
         crime: 1,
-        crimeRadius: 1
+        crimeRadius: 1,
+        capRelief: [0, 0, 0]
 
       },
       {
@@ -1759,7 +1797,8 @@ let buildMenu = [
         localLV: 15,
         maintenance: 100,
         crime: 1,
-        crimeRadius: 2
+        crimeRadius: 2,
+        capRelief: [0, 5000, 0]
 
       },
       {
@@ -1782,7 +1821,8 @@ let buildMenu = [
         localLV: 25,
         maintenance: 100,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
 
       },
       {
@@ -1805,7 +1845,8 @@ let buildMenu = [
         localLV: 35,
         maintenance: 100,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
 
       },
       {
@@ -1828,7 +1869,8 @@ let buildMenu = [
         localLV: 45,
         maintenance: 100,
         crime: 4,
-        crimeRadius: 5
+        crimeRadius: 5,
+        capRelief: [0, 0, 0]
 
       },
       {
@@ -1850,7 +1892,8 @@ let buildMenu = [
         globalLV: [20, 20, 0, 20],//res,com,ind, other
         localLV: 20,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
 
       },
       {
@@ -1873,7 +1916,8 @@ let buildMenu = [
         localLV: 17,
         maintenance: 0,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [5000, 0, 0]
 
       },
       {
@@ -1896,7 +1940,8 @@ let buildMenu = [
         localLV: 5,
         maintenance: 500,
         crime: 4,
-        crimeRadius: 7
+        crimeRadius: 7,
+        capRelief: [0, 10000, 0]
 
       },
       {
@@ -1919,7 +1964,8 @@ let buildMenu = [
         localLV: 20,
         maintenance: 0,
         crime: 5,
-        crimeRadius: 9
+        crimeRadius: 9,
+        capRelief: [2000, 2000, 0]
 
       },
       {
@@ -1942,7 +1988,8 @@ let buildMenu = [
         localLV: 17,
         maintenance: 0,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
 
       },
       {
@@ -1965,7 +2012,8 @@ let buildMenu = [
         localLV: 50,
         maintenance: 175,
         crime: 1,
-        crimeRadius: 2
+        crimeRadius: 2,
+        capRelief: [37000, 0, 0]
 
       },
       {
@@ -1979,7 +2027,8 @@ let buildMenu = [
         zone: 21,
         parentMenu: 5,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
 
       },
       {
@@ -1993,7 +2042,8 @@ let buildMenu = [
         zone: 21,
         parentMenu: 5,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
 
       },
       {
@@ -2007,7 +2057,8 @@ let buildMenu = [
         zone: 21,
         parentMenu: 5,
         crime: 6,
-        crimeRadius: 7
+        crimeRadius: 7,
+        capRelief: [0, 0, 0]
 
       },
       {
@@ -2021,7 +2072,8 @@ let buildMenu = [
         zone: 21,
         parentMenu: 5,
         crime: 7,
-        crimeRadius: 9
+        crimeRadius: 9,
+        capRelief: [0, 0, 0]
 
       },
       {
@@ -2035,7 +2087,8 @@ let buildMenu = [
         zone: 21,
         parentMenu: 5,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
 
       },
       {
@@ -2049,7 +2102,8 @@ let buildMenu = [
         zone: 21,
         parentMenu: 5,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [10000, 0, 0]
 
       },
       {
@@ -2063,7 +2117,8 @@ let buildMenu = [
         zone: 21,
         parentMenu: 5,
         crime: 1,
-        crimeRadius: 3
+        crimeRadius: 3,
+        capRelief: [0, 0, 0]
 
       },
       {
@@ -2077,7 +2132,8 @@ let buildMenu = [
         zone: 21,
         parentMenu: 5,
         crime: 5,
-        crimeRadius: 5
+        crimeRadius: 5,
+        capRelief: [0, 0, 0]
 
       },
       {
@@ -2091,7 +2147,8 @@ let buildMenu = [
         zone: 21,
         parentMenu: 5,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
 
       },
       {
@@ -2105,7 +2162,8 @@ let buildMenu = [
         zone: 21,
         parentMenu: 5,
         crime: -5,
-        crimeRadius: 5
+        crimeRadius: 5,
+        capRelief: [0, 0, 0]
 
       },
       {
@@ -2119,7 +2177,8 @@ let buildMenu = [
         zone: 21,
         parentMenu: 5,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [48000, 0, 0]
 
       },
       {
@@ -2133,7 +2192,8 @@ let buildMenu = [
         zone: 21,
         parentMenu: 5,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
 
       },
       {
@@ -2147,7 +2207,8 @@ let buildMenu = [
         zone: 21,
         parentMenu: 5,
         crime: 15,
-        crimeRadius: 15
+        crimeRadius: 15,
+        capRelief: [75000, 0, 0]
 
       },
       {
@@ -2161,7 +2222,8 @@ let buildMenu = [
         zone: 21,
         parentMenu: 5,
         crime: 7,
-        crimeRadius: 10
+        crimeRadius: 10,
+        capRelief: [25000, 0, 0]
 
       },
       {
@@ -2175,7 +2237,8 @@ let buildMenu = [
         zone: 21,
         parentMenu: 5,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 25000, 0]
 
       },
       {
@@ -2189,7 +2252,8 @@ let buildMenu = [
         zone: 21,
         parentMenu: 5,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [100000, 100000, 100000]
 
       },
       {
@@ -2203,7 +2267,8 @@ let buildMenu = [
         zone: 21,
         parentMenu: 5,
         crime: 4,
-        crimeRadius: 7
+        crimeRadius: 7,
+        capRelief: [0, 100000, 100000]
 
       }
     ]
@@ -2234,7 +2299,8 @@ let buildMenu = [
         localLV: 10,
         maintenance: 5,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'Statue',
@@ -2256,7 +2322,8 @@ let buildMenu = [
         localLV: 10,
         maintenance: 5,
         crime: 1,
-        crimeRadius: 1
+        crimeRadius: 1,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'Small Plaza',
@@ -2278,7 +2345,8 @@ let buildMenu = [
         localLV: 10,
         maintenance: 5,
         crime: 1,
-        crimeRadius: 1
+        crimeRadius: 1,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'Small Beach',
@@ -2300,7 +2368,8 @@ let buildMenu = [
         localLV: 10,
         maintenance: 20,
         crime: 1,
-        crimeRadius: 1
+        crimeRadius: 1,
+        capRelief: [250, 0, 0]
       },
       {
         name: 'Small Forest',
@@ -2322,7 +2391,8 @@ let buildMenu = [
         localLV: 10,
         maintenance: 1,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'Small Park',
@@ -2344,7 +2414,8 @@ let buildMenu = [
         localLV: 10,
         maintenance: 5,
         crime: 1,
-        crimeRadius: 1
+        crimeRadius: 1,
+        capRelief: [250, 0, 0]
       },
       {
         name: 'Picnic Park',
@@ -2366,7 +2437,8 @@ let buildMenu = [
         localLV: 20,
         maintenance: 10,
         crime: 1,
-        crimeRadius: 2
+        crimeRadius: 2,
+        capRelief: [1000, 0, 0]
       },
       {
         name: 'Gazeebo',
@@ -2388,7 +2460,8 @@ let buildMenu = [
         localLV: 10,
         maintenance: 10,
         crime: 1,
-        crimeRadius: 2
+        crimeRadius: 2,
+        capRelief: [100, 0, 0]
       },
       {
         name: 'Large Park',
@@ -2410,7 +2483,8 @@ let buildMenu = [
         localLV: 20,
         maintenance: 25,
         crime: 1,
-        crimeRadius: 3
+        crimeRadius: 3,
+        capRelief: [1000, 0, 0]
       },
       {
         name: 'Large Plaza',
@@ -2432,7 +2506,8 @@ let buildMenu = [
         localLV: 10,
         maintenance: 25,
         crime: 1,
-        crimeRadius: 3
+        crimeRadius: 3,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'Tennis Court',
@@ -2454,7 +2529,8 @@ let buildMenu = [
         localLV: 10,
         maintenance: 20,
         crime: 1,
-        crimeRadius: 1
+        crimeRadius: 1,
+        capRelief: [750, 0, 0]
       },
       {
         name: 'Statue Plaza',
@@ -2476,7 +2552,8 @@ let buildMenu = [
         localLV: 10,
         maintenance: 25,
         crime: 1,
-        crimeRadius: 1
+        crimeRadius: 1,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'Playground',
@@ -2498,7 +2575,8 @@ let buildMenu = [
         localLV: 10,
         maintenance: 15,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [1000, 0, 0]
       },
       {
         name: 'Basketball Court',
@@ -2520,7 +2598,8 @@ let buildMenu = [
         localLV: 10,
         maintenance: 15,
         crime: 1,
-        crimeRadius: 1
+        crimeRadius: 1,
+        capRelief: [750, 0, 0]
       },
       {
         name: 'Large Beach',
@@ -2542,7 +2621,8 @@ let buildMenu = [
         localLV: 10,
         maintenance: 25,
         crime: 1,
-        crimeRadius: 2
+        crimeRadius: 2,
+        capRelief: [1000, 0, 0]
       },
       {
         name: 'Lake Park',
@@ -2564,7 +2644,8 @@ let buildMenu = [
         localLV: 20,
         maintenance: 25,
         crime: 1,
-        crimeRadius: 3
+        crimeRadius: 3,
+        capRelief: [2000, 0, 0]
       },
       {
         name: 'Nature Center',
@@ -2586,7 +2667,8 @@ let buildMenu = [
         localLV: 30,
         maintenance: 150,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [4000, 0, 0]
       },
       {
         name: 'Deluxe Plaza',
@@ -2608,7 +2690,8 @@ let buildMenu = [
         localLV: 10,
         maintenance: 150,
         crime: 2,
-        crimeRadius: 3
+        crimeRadius: 3,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'Baseball',
@@ -2630,7 +2713,8 @@ let buildMenu = [
         localLV: 10,
         maintenance: 35,
         crime: 1,
-        crimeRadius: 1
+        crimeRadius: 1,
+        capRelief: [750, 0, 0]
       },
       {
         name: 'Extra Lage Park',
@@ -2652,7 +2736,8 @@ let buildMenu = [
         localLV: 40,
         maintenance: 100,
         crime: 4,
-        crimeRadius: 5
+        crimeRadius: 5,
+        capRelief: [5000, 0, 0]
       },
       {
         name: 'City Pool',
@@ -2674,7 +2759,8 @@ let buildMenu = [
         localLV: 10,
         maintenance: 350,
         crime: 2,
-        crimeRadius: 3
+        crimeRadius: 3,
+        capRelief: [1500, 0, 0]
       },
       {
         name: 'Oblisk Plaza',
@@ -2696,7 +2782,8 @@ let buildMenu = [
         localLV: 10,
         maintenance: 50,
         crime: 2,
-        crimeRadius: 3
+        crimeRadius: 3,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'Small Stadium',
@@ -2718,7 +2805,8 @@ let buildMenu = [
         localLV: 10,
         maintenance: 1000,
         crime: 10,
-        crimeRadius: 8
+        crimeRadius: 8,
+        capRelief: [50000, 0, 0]
       },
       {
         name: 'Water Park',
@@ -2740,7 +2828,8 @@ let buildMenu = [
         localLV: 10,
         maintenance: 3000,
         crime: 8,
-        crimeRadius: 7
+        crimeRadius: 7,
+        capRelief: [100000, 0, 0]
       },
       {
         name: 'Zoo',
@@ -2761,7 +2850,8 @@ let buildMenu = [
         localLV: 20,
         maintenance: 7500,
         crime: 9,
-        crimeRadius: 8
+        crimeRadius: 8,
+        capRelief: [24000, 0, 0]
 
       },
       {
@@ -2784,7 +2874,8 @@ let buildMenu = [
         localLV: 10,
         maintenance: 11000,
         crime: 20,
-        crimeRadius: 16
+        crimeRadius: 16,
+        capRelief: [200000, 0, 0]
 
       },
       {
@@ -2807,7 +2898,8 @@ let buildMenu = [
         localLV: 10,
         maintenance: 75,
         crime: 5,
-        crimeRadius: 5
+        crimeRadius: 5,
+        capRelief: [50000, 0, 0]
       },
       {
         name: 'Lage Forest',
@@ -2829,7 +2921,8 @@ let buildMenu = [
         localLV: 100,
         maintenance: 125,
         crime: 5,
-        crimeRadius: 3
+        crimeRadius: 3,
+        capRelief: [0, 0, 0]
       },
       {
         name: 'Amusement Park',
@@ -2851,7 +2944,8 @@ let buildMenu = [
         localLV: 10,
         maintenance: 8000,
         crime: 16,
-        crimeRadius: 14
+        crimeRadius: 14,
+        capRelief: [200000, 0, 0]
       },
       {
         name: 'State Park',
@@ -2873,7 +2967,8 @@ let buildMenu = [
         localLV: 100,
         maintenance: 5000,
         crime: 6,
-        crimeRadius: 4
+        crimeRadius: 4,
+        capRelief: [200000, 0, 0]
       }
 
     ]
@@ -2904,7 +2999,8 @@ let buildMenu = [
         localLV: 10,
         maintenance: 1000,
         crime: -20,
-        crimeRadius: 20
+        crimeRadius: 20,
+        capRelief: [9000, 9000, 0]
       },
       {
         name: 'Post Office',
@@ -2927,7 +3023,8 @@ let buildMenu = [
         localLV: 10,
         maintenance: 150,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [5000, 0, 0]
 
       },
       {
@@ -2951,7 +3048,8 @@ let buildMenu = [
         localLV: 10,
         maintenance: 275,
         crime: 8,
-        crimeRadius: 9
+        crimeRadius: 9,
+        capRelief: [0, 75000, 0]
       },
       {
         name: 'Courthouse',
@@ -2973,7 +3071,8 @@ let buildMenu = [
         localLV: 10,
         maintenance: 400,
         crime: -30,
-        crimeRadius: 30
+        crimeRadius: 30,
+        capRelief: [0, 0, 0]
 
       },
       {
@@ -2996,7 +3095,8 @@ let buildMenu = [
         localLV: -15,
         maintenance: 1000,
         crime: 15,
-        crimeRadius: 15
+        crimeRadius: 15,
+        capRelief: [0, 0, 0]
 
       },
       {
@@ -3019,7 +3119,8 @@ let buildMenu = [
         localLV: 10,
         maintenance: 800,
         crime: 0,
-        crimeRadius: 0
+        crimeRadius: 0,
+        capRelief: [0, 0, 0]
 
       },
       {
@@ -3042,7 +3143,8 @@ let buildMenu = [
         localLV: -55,
         maintenance: 13000,
         crime: 20,
-        crimeRadius: 20
+        crimeRadius: 20,
+        capRelief: [0, 0, 0]
 
       }
     ]

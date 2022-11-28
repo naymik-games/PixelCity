@@ -458,6 +458,30 @@ function getLVIndex(value) {
     var t = 2
   }
   return t
+  //
+}
+function getRCIIndex(zone, lvIndex) {
+  if (zone == 0) {
+    var rciIndex = 0 + lvIndex //res light
+  } else if (zone == 1) {
+    var rciIndex = 3 + lvIndex //res med
+  } else if (zone == 2) {
+    var rciIndex = 6 + lvIndex //res dense
+  } else if (zone == 3) {
+    var rciIndex = 9 + lvIndex //com light
+  } else if (zone == 4) {
+    var rciIndex = 12 + lvIndex //com med
+  } else if (zone == 5) {
+    var rciIndex = 15 + lvIndex //com dense
+  } else if (zone == 6) {
+    var rciIndex = 18 + 0 //ind light
+  } else if (zone == 7) {
+    var rciIndex = 20 + 0 //ind med
+  } else if (zone == 7) {
+    var rciIndex = 22 + 0 //ind d
+  }
+  return rciIndex
+  //000 000 000   000 000 000   00 00 00 
 }
 /* function updateLocalLandValue() {
   for (var y = 0; y < mapConfig.height; y++) {
@@ -690,9 +714,12 @@ function driveTimes() {
   console.log('drive times')
   gridTrans = null
   gridTrans = create2DArrayValue(mapConfig.width, mapConfig.height)
+  createRoadMap()
   failedTripCount = 0
   successfullTripCount = 0
   tripsAttempted = 0
+  commuteAverage = 0
+  commuteTotal = 0
   var com = sim.gameData.zoneCounts[3] + sim.gameData.zoneCounts[4] + sim.gameData.zoneCounts[5]
   var ind = sim.gameData.zoneCounts[6] + sim.gameData.zoneCounts[7] + sim.gameData.zoneCounts[8]
   var total = com + ind
@@ -715,6 +742,7 @@ function driveTimes() {
             //dest = [0, 1, 2]
             dest = 'res'
           }
+          // var test = aStar({ x: x, y: y }, dest, getDensityMultiplier(grid[y][x].zone))
           var tr = tryDriveTo({ x: x, y: y }, dest, getDensityMultiplier(grid[y][x].zone))
           //console.log(tr)
           if (tr) {
@@ -758,8 +786,53 @@ function driveTimes() {
   console.log('failed ' + failedTripCount)
   console.log('success ' + successfullTripCount)
   console.log('attempted ' + tripsAttempted)
+  console.log('total commute ' + commuteTotal)
+  commuteAverage = Math.round(commuteTotal / successfullTripCount) * (1 + (failedTripCount * sim.gameData.mapConfig.size))
+  console.log('Average commute ' + commuteAverage)
+  congestionAverage = getAverageCongestion()
+  console.log(gridTrans)
 }
+
 function tryDriveTo(point, target, density) {
+  tripsAttempted++
+  var road = findRoad(point);
+  console.log(road)
+  if (!road) {
+    failedTripCount++
+    return -1;
+  }
+  if (target == 'res') {
+    var target1 = getRandomResTile()
+  } else if (target == 'com') {
+    var target1 = getRandomComTile()
+  } else if (target == 'ind') {
+    var target1 = getRandomIndTile()
+  }
+  if (target1 == null) { return }
+  var roadT = findRoad(target1);
+  console.log(roadT)
+  if (!roadT) {
+    failedTripCount++
+    return -1;
+  }
+
+  console.log(roadT)
+  var graph = new Graph(gridTrans);
+  //console.log(graph)
+  var start = graph.grid[road.y][road.x];
+  var end = graph.grid[roadT.y][roadT.x];
+  var result = astar.search(graph, start, end);
+  console.log(result)
+  if (result.length > 0) {
+    successfullTripCount++
+    commuteTotal += result.length
+    addCongestion(result, density)
+  } else {
+    failedTripCount++
+
+  }
+}
+/* function tryDriveTo_(point, target, density) {
   // console.log(point)
   tripsAttempted++
   var road = findRoad(point);
@@ -826,13 +899,14 @@ function tryDriveTo(point, target, density) {
     // console.log('route length ' + route.length + ' startX ' + point.x + ',startY ' + point.y)
     //console.log(route)
     successfullTripCount++
+
     return route.length
   }
 
 
   //return true;
-}
-function findNextRoad(point, prevPos) {
+} */
+/* function findNextRoad(point, prevPos) {
   //offsets for up, down, left, right for moving
   var posX = [-1, 1, 0, 0];
   var posY = [0, 0, -1, 1];
@@ -862,8 +936,8 @@ function findNextRoad(point, prevPos) {
   }
 
   return directions[Phaser.Math.Between(0, directions.length - 1)];
-}
-function findTarget(pos, target) {
+} */
+/* function findTarget(pos, target) {
   //offsets for up, down, left, right
   var posX = [-1, 1, 0, 0];
   var posY = [0, 0, -1, 1];
@@ -879,8 +953,8 @@ function findTarget(pos, target) {
   }
 
   return false;
-}
-function findTargetTile(pos, target) {
+} */
+/* function findTargetTile(pos, target) {
   //offsets for up, down, left, right
   var posX = [-1, 1, 0, 0];
   var posY = [0, 0, -1, 1];
@@ -896,7 +970,7 @@ function findTargetTile(pos, target) {
   }
 
   return false;
-}
+} */
 function roadInRange(point) {
   var tiles = getTilesInRange(point, gameRules.roadRange)
   for (var i = 0; i < tiles.length; i++) {
@@ -907,19 +981,56 @@ function roadInRange(point) {
   return false
 }
 function findRoad(point) {
+  var availableRoads = []
   var tiles = getTilesInRange(point, gameRules.roadRange)
   for (var i = 0; i < tiles.length; i++) {
     if (tiles[i].type == 'road' || tiles[i].type == 'rail') {
-      return tiles[i].xy
+      //return tiles[i].xy
+      availableRoads.push(tiles[i].xy)
     }
   }
-  return false
+  if (availableRoads.length > 0) {
+    return availableRoads[Phaser.Math.Between(0, availableRoads.length - 1)]
+  } else {
+    return false
+  }
+
 }
 function isRoad(point) {
   if (grid[point.y][point.x].type == 'road' || grid[point.y][point.x].type == 'rail') {
     return true
   }
   return false
+}
+function createRoadMap() {
+  for (var y = 0; y < sim.gameData.mapConfig.height; y++) {
+    for (var x = 0; x < sim.gameData.mapConfig.width; x++) {
+      if (isRoad({ x: x, y: y })) {
+        gridTrans[y][x] = 1
+      }
+    }
+  }
+  console.log(gridTrans)
+}
+function getAverageCongestion() {
+  var count = 0
+  var conTotal = 0
+  for (var y = 0; y < sim.gameData.mapConfig.height; y++) {
+    for (var x = 0; x < sim.gameData.mapConfig.width; x++) {
+      if (gridTrans[y][x] > 1) {
+        conTotal += gridTrans[y][x]
+        count++
+      }
+    }
+  }
+  return Math.round(conTotal / count)
+}
+function addCongestion(path, density) {
+  for (var i = 0; i < path.length; i++) {
+
+
+    gridTrans[path[i].x][path[i].y] += 1 * density
+  }
 }
 function getDensityMultiplier(zone) {
   if (zone == 0 || zone == 3 || zone == 6) {
@@ -929,6 +1040,28 @@ function getDensityMultiplier(zone) {
   } else if (zone == 2 || zone == 5 || zone == 8) {
     return 3
   }
+}
+function setNoRoad() {
+  noRoad = 0
+  var totalLV = 0
+  for (var y = 0; y < mapConfig.height; y++) {
+    for (var x = 0; x < mapConfig.width; x++) {
+      var tile = grid[y][x]
+      if (tile.building != null) {
+        if (!findRoad(tile.xy)) {
+          gridImage[y][x].building.setTint(0x8E8E8E)
+          noRoad++
+        } else {
+          gridImage[y][x].building.clearTint()
+        }
+
+
+      }
+
+    }
+  }
+  console.log('no road ' + noRoad)
+
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 // EDUCATION
@@ -1144,7 +1277,7 @@ function perc2color(perc) {
 function create2DArrayValue(numRows, numColumns) {
   let array = new Array(numRows);
 
-  for (let i = 0; i < numColumns; i++) {
+  for (let i = 0; i < numRows; i++) {
     array[i] = new Array(numColumns).fill(0);
   }
 

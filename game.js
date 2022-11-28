@@ -18,7 +18,7 @@ window.onload = function () {
     dom: {
       createContainer: true
     },
-    scene: [preloadGame, startGame, playGame, UI, Menu, Info, People, Rci, Power, Finance, Settings, Police, Laws]
+    scene: [preloadGame, startGame, playGame, UI, Menu, Info, People, Rci, Power, Finance, Settings, Police, Laws, Transportation]
   }
   game = new Phaser.Game(gameConfig);
   window.focus();
@@ -382,6 +382,9 @@ class playGame extends Phaser.Scene {
         removeSchool(buildMenu[tile.parentMenu].subMenu[tile.menu].capacity)
       }
       sim.gameData.specialJobs -= buildMenu[tile.parentMenu].subMenu[tile.menu].jobs
+      sim.gameData.demandCaps[0] -= buildMenu[tile.parentMenu].subMenu[tile.menu].capRelief[0]
+      sim.gameData.demandCaps[1] -= buildMenu[tile.parentMenu].subMenu[tile.menu].capRelief[1]
+      sim.gameData.demandCaps[2] -= buildMenu[tile.parentMenu].subMenu[tile.menu].capRelief[2]
       tileIMG.building = null
 
     }
@@ -667,6 +670,9 @@ class playGame extends Phaser.Scene {
       addLocalLandValue(tile, this.zoneData)
       var temp = getLandValue(grid[tile.y][tile.x].partOf)
       var lvIndex = getLVIndex(temp.landvalue)
+      var rciIndex = getRCIIndex(zone, lvIndex)
+      console.log(rciIndex)
+      sim.gameData.rciCounts[rciIndex] += 1
       if (i < area.length - 1) {
 
       } else {
@@ -1117,6 +1123,9 @@ class playGame extends Phaser.Scene {
       sim.gameData.zoneCounts[this.placeData.zone] += 1
       sim.gameData.maintenanceCosts[this.placeData.zone] += this.placeData.maintenance
       sim.gameData.maintenanceCostsSpending[this.placeData.zone] += this.placeData.maintenance
+      sim.gameData.demandCaps[0] += this.placeData.capRelief[0]
+      sim.gameData.demandCaps[1] += this.placeData.capRelief[1]
+      sim.gameData.demandCaps[2] += this.placeData.capRelief[2]
       addGlobalLandValue(this.placeData)
       addLocalLandValue(mapXY, this.placeData)
       sim.gameData.funds -= this.placeData.cost

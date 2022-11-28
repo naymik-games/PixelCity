@@ -39,6 +39,7 @@ let mapConfigs = [
     width: 32,
     height: 32,
     seed: 3990765355,
+    size: 1,
     divisor: 12,
     water: 1
   },
@@ -46,6 +47,7 @@ let mapConfigs = [
     width: 64,
     height: 64,
     seed: 3990765355,
+    size: 2,
     divisor: 12,
     water: 1
   },
@@ -54,12 +56,14 @@ let mapConfigs = [
     height: 128,
     seed: 3990765355,
     divisor: 12,
+    size: 3,
     water: 1
   },
   {
     width: 192,
     height: 192,
     seed: 3990765355,
+    size: 4,
     divisor: 12,
     water: 1
   }
@@ -76,6 +80,7 @@ let gameStats = {
   population: 100,
   maxPlotSize: 1,
   difficulty: 0,
+  demandCaps: [25000, 25000, 70000],
   globalLV: [0, 0, 0, 0],
   specialJobs: 0,
   powerPlants: [],
@@ -86,8 +91,9 @@ let gameStats = {
   hospitalCapacity: 0,
   averageLV: 0,
   zoneCounts: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  rciCounts: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   rci: [0, 0, 0],
-  taxRates: [7, 7, 7],
+  taxRates: [9, 9, 9],
   maintenanceCosts: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   maintenanceCostsSpending: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   maintenanceCostsPer: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
@@ -106,11 +112,60 @@ let gameRules = {
   lvMed: 350,
   baseLV: 50,
   psRadius: 10,
-  phRadius: 15
-
-
-
+  phRadius: 15,
+  commuters: 150
 }
+rciSupply = [23,
+  19,
+  18,
+  73,
+  71,
+  67,
+  157,
+  151,
+  147,
+  18,
+  18,
+  17,
+  64,
+  64,
+  61,
+  130,
+  130,
+  128,
+  19,
+  17,
+  67,
+  61,
+  130,
+  129
+]
+rciJobs = [
+  12,
+  10,
+  9,
+  37,
+  36,
+  34,
+  79,
+  76,
+  74,
+  17,
+  17,
+  16,
+  59,
+  59,
+  57,
+  12,
+  12,
+  11,
+  17,
+  17,
+  61,
+  59,
+  12,
+  12
+]
 let fundsLevel = [100000, 75000, 50000]
 let zoneSizeTable = [0, 1, 4, 9, 16, 25, 36, 49, 64]
 let GM = {
@@ -140,6 +195,10 @@ let gridTrans
 let failedTripCount = 0
 let successfullTripCount = 0
 let tripsAttempted = 0
+let commuteTotal = 0
+let commuteAverage = 0
+let congestionAverage = 0
+let noRoad = 0
 loadFont("PixelFont", "assets/fonts/QuinqueFive.ttf");
 function loadFont(name, url) {
   var newFont = new FontFace(name, `url(${url})`);

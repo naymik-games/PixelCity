@@ -15,7 +15,7 @@ class Rci extends Phaser.Scene {
 
   create() {
     this.Main = this.scene.get('playGame');
-    console.log(this.mapXY)
+    // console.log(this.mapXY)
     /*    var tablebg = this.add.image(game.config.width / 2, game.config.height, 'blank').setOrigin(.5, 1).setTint(0xf7f7f7);
        tablebg.displayWidth = 900
        tablebg.displayHeight = game.config.height / 2 */
@@ -37,21 +37,25 @@ class Rci extends Phaser.Scene {
 
     //this.nameText = this.add.bitmapText(300, 860, 'topaz', 'RCI', 50).setOrigin(0, .5).setTint(0x000000).setInteractive();
 
-    var workers = Math.floor(sim.gameData.population * .50)
+    var workers = sim.getWorkers()
+    var workersRes = workers - gameRules.commuters
 
-    var comJobs = sim.getTotalComCapacity()
-    var indJobs = sim.getTotalIndCapacity()
+    this.workersLabel = this.add.text(25, 825, 'Workers ', { fontFamily: 'PixelFont', fontSize: '25px', color: '#CAD4D8', align: 'left' })
+
+    this.housingText = this.add.bitmapText(25, 925, 'topaz', 'Residents: ' + workersRes + ' +  Commuters: ' + gameRules.commuters + ' = ' + workers, 40).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive();
+
+    var comJobs = sim.getComJobs()
+    var indJobs = sim.getIndJobs()
     var specJobs = sim.gameData.specialJobs
     var totalJobs = comJobs + indJobs + specJobs
 
-    this.jobsLabel = this.add.text(25, 825, 'Jobs ', { fontFamily: 'PixelFont', fontSize: '25px', color: '#CAD4D8', align: 'left' })
+    this.jobsLabel = this.add.text(25, 1025, 'Jobs ', { fontFamily: 'PixelFont', fontSize: '25px', color: '#CAD4D8', align: 'left' })
 
 
-    this.jobText = this.add.bitmapText(25, 925, 'topaz', 'Com ' + comJobs + ' Ind ' + indJobs + ' Other ' + specJobs + ' Total: ' + totalJobs, 40).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive();
+    this.jobText = this.add.bitmapText(25, 1125, 'topaz', 'Com: ' + comJobs + ' + Ind: ' + indJobs + ' + Other: ' + specJobs + ' = ' + totalJobs, 40).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive();
 
 
-    this.housingText = this.add.bitmapText(25, 1000, 'topaz', 'Workers: ' + workers, 40).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive();
-
+    console.log(sim.gameData.rciCounts)
     //console.log(roadInRange(tile.xy))
     /* if (tile.hasBuilding) {
       console.log(tile.building.frame.name)

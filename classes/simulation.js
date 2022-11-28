@@ -13,6 +13,7 @@ class Sim {
     this.updateFunds()
     driveTimes()
     this.updatePopulation(newYear, fiveYear)
+    setNoRoad()
   }
   updateFunds() {
     //income
@@ -28,6 +29,50 @@ class Sim {
     this.gameData.funds += balance
   }
   updateRCI() {
+    var resSupply = this.getTotalResCapacity()
+    var comSupply = this.getTotalComCapacity()
+    var indSupply = this.getTotalIndCapacity()
+
+    var resCapRatio = sim.gameData.demandCaps[0] / resSupply
+    var comCapRatio = sim.gameData.demandCaps[1] / comSupply
+    var indCapRatio = sim.gameData.demandCaps[2] / indSupply
+
+    //////////
+    var resWorkers = this.getWorkers()
+
+    var totalJobs = this.getTotalJobs()
+
+    console.log('total jobs ' + totalJobs)
+    //////////////////
+    var workerRatio = totalJobs / resWorkers
+    console.log('worker ratio ' + workerRatio)
+
+    var jobRatio = resWorkers / totalJobs
+    console.log('job ratio ' + jobRatio)
+
+    var resDemand = resCapRatio * workerRatio
+    console.log('res cap ratio ' + resDemand)
+    var comDemand = comCapRatio * jobRatio
+    console.log('com cap ratio ' + comDemand)
+    var indDemand = indCapRatio * jobRatio
+    console.log('ind cap ratio ' + indDemand)
+
+    this.gameData.rci[0] = resDemand / 100
+    this.gameData.rci[1] = comDemand / 100
+    this.gameData.rci[2] = indDemand / 100
+    console.log('res ' + this.gameData.rci[0] + ' com ' + this.gameData.rci[1] + ' ind ' + this.gameData.rci[2])
+
+    //////////////////////////////////////////////////////////////////////////////////////////
+    var rand = Phaser.Math.Between(0, birthRates.length - 1)
+    var births = Math.round(this.gameData.population * birthRates[rand]) //new pop from births
+    var availableHousing = resSupply - this.gameData.population
+    var migration = resWorkers * (workerRatio - 1)
+    var r = clamp(migration, -20, availableHousing + births)
+    console.log('births: ' + births + ' migration: ' + migration + ' migration adj: ' + r)
+
+    this.gameData.population += Math.ceil(r + births)
+  }
+  updateRCI_() {
     //RCI
     //residential capacity
 
@@ -131,9 +176,9 @@ class Sim {
     resRatio = resRatio * capacityRatio
 
 
-    //console.log('res ratio: ' + resRatio)
-    //console.log('com ratio: ' + comRatio)
-    // console.log('Ind ratio: ' + indRatio)
+    console.log('res ratio: ' + resRatio)
+    console.log('com ratio: ' + comRatio)
+    console.log('Ind ratio: ' + indRatio)
 
 
     //console.log(clamp(0 + Math.round(resRatio), -2000, 2000))
@@ -158,22 +203,63 @@ class Sim {
     //}
   }
   getTotalResCapacity() {
-    var lrCapacity = this.gameData.zoneCounts[0] * 24 //8 residents per tile
-    var mrCapacity = this.gameData.zoneCounts[1] * 74 //40 residents per tile
-    var drCapacity = this.gameData.zoneCounts[2] * 158 //120 residents per tile
-    return lrCapacity + mrCapacity + drCapacity
+    var resSupply = 0
+    for (var i = 0; i < 9; i++) {
+      resSupply += sim.gameData.rciCounts[i] * rciSupply[i]
+    }
+    if (resSupply == 0) {
+      resSupply = 1
+    }
+    return resSupply
   }
   getTotalComCapacity() {
-    var lcCapacity = this.gameData.zoneCounts[3] * 17 //6jobs per tile
-    var mcCapacity = this.gameData.zoneCounts[4] * 59 //35 jobs per tile
-    var dcCapacity = this.gameData.zoneCounts[5] * 123 //100 jobs per tile
-    return lcCapacity + mcCapacity + dcCapacity
+    var comSupply = 0
+    for (var i = 9; i < 18; i++) {
+      comSupply += sim.gameData.rciCounts[i] * rciSupply[i]
+    }
+    if (comSupply == 0) {
+      comSupply = 1
+    }
+    return comSupply
   }
   getTotalIndCapacity() {
-    var liCapacity = this.gameData.zoneCounts[6] * 17 //six jobs per tile
-    var miCapacity = this.gameData.zoneCounts[7] * 61 //75 jobs per tile
-    var hiCapacity = this.gameData.zoneCounts[8] * 127 //75 jobs per tile
-    return liCapacity + miCapacity + hiCapacity
+    var indSupply = 0
+    for (var i = 18; i < 24; i++) {
+      indSupply += sim.gameData.rciCounts[i] * rciSupply[i]
+    }
+    if (indSupply == 0) {
+      indSupply = 1
+    }
+    return indSupply
+  }
+  getWorkers() {
+    var resWorkers = 0
+    for (var i = 0; i < 9; i++) {
+      resWorkers += sim.gameData.rciCounts[i] * rciJobs[i]
+    }
+    if (Math.round(sim.gameData.population / 2) >= resWorkers) {
+      resWorkers += gameRules.commuters
+    } else {
+      resWorkers = gameRules.commuters + Math.round(sim.gameData.population / 2)
+    }
+    return resWorkers
+  }
+  getTotalJobs() {
+    return this.getComJobs() + this.getIndJobs() + sim.gameData.specialJobs
+  }
+  getComJobs() {
+    var comJobs = 0
+    for (var i = 9; i < 18; i++) {
+      comJobs += sim.gameData.rciCounts[i] * rciJobs[i]
+    }
+    return comJobs
+  }
+  getIndJobs() {
+    var indJobs = 0
+    for (var i = 18; i < 24; i++) {
+      indJobs += sim.gameData.rciCounts[i] * rciJobs[i]
+    }
+    return indJobs
   }
   updatePopulation(newYear, fiveYear) {
     if (newYear) {

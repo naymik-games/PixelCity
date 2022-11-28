@@ -34,7 +34,7 @@ class People extends Phaser.Scene {
 
     //this.nameText = this.add.bitmapText(300, 860, 'topaz', 'Citizen Data', 50).setOrigin(0, .5).setTint(0x000000).setInteractive();
 
-    var workers = Math.floor(sim.gameData.population * .50)
+    var workers = sim.getWorkers()
 
     this.popText = this.add.bitmapText(25, 625, 'topaz', 'Pop: ' + sim.gameData.population + ' Workers: ' + workers, 40).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive();
     this.housingText = this.add.bitmapText(25, 700, 'topaz', 'Housing Capacity: ' + sim.getTotalResCapacity(), 40).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive();

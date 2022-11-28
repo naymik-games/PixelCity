@@ -49,7 +49,7 @@ class UI extends Phaser.Scene {
         this.playpause.setFrame(1)
       }
     }, this)
-    this.headerGroup.add(this.playpause)
+    // this.headerGroup.add(this.playpause)
     /*  this.rcibg = this.add.image(150, 150, 'blank').setOrigin(0, .5).setTint(0xfafafa).setAlpha(.7)
      this.rcibg.displayWidth = 150
      this.rcibg.displayHeight = 200 */
@@ -73,6 +73,37 @@ class UI extends Phaser.Scene {
     this.rci.displayWidth = 150
     this.rci.displayHeight = 5
     this.headerGroup.add(this.rci)
+
+
+
+
+
+
+
+    this.res1 = this.add.image(225, 450, 'blank').setOrigin(.5, 1).setTint(0x529345)
+    this.res1.displayWidth = 25
+    this.res1.displayHeight = -75
+    this.headerGroup.add(this.res1)
+
+    this.com1 = this.add.image(275, 450, 'blank').setOrigin(.5, 1).setTint(0x45a0c6)
+    this.com1.displayWidth = 25
+    this.com1.displayHeight = -75
+    this.headerGroup.add(this.com1)
+
+    this.ind1 = this.add.image(325, 450, 'blank').setOrigin(.5, 1).setTint(0xc6c245)
+    this.ind1.displayWidth = 25
+    this.ind1.displayHeight = -75
+    this.headerGroup.add(this.ind1)
+
+    this.rci1 = this.add.image(275, 450, 'blank').setOrigin(.5, 1).setTint(0x000000)
+    this.rci1.displayWidth = 150
+    this.rci1.displayHeight = 5
+    this.headerGroup.add(this.rci1)
+
+
+
+
+
 
     this.month = ['--', 'Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
     //sim.gameData.day
@@ -146,7 +177,7 @@ class UI extends Phaser.Scene {
     }, this)
     this.advisorGroup.add(policeIcon)
 
-    var lawIcon = this.add.image(75, 800, 'icons', 48).setOrigin(.5).setScale(2).setInteractive()
+    var lawIcon = this.add.image(75, 800, 'icons', 57).setOrigin(.5).setScale(2).setInteractive()
     lawIcon.on('pointerdown', function () {
       this.scene.launch('Laws')
       this.scene.pause()
@@ -154,6 +185,16 @@ class UI extends Phaser.Scene {
       this.scene.pause('Menu')
     }, this)
     this.advisorGroup.add(lawIcon)
+
+    var trafficIcon = this.add.image(75, 875, 'icons', 44).setOrigin(.5).setScale(2).setInteractive()
+    trafficIcon.on('pointerdown', function () {
+      this.scene.launch('Transportation')
+      this.scene.pause()
+      this.scene.pause('playGame')
+      this.scene.pause('Menu')
+    }, this)
+    this.advisorGroup.add(trafficIcon)
+
     this.advisorGroup.setPosition(-150, 0)
     ///////////////////////////////////////////////////////
     this.dataGroup = this.add.container()
@@ -479,10 +520,13 @@ class UI extends Phaser.Scene {
     this.circularProgress.setValue(this.day.getElapsed() / gameRules.dayLength)
     this.modeText.setText(gameModeNames[gameMode])
 
-
     this.res.displayHeight = 75 * (sim.gameData.rci[0] / 2000)
     this.com.displayHeight = 75 * (sim.gameData.rci[1] / 1500)
     this.ind.displayHeight = 75 * (sim.gameData.rci[2] / 1500)
+
+    this.res1.displayHeight = 75 * clamp(sim.gameData.rci[0], 0, 1)
+    this.com1.displayHeight = 75 * clamp(sim.gameData.rci[1], 0, 1)
+    this.ind1.displayHeight = 75 * clamp(sim.gameData.rci[2], 0, 1)
   }
   updateStats() {
     this.fundsText.setText('$' + sim.gameData.funds)
