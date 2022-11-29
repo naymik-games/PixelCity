@@ -25,7 +25,7 @@ class People extends Phaser.Scene {
     var tablebg_mid = this.add.image(game.config.width / 2, game.config.height - 75, 'modal_mid').setOrigin(.5, 1);
     tablebg_mid.displayHeight = 950
     var tablebg_bot = this.add.image(game.config.width / 2, game.config.height, 'modal_bot').setOrigin(.5, 1);
-    this.closeIcon = this.add.image(42, 562, 'icons', 20).setOrigin(.5).setScale(1.5).setInteractive().setAlpha(0.01);
+    this.closeIcon = this.add.image(858, 562, 'icons', 20).setOrigin(.5).setScale(1.5).setInteractive().setAlpha(0.01);
     this.nameText = this.add.text(100, 547, 'Cititzen Data ', { fontFamily: 'PixelFont', fontSize: '30px', color: '#0057AF', align: 'left', backgroundColor: '#A6CAF0' })
 
     //thumb

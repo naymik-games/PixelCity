@@ -33,7 +33,7 @@ class Finance extends Phaser.Scene {
     var tablebg_bot = this.add.image(game.config.width / 2, game.config.height, 'modal_bot').setOrigin(.5, 1);
     var tablebg_break = this.add.image(game.config.width / 2, 1350, 'modal_break').setOrigin(.5, 1);
     this.tablebg_tab = this.add.image(game.config.width / 2, game.config.height - 1260, 'modal_tab', 0).setOrigin(.5, 1);
-    this.closeIcon = this.add.image(42, 287, 'icons', 20).setOrigin(.5).setScale(1.5).setInteractive().setAlpha(0.01);
+    this.closeIcon = this.add.image(858, 287, 'icons', 20).setOrigin(.5).setScale(1.5).setInteractive().setAlpha(0.01);
     this.nameText = this.add.text(100, 272, 'Finances ', { fontFamily: 'PixelFont', fontSize: '30px', color: '#0057AF', align: 'left', backgroundColor: '#A6CAF0' })
 
     this.incomeGroup = this.add.container()
