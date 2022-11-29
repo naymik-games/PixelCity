@@ -13,6 +13,9 @@ class Sim {
     this.updateFunds()
     driveTimes()
     this.updatePopulation(newYear, fiveYear)
+    if (this.gameData.population > 500) {
+      this.gameData.maxPlotSize = 2
+    }
     setNoRoad()
   }
   updateFunds() {
