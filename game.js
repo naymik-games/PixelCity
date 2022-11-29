@@ -1400,7 +1400,7 @@ class playGame extends Phaser.Scene {
       var plantID = sim.gameData.waterPlants[i][1]
       var plant = buildMenu[2].subMenu[plantID]
       var tiles = getTilesInRange(sim.gameData.waterPlants[i][0], plant.waterRange)
-      this.drawDataTileSize(sim.gameData.waterPlants[i][0], plant.waterRange)
+      //this.drawDataTileSize(sim.gameData.waterPlants[i][0], plant.waterRange)
       for (var j = 0; j < tiles.length; j++) {
         var tile = tiles[j]
         var point = tile.xy

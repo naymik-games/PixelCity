@@ -33,16 +33,16 @@ function removePollution(point, data) {
     // console.log(d)
     var v = data.airPollutionRadius - (d - 1)
     var per = v / data.airPollutionRadius
-    tiles[i].pollution[0] -= clamp(tiles[i].pollution[0] + Math.round(data.airPollution * per), 0, 100000)
+    tiles[i].pollution[0] = tiles[i].pollution[0] - Math.round(data.airPollution * per)
   }
   //water
   var tiles = this.getTilesInRange(point, data.waterPollutionRadius)
   for (var i = 0; i < tiles.length; i++) {
     var d = getDistanceAlt(point, tiles[i].xy)
     // console.log(d)
-    var v = data.airPollutionRadius - (d - 1)
-    var per = v / data.airPollutionRadius
-    tiles[i].pollution[1] -= clamp(tiles[i].pollution[1] + Math.round(data.airPollution * per), 0, 100000)
+    var v = data.waterPollutionRadius - (d - 1)
+    var per = v / data.waterPollutionRadius
+    tiles[i].pollution[1] = tiles[i].pollution[0] - Math.round(data.waterPollution * per)
   }
 }
 function updatePollution() {
