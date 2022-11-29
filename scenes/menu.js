@@ -9,8 +9,8 @@ class Menu extends Phaser.Scene {
   preload() {
     this.load.scenePlugin({
       key: 'rexuiplugin',
-      url: '../classes/rexuiplugin.min.js',
-      //url: 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexuiplugin.min.js',
+      //url: '../classes/rexuiplugin.min.js',
+      url: 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexuiplugin.min.js',
       sceneKey: 'rexUI'
     });
 
