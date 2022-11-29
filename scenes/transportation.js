@@ -25,6 +25,7 @@ class Transportation extends Phaser.Scene {
     tablebg_mid.displayHeight = 750
     var tablebg_bot = this.add.image(game.config.width / 2, game.config.height, 'modal_bot').setOrigin(.5, 1);
     this.closeIcon = this.add.image(858, 762, 'icons', 20).setOrigin(.5).setScale(1.5).setInteractive().setAlpha(0.01);
+    var transIcon = this.add.image(42, 762, 'icons_clear', 44).setOrigin(.5).setScale(1.5).setInteractive().setAlpha(1);
     this.nameText = this.add.text(100, 747, 'Transportation ', { fontFamily: 'PixelFont', fontSize: '30px', color: '#0057AF', align: 'left', backgroundColor: '#A6CAF0' })
 
 

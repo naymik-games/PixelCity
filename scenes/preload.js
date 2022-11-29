@@ -420,8 +420,14 @@ class preloadGame extends Phaser.Scene {
     });
     ////////////////////////////////////////////////////////
     this.load.spritesheet("icons", "assets/sprites/menu_icons.png", {
-      frameWidth: 32,
-      frameHeight: 32,
+      frameWidth: 40,
+      frameHeight: 40,
+      margin: 1,
+      spacing: 1
+    });
+    this.load.spritesheet("icons_clear", "assets/sprites/menu_icons_clear.png", {
+      frameWidth: 40,
+      frameHeight: 40,
       margin: 1,
       spacing: 1
     });

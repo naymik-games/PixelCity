@@ -150,7 +150,7 @@ class UI extends Phaser.Scene {
     }, this)
     this.advisorGroup.add(rciIcon)
 
-    var powerIcon = this.add.image(75, 575, 'icons', 3).setOrigin(.5).setScale(2).setInteractive()
+    var powerIcon = this.add.image(75, 575, 'icons', 6).setOrigin(.5).setScale(2).setInteractive()
     powerIcon.on('pointerdown', function () {
       this.scene.launch('Power')
       this.scene.pause()
@@ -159,7 +159,7 @@ class UI extends Phaser.Scene {
     }, this)
     this.advisorGroup.add(powerIcon)
 
-    var financeIcon = this.add.image(75, 650, 'icons', 30).setOrigin(.5).setScale(2).setInteractive()
+    var financeIcon = this.add.image(75, 650, 'icons', 28).setOrigin(.5).setScale(2).setInteractive()
     financeIcon.on('pointerdown', function () {
       this.scene.launch('Finance')
       this.scene.pause()
@@ -177,7 +177,7 @@ class UI extends Phaser.Scene {
     }, this)
     this.advisorGroup.add(policeIcon)
 
-    var lawIcon = this.add.image(75, 800, 'icons', 57).setOrigin(.5).setScale(2).setInteractive()
+    var lawIcon = this.add.image(75, 800, 'icons', 62).setOrigin(.5).setScale(2).setInteractive()
     lawIcon.on('pointerdown', function () {
       this.scene.launch('Laws')
       this.scene.pause()
@@ -195,7 +195,7 @@ class UI extends Phaser.Scene {
     }, this)
     this.advisorGroup.add(trafficIcon)
 
-    this.advisorGroup.setPosition(-150, 0)
+    this.advisorGroup.setPosition(-150, 25)
     ///////////////////////////////////////////////////////
     this.dataGroup = this.add.container()
     var traflON = false
@@ -237,7 +237,7 @@ class UI extends Phaser.Scene {
     }, this)
     this.dataGroup.add(polIcon)
     var lvON = false
-    var lvIcon = this.add.image(75, 575, 'icons', 52).setOrigin(.5).setScale(2).setInteractive()
+    var lvIcon = this.add.image(75, 575, 'icons', 56).setOrigin(.5).setScale(2).setInteractive()
     lvIcon.on('pointerdown', function () {
       if (lvON) {
         this.Main.graphicsData.clear()
@@ -255,7 +255,7 @@ class UI extends Phaser.Scene {
     }, this)
     this.dataGroup.add(lvIcon)
     var waterON = false
-    var waterIcon = this.add.image(75, 650, 'icons', 53).setOrigin(.5).setScale(2).setInteractive()
+    var waterIcon = this.add.image(75, 650, 'icons', 58).setOrigin(.5).setScale(2).setInteractive()
     waterIcon.on('pointerdown', function () {
       if (waterON) {
         this.Main.graphicsData.clear()
@@ -275,7 +275,7 @@ class UI extends Phaser.Scene {
     this.dataGroup.add(waterIcon)
 
     var powerON = false
-    var powerDIcon = this.add.image(75, 725, 'icons', 3).setOrigin(.5).setScale(2).setInteractive()
+    var powerDIcon = this.add.image(75, 725, 'icons', 6).setOrigin(.5).setScale(2).setInteractive()
     powerDIcon.on('pointerdown', function () {
       if (powerON) {
         this.Main.graphicsData.clear()
@@ -314,15 +314,15 @@ class UI extends Phaser.Scene {
     }, this)
     this.dataGroup.add(crimeIcon)
 
-    this.dataGroup.setPosition(-150, 0)
+    this.dataGroup.setPosition(-150, 25)
     var dataOn = false
-    var dataIcon = this.add.image(75, 275, 'icons', 51).setOrigin(.5, 0).setScale(3).setInteractive()
+    var dataIcon = this.add.image(75, 275, 'icons', 54).setOrigin(.5, 0).setScale(3).setInteractive()
     dataIcon.on('pointerdown', function () {
       if (dataOn) {
         //this.Main.graphics.clear()
         //this.dataGroup.setPosition(-150, 0)
         //this.headerGroup.setPosition(0, 0)
-        dataIcon.setFrame(51)
+        dataIcon.setFrame(54)
         this.Main.graphicsData.clear()
         this.Main.graphicsBorder.clear()
         /*  var tween = this.tweens.add({
@@ -346,8 +346,8 @@ class UI extends Phaser.Scene {
         //this.Main.drawTrafficGrid()
         //this.dataGroup.setPosition(0, 0)
         //this.headerGroup.setPosition(0, -500)
-        dataIcon.setFrame(56)
-        advisorIcon.setFrame(54)
+        dataIcon.setFrame(55)
+        advisorIcon.setFrame(60)
         advisorOn = false
         var tween = this.tweens.add({
           targets: this.advisorGroup,
@@ -375,13 +375,13 @@ class UI extends Phaser.Scene {
 
 
     var advisorOn = false
-    var advisorIcon = this.add.image(200, 275, 'icons', 54).setOrigin(.5, 0).setScale(3).setInteractive()
+    var advisorIcon = this.add.image(225, 275, 'icons', 60).setOrigin(.5, 0).setScale(3).setInteractive()
     advisorIcon.on('pointerdown', function () {
       if (advisorOn) {
         //this.Main.graphics.clear()
         //this.dataGroup.setPosition(-150, 0)
         //this.headerGroup.setPosition(0, 0)
-        advisorIcon.setFrame(54)
+        advisorIcon.setFrame(60)
         this.Main.graphicsData.clear()
         this.Main.graphicsBorder.clear()
         var tween = this.tweens.add({
@@ -405,8 +405,8 @@ class UI extends Phaser.Scene {
         //this.Main.drawTrafficGrid()
         //this.dataGroup.setPosition(0, 0)
         //this.headerGroup.setPosition(0, -500)
-        advisorIcon.setFrame(55)
-        dataIcon.setFrame(51)
+        advisorIcon.setFrame(61)
+        dataIcon.setFrame(54)
         dataOn = false
         var tween = this.tweens.add({
           targets: this.advisorGroup,
@@ -449,16 +449,16 @@ class UI extends Phaser.Scene {
       this.scene.pause('Menu')
     }, this)
 
-    this.cursorIcon = this.add.image(825, 1389, 'icons', 1).setOrigin(.5).setScale(3).setInteractive();
+    this.cursorIcon = this.add.image(825, 1389, 'icons', 2).setOrigin(.5).setScale(3).setInteractive();
     this.cursorIcon.on('pointerdown', function () {
       this.events.emit('cursor');
       this.togglePan()
     }, this)
-    this.zoomInIcon = this.add.image(820, 1289, 'icons', 34).setOrigin(1, .5).setScale(1.5).setInteractive().setAlpha(0);
+    this.zoomInIcon = this.add.image(820, 1289, 'icons', 32).setOrigin(1, .5).setScale(1.5).setInteractive().setAlpha(0);
     this.zoomInIcon.on('pointerdown', function () {
       this.setZoom('in')
     }, this)
-    this.zoomOutIcon = this.add.image(830, 1289, 'icons', 35).setOrigin(0, .5).setScale(1.5).setInteractive().setAlpha(0);
+    this.zoomOutIcon = this.add.image(830, 1289, 'icons', 34).setOrigin(0, .5).setScale(1.5).setInteractive().setAlpha(0);
     this.zoomOutIcon.on('pointerdown', function () {
       this.setZoom('out')
     }, this)
@@ -534,12 +534,12 @@ class UI extends Phaser.Scene {
   togglePan() {
     if (this.drag) {
       this.drag = false;
-      this.cursorIcon.setFrame(1)
+      this.cursorIcon.setFrame(2)
       this.zoomInIcon.setAlpha(0)
       this.zoomOutIcon.setAlpha(0)
     } else {
       this.drag = true;
-      this.cursorIcon.setFrame(2)
+      this.cursorIcon.setFrame(5)
       this.zoomInIcon.setAlpha(1)
       this.zoomOutIcon.setAlpha(1)
     }

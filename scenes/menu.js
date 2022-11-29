@@ -382,8 +382,8 @@ let buildMenu = [
   {
     id: 0,
     name: 'Transportation',
-    frameOff: 5,
-    frameOn: 14,
+    frameOff: 10,
+    frameOn: 11,
     subMenu: [
       {
         name: 'Road',
@@ -565,8 +565,8 @@ let buildMenu = [
   {
     id: 1,
     name: 'Zone',
-    frameOff: 7,
-    frameOn: 16,
+    frameOff: 14,
+    frameOn: 15,
     subMenu: [
       {
         name: 'Light Residential',
@@ -886,8 +886,8 @@ let buildMenu = [
   {
     id: 2,
     name: 'Utilities',
-    frameOff: 3,
-    frameOn: 12,
+    frameOff: 6,
+    frameOn: 7,
     subMenu: [
       {
         name: 'Water Tower',
@@ -1213,8 +1213,8 @@ let buildMenu = [
   {
     id: 3,
     name: 'Health & Safety',
-    frameOff: 26,
-    frameOn: 27,
+    frameOff: 24,
+    frameOn: 25,
     subMenu: [
       {
         name: 'Clinic',
@@ -1408,8 +1408,8 @@ let buildMenu = [
   {
     id: 4,
     name: 'Education',
-    frameOff: 24,
-    frameOn: 25,
+    frameOff: 22,
+    frameOn: 23,
     subMenu: [
       {
         name: 'Elementary School',
@@ -1656,8 +1656,8 @@ let buildMenu = [
   {
     id: 5,
     name: 'Special',
-    frameOff: 6,
-    frameOn: 15,
+    frameOff: 12,
+    frameOn: 13,
     subMenu: [
       {
         name: 'Lighthouse',
@@ -2276,8 +2276,8 @@ let buildMenu = [
   {
     id: 6,
     name: 'Parks',
-    frameOff: 32,
-    frameOn: 33,
+    frameOff: 30,
+    frameOn: 31,
     subMenu: [
       {
         name: 'Fountain',
@@ -2976,8 +2976,8 @@ let buildMenu = [
   {
     id: 7,
     name: 'Government',
-    frameOff: 4,
-    frameOn: 13,
+    frameOff: 8,
+    frameOn: 9,
     subMenu: [
       {
         name: 'City Hall',
@@ -3153,7 +3153,7 @@ let buildMenu = [
     id: 7,
     name: 'Bulldoze',
     frameOff: 0,
-    frameOn: 9,
+    frameOn: 1,
     subMenu: null
   }
 ]
