@@ -22,9 +22,9 @@ class Menu extends Phaser.Scene {
     this.menuButtons = []
     this.currentMenu = null
     this.Main = this.scene.get('playGame');
-    var tablebg = this.add.image(game.config.width / 2, 15, 'modal_mid').setOrigin(.5, 0);
-    var headerbg = this.add.image(game.config.width / 2, 15, 'modal_top').setOrigin(.5, 0);
-    var footerbg = this.add.image(game.config.width / 2, 15, 'modal_bot').setOrigin(.5, 0);
+    //var tablebg = ;
+    // var headerbg = ;
+    // var footerbg =;
     /* this.header.displayWidth = 870;
      this.header.displayHeight = 200; */
     for (var i = 0; i < buildMenu.length; i++) {
@@ -54,7 +54,7 @@ class Menu extends Phaser.Scene {
       scrollMode: 0,
 
       //background: this.rexUI.add.roundRectangle(0, 0, 20, 10, 10, 0xffffff),
-      background: tablebg,
+      background: this.add.image(game.config.width / 2, 15, 'modal_mid').setOrigin(.5, 0),
       table: {
         cellWidth: undefined,
         cellHeight: 200,
@@ -89,7 +89,7 @@ class Menu extends Phaser.Scene {
         height: 75,
         orientation: scrollMode,
 
-        background: headerbg,
+        background: this.add.image(game.config.width / 2, 15, 'modal_top').setOrigin(.5, 0),
         //icon: this.add.image(-50, 0, 'icons', 20),
         // icon: scene.add.image(0, 0, buildMenu[0].subMenu[0].sheet, buildMenu[0].subMenu[0].index).setScale(.5),
         //text: scene.add.text(0, 0, '', { color: '#000000' }),
@@ -107,7 +107,7 @@ class Menu extends Phaser.Scene {
           text: 0,
         }
       }),
-      footer: footerbg,
+      footer: this.add.image(game.config.width / 2, 15, 'modal_bot').setOrigin(.5, 0),
 
 
       /*  footer: GetFooterSizer(this, scrollMode), */

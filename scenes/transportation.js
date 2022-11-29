@@ -45,10 +45,8 @@ class Transportation extends Phaser.Scene {
 
     this.housingText = this.add.bitmapText(25, 925, 'topaz', 'Congestion: ' + congestionAverage + ' Avg Commute: ' + commuteAverage + ' No Road: ' + noRoad, 40).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive();
 
-    var comJobs = sim.getComJobs()
-    var indJobs = sim.getIndJobs()
-    var specJobs = sim.gameData.specialJobs
-    var totalJobs = comJobs + indJobs + specJobs
+    this.housingText2 = this.add.bitmapText(25, 1025, 'topaz', 'Failed: ' + failedTripCount + ' Succeeded: ' + successfullTripCount + ' Total: ' + tripsAttempted, 40).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive();
+
 
     //this.jobsLabel = this.add.text(25, 1025, 'Jobs ', { fontFamily: 'PixelFont', fontSize: '25px', color: '#CAD4D8', align: 'left' })
 

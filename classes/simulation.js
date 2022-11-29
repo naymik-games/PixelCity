@@ -21,11 +21,11 @@ class Sim {
     var cI = getComTaxIncome()
     var iI = getIndTaxIncome()
     var tI = rI + cI + iI
-    console.log('Total Income: ' + tI)
+    // console.log('Total Income: ' + tI)
     var tM = getTotalMaintenanceCost()
-    console.log('Total Cost: ' + tM)
+    //  console.log('Total Cost: ' + tM)
     var balance = tI - tM
-    console.log('Balance: ' + balance)
+    // console.log('Balance: ' + balance)
     this.gameData.funds += balance
   }
   updateRCI() {
@@ -42,25 +42,25 @@ class Sim {
 
     var totalJobs = this.getTotalJobs()
 
-    console.log('total jobs ' + totalJobs)
+    // console.log('total jobs ' + totalJobs)
     //////////////////
     var workerRatio = totalJobs / resWorkers
-    console.log('worker ratio ' + workerRatio)
+    //  console.log('worker ratio ' + workerRatio)
 
     var jobRatio = resWorkers / totalJobs
-    console.log('job ratio ' + jobRatio)
+    // console.log('job ratio ' + jobRatio)
 
     var resDemand = resCapRatio * workerRatio
-    console.log('res cap ratio ' + resDemand)
+    //  console.log('res cap ratio ' + resDemand)
     var comDemand = comCapRatio * jobRatio
-    console.log('com cap ratio ' + comDemand)
+    //  console.log('com cap ratio ' + comDemand)
     var indDemand = indCapRatio * jobRatio
-    console.log('ind cap ratio ' + indDemand)
+    //  console.log('ind cap ratio ' + indDemand)
 
     this.gameData.rci[0] = resDemand / 100
     this.gameData.rci[1] = comDemand / 100
     this.gameData.rci[2] = indDemand / 100
-    console.log('res ' + this.gameData.rci[0] + ' com ' + this.gameData.rci[1] + ' ind ' + this.gameData.rci[2])
+    //  console.log('res ' + this.gameData.rci[0] + ' com ' + this.gameData.rci[1] + ' ind ' + this.gameData.rci[2])
 
     //////////////////////////////////////////////////////////////////////////////////////////
     var rand = Phaser.Math.Between(0, birthRates.length - 1)
@@ -68,7 +68,7 @@ class Sim {
     var availableHousing = resSupply - this.gameData.population
     var migration = resWorkers * (workerRatio - 1)
     var r = clamp(migration, -20, availableHousing + births)
-    console.log('births: ' + births + ' migration: ' + migration + ' migration adj: ' + r)
+    //  console.log('births: ' + births + ' migration: ' + migration + ' migration adj: ' + r)
 
     this.gameData.population += Math.ceil(r + births)
   }
@@ -100,7 +100,7 @@ class Sim {
     var rand = Phaser.Math.Between(0, birthRates.length - 1)
     var births = Math.round(this.gameData.population * birthRates[rand]) //new pop from births
     var newPop = migration + births
-    console.log('births: ' + births + ' migration: ' + migration)
+    // console.log('births: ' + births + ' migration: ' + migration)
     var projectedPop = this.gameData.population + migration + births // projected population
     // var employmentText = this.add.bitmapText(25, 1310, 'topaz', 'Employment: ' + employment + ' Migration: ' + migration + ' \nBirths: ' + births + ' Projected pop: ' + projectedPop, 40).setOrigin(0, .5).setTint(0x000000).setInteractive();
 
@@ -176,9 +176,9 @@ class Sim {
     resRatio = resRatio * capacityRatio
 
 
-    console.log('res ratio: ' + resRatio)
-    console.log('com ratio: ' + comRatio)
-    console.log('Ind ratio: ' + indRatio)
+    //  console.log('res ratio: ' + resRatio)
+    //  console.log('com ratio: ' + comRatio)
+    //  console.log('Ind ratio: ' + indRatio)
 
 
     //console.log(clamp(0 + Math.round(resRatio), -2000, 2000))

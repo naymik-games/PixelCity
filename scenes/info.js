@@ -87,8 +87,18 @@ class Info extends Phaser.Scene {
       this.scene.resume('UI')
       this.scene.resume('Menu')
     }, this)
+    var buildingTitle = ''
+    if (tile.zone < 3) {
+      buildingTitle = 'Residence'
+    } else if (tile.zone < 6) {
+      buildingTitle = 'Commercial'
+    } else if (tile.zone < 9) {
+      buildingTitle = 'Industry'
+    } else {
+      buildingTitle = tile.buildingData.name
+    }
 
-    this.nameText = this.add.text(25, 840, tile.buildingData.name, { fontFamily: 'PixelFont', fontSize: '35px', color: '#CAD4D8', align: 'left' })
+    this.nameText = this.add.text(25, 840, buildingTitle, { fontFamily: 'PixelFont', fontSize: '35px', color: '#CAD4D8', align: 'left' })
     //this.nameText = this.add.bitmapText(300, 860, 'topaz', tile.buildingData.name, 50).setOrigin(0, .5).setTint(0x000000)
     this.zoneText = this.add.bitmapText(300, 930, 'topaz', 'Zone: ' + zoneNames[tile.zone], 40).setOrigin(0, .5).setTint(0xCAD4D8)
     this.sizeText = this.add.bitmapText(300, 1000, 'topaz', 'Size: ' + tile.size, 40).setOrigin(0, .5).setTint(0xCAD4D8)
@@ -99,7 +109,20 @@ class Info extends Phaser.Scene {
       var answer = 'No'
     }
     this.transportationText = this.add.bitmapText(25, 1175, 'topaz', 'Connected: ' + answer, 40).setOrigin(0, .5).setTint(0xA6CAF0)
-    this.jobsText = this.add.bitmapText(25, 1275, 'topaz', 'Jobs: ' + tile.buildingData.jobs, 40).setOrigin(0, .5).setTint(0xA6CAF0)
+
+    var temp = getLandValue(tile.xy)
+    var lvIndex = getLVIndex(temp.landvalue)
+    var rciIndex = getRCIIndex(tile.zone, lvIndex)
+
+
+
+    var jobs = 0
+    if (tile.zone < 9) {
+      jobs = rciSupply[rciIndex] * tile.size
+    } else {
+      jobs = tile.buildingData.jobs
+    }
+    this.jobsText = this.add.bitmapText(25, 1275, 'topaz', 'Jobs: ' + jobs, 40).setOrigin(0, .5).setTint(0xA6CAF0)
     if (waterInRange(tile.xy)) {
       var answer = 'Yes'
     } else {
