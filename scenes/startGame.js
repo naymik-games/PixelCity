@@ -351,7 +351,7 @@ class startGame extends Phaser.Scene {
     gameStats.difficulty = this.diff
     this.scene.stop()
     this.scene.start('playGame');
-    this.scene.launch('Menu');
+    // this.scene.launch('Menu');
   }
   clickHandler2() {
     mapLoad = 'load'
