@@ -108,7 +108,7 @@ class Info extends Phaser.Scene {
     } else {
       var answer = 'No'
     }
-    this.transportationText = this.add.bitmapText(25, 1175, 'topaz', 'Connected: ' + answer, 40).setOrigin(0, .5).setTint(0xA6CAF0)
+    this.transportationText = this.add.bitmapText(25, 1175, 'topaz', 'Road: ' + answer, 40).setOrigin(0, .5).setTint(0xA6CAF0)
 
     var temp = getLandValue(tile.xy)
     var lvIndex = getLVIndex(temp.landvalue)
@@ -122,7 +122,7 @@ class Info extends Phaser.Scene {
     } else {
       jobs = tile.buildingData.jobs
     }
-    this.jobsText = this.add.bitmapText(25, 1275, 'topaz', 'Jobs: ' + jobs, 40).setOrigin(0, .5).setTint(0xA6CAF0)
+    this.jobsText = this.add.bitmapText(25, 1475, 'topaz', 'Jobs: ' + jobs, 40).setOrigin(0, .5).setTint(0xA6CAF0)
     if (waterInRange(tile.xy)) {
       var answer = 'Yes'
     } else {
@@ -135,7 +135,7 @@ class Info extends Phaser.Scene {
     } else {
       var answer = 'No'
     }
-    this.powerText = this.add.bitmapText(25, 1475, 'topaz', 'Powered: ' + answer, 40).setOrigin(0, .5).setTint(0xA6CAF0)
+    this.powerText = this.add.bitmapText(25, 1275, 'topaz', 'Powered: ' + answer, 40).setOrigin(0, .5).setTint(0xA6CAF0)
 
     var distance = getDistanceBonus(this.mapXY)
 
@@ -157,7 +157,7 @@ class Info extends Phaser.Scene {
     } else {
       var t = 'high'
     }
-    this.lvText = this.add.bitmapText(450, 1475, 'topaz', 'LV: ' + lv.landvalue + ' (' + t + ')', 40).setOrigin(0, .5).setTint(0x000000)
+    this.lvText = this.add.bitmapText(450, 1475, 'topaz', 'LV: ' + lv.landvalue + ' (' + t + ')', 40).setOrigin(0, .5).setTint(0xA6CAF0)
     //console.log(roadInRange(tile.xy))
     /* if (tile.hasBuilding) {
       console.log(tile.building.frame.name)

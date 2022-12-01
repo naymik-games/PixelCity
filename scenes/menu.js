@@ -210,12 +210,11 @@ class Menu extends Phaser.Scene {
   }
   menuPress(men) {
     console.log(men.name)
-    if (men.action == 'doze') {
-      var item = null
-      this.events.emit('testErase', item);
-      return
-    }
+
     if (this.menuOpen) {
+
+      buildingsBright()
+      gameMode = GM_INFO;
       this.menuButtons[this.currentMenu].setFrame(buildMenu[this.currentMenu].frameOff)
       var tween = this.tweens.add({
         targets: this.gridTable,
@@ -244,6 +243,16 @@ class Menu extends Phaser.Scene {
       })
 
     } else {
+      this.menuButtons[men.id].setFrame(buildMenu[men.id].frameOn)
+      this.menuOpen = true
+      this.currentMenu = men.id
+      if (men.action == 'doze') {
+        var item = null
+        //this.events.emit('testErase', item);
+        buildingsDim()
+        gameMode = GM_ERASE
+        return
+      }
       var tween = this.tweens.add({
         targets: this.gridTable,
         x: 450,
@@ -253,9 +262,7 @@ class Menu extends Phaser.Scene {
       this.gridTable.scrollToTop()
       var tableBody = this.gridTable.getElement('header')
       tableBody.text = buildMenu[men.id].name
-      this.menuButtons[men.id].setFrame(buildMenu[men.id].frameOn)
-      this.menuOpen = true
-      this.currentMenu = men.id
+
     }
 
     /* if (men.name == 'Road') {
@@ -3150,7 +3157,7 @@ let buildMenu = [
     ]
   },
   {
-    id: 7,
+    id: 8,
     name: 'Bulldoze',
     frameOff: 0,
     frameOn: 1,

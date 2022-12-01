@@ -39,6 +39,7 @@ class Rci extends Phaser.Scene {
     //this.nameText = this.add.bitmapText(300, 860, 'topaz', 'RCI', 50).setOrigin(0, .5).setTint(0x000000).setInteractive();
 
     var workers = sim.getWorkers()
+    console.log('workers ' + workers)
     var workersRes = workers - gameRules.commuters
 
     this.workersLabel = this.add.text(25, 825, 'Workers ', { fontFamily: 'PixelFont', fontSize: '25px', color: '#CAD4D8', align: 'left' })

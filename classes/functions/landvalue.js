@@ -99,6 +99,7 @@ function getAverageLV() {
   // console.log('tlv ' + totalLV + ', count ' + count)
   //console.log(sim.gameData.averageLV)
 }
+
 function getLVIndex(value) {
   if (value < gameRules.lvLow) {
     var t = 0

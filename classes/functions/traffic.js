@@ -336,11 +336,12 @@ function getDensityMultiplier(zone) {
 function setNoRoad() {
   noRoad = 0
   var totalLV = 0
-  for (var y = 0; y < mapConfig.height; y++) {
-    for (var x = 0; x < mapConfig.width; x++) {
+  //!waterInRange(tile.xy) || !roadInRange(tile.xy) || !powerInRange(tile.xy)
+  for (var y = 0; y < sim.gameData.mapConfig.height; y++) {
+    for (var x = 0; x < sim.gameData.mapConfig.width; x++) {
       var tile = grid[y][x]
       if (tile.building != null) {
-        if (!findRoad(tile.xy)) {
+        if (!waterInRange(tile.xy) || !roadInRange(tile.xy) || !powerInRange(tile.xy)) {
           gridImage[y][x].building.setTint(0x8E8E8E)
           noRoad++
         } else {

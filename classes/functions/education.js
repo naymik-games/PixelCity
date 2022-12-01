@@ -34,6 +34,12 @@ function eqDecay() {
 
   }
 }
+function getNumSchoolChildren() {
+  var numOf10 = Math.ceil(sim.gameData.population * (sim.gameData.generations[1].count / 100))
+  var numOf15 = Math.ceil(sim.gameData.population * (sim.gameData.generations[2].count / 100))
+  var numOf20 = Math.ceil(sim.gameData.population * (sim.gameData.generations[3].count / 100))
+  return numOf10 + numOf15 + numOf20
+}
 function parentalEducation() {
 
   var eq = getEq()
@@ -51,104 +57,28 @@ function parentalEducation() {
     var eqAdd = 0
   }
   else if (numInSchool <= sim.gameData.schoolCapacity) {
-    sim.gameData.generations[1].EQ += .105 - getEduSub(sim.gameData.maintenanceCostsPer[16])
-    sim.gameData.generations[2].EQ += .105 - getEduSub(sim.gameData.maintenanceCostsPer[16])
-    sim.gameData.generations[3].EQ += .105 - getEduSub(sim.gameData.maintenanceCostsPer[16])
+    sim.gameData.generations[1].EQ += .125 - getEduSub(sim.gameData.maintenanceCostsPer[16])
+    sim.gameData.generations[2].EQ += .125 - getEduSub(sim.gameData.maintenanceCostsPer[16])
+    sim.gameData.generations[3].EQ += .125 - getEduSub(sim.gameData.maintenanceCostsPer[16])
+  } else {
+    var per = sim.gameData.schoolCapacity / numInSchool
+    sim.gameData.generations[1].EQ += (.125 - getEduSub(sim.gameData.maintenanceCostsPer[16])) * per
+    sim.gameData.generations[2].EQ += (.125 - getEduSub(sim.gameData.maintenanceCostsPer[16])) * per
+    sim.gameData.generations[3].EQ += (.125 - getEduSub(sim.gameData.maintenanceCostsPer[16])) * per
   }
 
   if (sim.gameData.collegeCapacity == 0) {
     var eqAdd = 0
   }
   else if (numOf25 <= sim.gameData.collegeCapacity) {
-    sim.gameData.generations[4].EQ += 3 - getEduSub(sim.gameData.maintenanceCostsPer[16])
+    sim.gameData.generations[4].EQ += 1.5 - getEduSub(sim.gameData.maintenanceCostsPer[16])
+  } else {
+    var per = sim.gameData.collegeCapacity / numOf25
+    sim.gameData.generations[4].EQ += 1.5 - getEduSub(sim.gameData.maintenanceCostsPer[16]) * per
   }
-  console.log('count up to 10 ' + numOf10 + 'count up to 15 ' + numOf15)
+  //console.log('count up to 10 ' + numOf10 + 'count up to 15 ' + numOf15)
 
 
-}
-/////////////////////////////////////////////////////////////////////////////////
-// HELPER/UTILITY
-///////////////////////////////////////////////////////////////////////////////
-function getTilesInRange(point, range) {
-  var tilesInRange = [];
-  for (var y = point.y - range; y <= point.y + range; y++) {
-    for (var x = point.x - range; x <= point.x + range; x++) {
-      if (this.validPoint(x, y)) {
-        tilesInRange.push(grid[y][x])
-      }
-
-    }
-  }
-  return tilesInRange
-}
-
-function getRandomIndTile() {
-
-  var ind = sim.gameData.zoneCounts[6] + sim.gameData.zoneCounts[7] + sim.gameData.zoneCounts[8]
-  if (ind == 0) {
-    return null
-  }
-  var found = false
-  while (!found) {
-    var ranX = Phaser.Math.Between(0, sim.gameData.mapConfig.width - 1)
-    var ranY = Phaser.Math.Between(0, sim.gameData.mapConfig.height - 1)
-    if (grid[ranY][ranX].zone == 6 || grid[ranY][ranX].zone == 7 || grid[ranY][ranX].zone == 7) {
-      found = true
-      return { x: ranX, y: ranY }
-    }
-  }
-}
-function getRandomResTile() {
-
-  var res = sim.gameData.zoneCounts[0] + sim.gameData.zoneCounts[1] + sim.gameData.zoneCounts[2]
-  if (res == 0) {
-    return null
-  }
-  var found = false
-  while (!found) {
-    var ranX = Phaser.Math.Between(0, sim.gameData.mapConfig.width - 1)
-    var ranY = Phaser.Math.Between(0, sim.gameData.mapConfig.height - 1)
-    if (grid[ranY][ranX].zone == 0 || grid[ranY][ranX].zone == 1 || grid[ranY][ranX].zone == 2) {
-      found = true
-      return { x: ranX, y: ranY }
-    }
-  }
-}
-function getRandomComTile() {
-  var com = sim.gameData.zoneCounts[3] + sim.gameData.zoneCounts[4] + sim.gameData.zoneCounts[5]
-  if (com == 0) {
-    return null
-  }
-  var found = false
-  while (!found) {
-    var ranX = Phaser.Math.Between(0, sim.gameData.mapConfig.width - 1)
-    var ranY = Phaser.Math.Between(0, sim.gameData.mapConfig.height - 1)
-    if (grid[ranY][ranX].zone == 3 || grid[ranY][ranX].zone == 4 || grid[ranY][ranX].zone == 5) {
-      found = true
-      return { x: ranX, y: ranY }
-    }
-  }
-}
-function getCovSub(per) {
-  var sub = 0
-  if (per > 110) {
-    sub = -3
-  } else if (per > 100) {
-    sub = -2
-  } else if (per == 100) {
-    sub = 0
-  } else if (per < 60) {
-    sub = 5
-  } else if (per < 70) {
-    sub = 4
-  } else if (per < 80) {
-    sub = 3
-  } else if (per < 90) {
-    sub = 2
-  } else if (per < 100) {
-    sub = 1
-  }
-  return sub
 }
 function getEduSub(per) {
   var sub = 0

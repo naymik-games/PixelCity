@@ -12,6 +12,7 @@ class People extends Phaser.Scene {
          //  url: 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexuiplugin.min.js',
          sceneKey: 'rexUI'
        }); */
+
   }
 
   create() {
@@ -21,13 +22,13 @@ class People extends Phaser.Scene {
     tablebg.displayWidth = 900
     tablebg.displayHeight = game.config.height / 2 */
 
-    var tablebg_top = this.add.image(game.config.width / 2, game.config.height - 1025, 'modal_top').setOrigin(.5, 1);
+    var tablebg_top = this.add.image(game.config.width / 2, game.config.height - 1225, 'modal_top').setOrigin(.5, 1);
     var tablebg_mid = this.add.image(game.config.width / 2, game.config.height - 75, 'modal_mid').setOrigin(.5, 1);
-    tablebg_mid.displayHeight = 950
+    tablebg_mid.displayHeight = 1150
     var tablebg_bot = this.add.image(game.config.width / 2, game.config.height, 'modal_bot').setOrigin(.5, 1);
-    this.closeIcon = this.add.image(858, 562, 'icons', 20).setOrigin(.5).setScale(1.5).setInteractive().setAlpha(0.01);
-    var lawIcon = this.add.image(42, 562, 'icons_clear', 38).setOrigin(.5).setScale(1.5).setInteractive().setAlpha(1);
-    this.nameText = this.add.text(100, 547, 'Cititzen Data ', { fontFamily: 'PixelFont', fontSize: '30px', color: '#0057AF', align: 'left', backgroundColor: '#A6CAF0' })
+    this.closeIcon = this.add.image(858, 362, 'icons', 20).setOrigin(.5).setScale(1.5).setInteractive().setAlpha(0.01);
+    var lawIcon = this.add.image(42, 362, 'icons_clear', 38).setOrigin(.5).setScale(1.5).setInteractive().setAlpha(1);
+    this.nameText = this.add.text(100, 347, 'Cititzen Data ', { fontFamily: 'PixelFont', fontSize: '30px', color: '#0057AF', align: 'left', backgroundColor: '#A6CAF0' })
 
     //thumb
 
@@ -37,8 +38,8 @@ class People extends Phaser.Scene {
 
     var workers = sim.getWorkers()
 
-    this.popText = this.add.bitmapText(25, 625, 'topaz', 'Pop: ' + sim.gameData.population + ' Workers: ' + workers, 40).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive();
-    this.housingText = this.add.bitmapText(25, 700, 'topaz', 'Housing Capacity: ' + sim.getTotalResCapacity(), 40).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive();
+    this.popText = this.add.bitmapText(25, 425, 'topaz', 'Pop: ' + sim.gameData.population + ' Workers: ' + workers + ' Students: ' + getNumSchoolChildren(), 40).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive();
+    this.housingText = this.add.bitmapText(25, 500, 'topaz', 'Housing Capacity: ' + sim.getTotalResCapacity(), 40).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive();
 
     console.log(sim.gameData.zoneCounts)
     //console.log(roadInRange(tile.xy))
@@ -50,15 +51,15 @@ class People extends Phaser.Scene {
     } */
 
     //
-    var tablebg_break = this.add.image(game.config.width / 2, 908, 'modal_break').setOrigin(.5, 1);
-    this.tablebg_tab = this.add.image(game.config.width / 2, 950, 'modal_tab', 0).setOrigin(.5, 1);
-    this.eduText = this.add.text(50, 940, 'Education', { fontFamily: 'PixelFont', fontSize: '30px', color: '#E1803F', align: 'left' }).setOrigin(0, 1).setInteractive()
+    var tablebg_break = this.add.image(game.config.width / 2, 708, 'modal_break').setOrigin(.5, 1);
+    this.tablebg_tab = this.add.image(game.config.width / 2, 750, 'modal_tab', 0).setOrigin(.5, 1);
+    this.eduText = this.add.text(50, 740, 'Education', { fontFamily: 'PixelFont', fontSize: '30px', color: '#E1803F', align: 'left' }).setOrigin(0, 1).setInteractive()
     this.eduText.on('pointerdown', function () {
       this.tablebg_tab.setFrame(0)
       this.eqGroup.setAlpha(1)
       this.hqGroup.setAlpha(0)
     }, this)
-    this.healthText = this.add.text(500, 940, 'Health', { fontFamily: 'PixelFont', fontSize: '30px', color: '#E1803F', align: 'left' }).setOrigin(0, 1).setInteractive()
+    this.healthText = this.add.text(500, 740, 'Health', { fontFamily: 'PixelFont', fontSize: '30px', color: '#E1803F', align: 'left' }).setOrigin(0, 1).setInteractive()
     this.healthText.on('pointerdown', function () {
       this.tablebg_tab.setFrame(1)
       this.eqGroup.setAlpha(0)
@@ -84,11 +85,23 @@ class People extends Phaser.Scene {
       this.eqGroup.add(text)
     }
 
+    var numStudents = this.add.bitmapText(25, 825, 'topaz', 'Students: ' + getNumSchoolChildren(), 40).setOrigin(0, 1).setTint(0xCAD4D8);
+    this.eqGroup.add(numStudents)
+
+    var edCap = this.add.bitmapText(450, 825, 'topaz', 'Capacity: ' + sim.gameData.schoolCapacity, 40).setOrigin(0, 1).setTint(0xCAD4D8);
+    this.eqGroup.add(edCap)
+
+    var caution = this.add.image(edCap.x + edCap.width + 25, 810, 'caution').setOrigin(0, .5).setScale(3)
+    caution.visible = false
+    this.eqGroup.add(caution)
+
+    if ((getNumSchoolChildren() / sim.gameData.schoolCapacity) > .94) {
+      caution.visible = true
+    }
     var EQ = getEq()
     var eqTitle = this.add.bitmapText(25, 1025, 'topaz', 'EQ - ' + 'Pop: ' + EQ.pEQ + ' WF: ' + EQ.wfEQ, 40).setOrigin(0, 1).setTint(0xCAD4D8);
     this.eqGroup.add(eqTitle)
-    var edCap = this.add.bitmapText(600, 1025, 'topaz', 'Capacity ' + sim.gameData.schoolCapacity, 40).setOrigin(0, 1).setTint(0xCAD4D8);
-    this.eqGroup.add(edCap)
+
     this.eqGroup.setAlpha(1)
     ////////////////////////////////////
     // hq
@@ -108,11 +121,37 @@ class People extends Phaser.Scene {
       var text = this.add.bitmapText(65 + i * 43, 1555, 'topaz', ages[i], 35).setOrigin(0).setTint(0xCAD4D8);
       this.hqGroup.add(text)
     }
-    var HQ = getHq()
-    var hqTitle = this.add.bitmapText(25, 1025, 'topaz', 'EQ - ' + 'Pop: ' + HQ.pHQ + ' WF: ' + HQ.wfHQ, 40).setOrigin(0, 1).setTint(0xCAD4D8);
-    this.hqGroup.add(hqTitle)
-    var hosCap = this.add.bitmapText(600, 1025, 'topaz', 'Capacity ' + sim.gameData.hospitalCapacity, 40).setOrigin(0, 1).setTint(0xCAD4D8);
+
+    var numPatients = this.add.bitmapText(25, 825, 'topaz', 'Patients: ' + getNumberOfPatients(), 40).setOrigin(0, 1).setTint(0xCAD4D8);
+    this.hqGroup.add(numPatients)
+
+    var realCapacity = sim.gameData.hospitalCapacity * (sim.gameData.maintenanceCostsPer[13] / 100)//capacity * funding percent
+    console.log(realCapacity)
+    if (realCapacity == 0) {
+      var servedPer = 0
+    } else {
+      var servedPer = (getNumberOfPatients() / realCapacity) * 100
+    }
+
+    // console.log(served)
+    const displayPercent = parseFloat(servedPer).toFixed(0) + "%"
+    console.log(displayPercent)
+    var hosCap = this.add.bitmapText(400, 825, 'topaz', 'Capacity: ' + realCapacity + ' ' + displayPercent, 40).setOrigin(0, 1).setTint(0xCAD4D8);
     this.hqGroup.add(hosCap)
+
+    var caution2 = this.add.image(hosCap.x + hosCap.width + 25, 810, 'caution').setOrigin(0, .5).setScale(3).setAlpha(0)
+    this.hqGroup.add(caution2)
+
+    if (getNumberOfPatients() / sim.gameData.hospitalCapacity > .94) {
+      caution.setAlpha(1)
+
+    }
+
+    var HQ = getHq()
+    var wfLE = ((HQ.wfHQ / 1.44) + 50) * (89 - 65)
+    var hqTitle = this.add.bitmapText(25, 1025, 'topaz', 'HQ - ' + 'Pop: ' + HQ.pHQ + ' WF: ' + HQ.wfHQ + ' WF LE: ' + wfLE, 40).setOrigin(0, 1).setTint(0xCAD4D8);
+    this.hqGroup.add(hqTitle)
+
     this.hqGroup.setAlpha(0)
 
     this.closeIcon.on('pointerdown', function () {

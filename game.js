@@ -217,7 +217,7 @@ class playGame extends Phaser.Scene {
     }, this);
 
 
-    Menu.events.on('testErase', function (data) {
+    /* Menu.events.on('testErase', function (data) {
       if (this.drag) {
         this.drag = false;
         this.UI.togglePan()
@@ -240,7 +240,7 @@ class playGame extends Phaser.Scene {
     }, this);
 
 
-
+*/
     this.input.dragDistanceThreshold = 16;
     this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
       if (this.dragType == 'place') {
@@ -296,45 +296,135 @@ class playGame extends Phaser.Scene {
     //mapXY.y = (y / tileHeightHalf - (x / tileWidthHalf)) / 2;
     return mapXY
   }
-  dragErase(pointer, gameObject) {
-    gameObject.x = pointer.worldX;
-    gameObject.y = pointer.worldY;
-    gameObject.setDepth(centerY + 1000);
-    var pageX = gameObject.x - centerX + tileWidthHalf
-    var pageY = gameObject.y - centerY + tileHeightHalf
-    var mapXY = this.toMap(pageX, pageY)
+  /*   dragErase(pointer, gameObject) {
+      gameObject.x = pointer.worldX;
+      gameObject.y = pointer.worldY;
+      gameObject.setDepth(centerY + 1000);
+      var pageX = gameObject.x - centerX + tileWidthHalf
+      var pageY = gameObject.y - centerY + tileHeightHalf
+      var mapXY = this.toMap(pageX, pageY)
+      this.graphics.clear()
+      this.graphics.lineStyle(1, 0xEBF518, 2);
+      this.graphics.fillStyle(0xff0000, .5)
+      var tile = grid[mapXY.y][mapXY.x]
+      if (tile.partOf != null) {
+        this.drawTileSize(tile.partOf, grid[tile.partOf.y][tile.partOf.x].size)
+      } else if (tile.road != null) {
+        this.drawTileSize(mapXY, 1)
+      }
+  
+  
+  
+    }
+    dragEndErase(pointer, gameObject) {
+      this.graphics.clear()
+      this.selectCursor.destroy()
+      gameMode = GM_INFO
+  
+      gameObject.x = pointer.worldX;
+      gameObject.y = pointer.worldY;
+      gameObject.setDepth(centerY + 1000);
+      var pageX = gameObject.x - centerX + tileWidthHalf
+      var pageY = gameObject.y - centerY + tileHeightHalf
+      var mapXY = this.toMap(pageX, pageY)
+      var tile = grid[mapXY.y][mapXY.x]
+      if (tile.partOf != null) {
+        this.deleteBuilding(tile.partOf, grid[tile.partOf.y][tile.partOf.x].size)
+      } else if (tile.road != null) {
+        this.deleteRoad(mapXY)
+      }
+  
+    }
+   */
+
+
+  eraseDown(p) {
     this.graphics.clear()
-    this.graphics.lineStyle(1, 0xEBF518, 2);
-    this.graphics.fillStyle(0xff0000, .5)
-    var tile = grid[mapXY.y][mapXY.x]
-    if (tile.partOf != null) {
-      this.drawTileSize(tile.partOf, grid[tile.partOf.y][tile.partOf.x].size)
-    } else if (tile.road != null) {
-      this.drawTileSize(mapXY, 1)
+    this.graphics.lineStyle(1, 0x00ff000, 2);
+    this.graphics.fillStyle(0xff0000, .4)
+    this.selected = []
+    var pageX = p.worldX - centerX + tileWidthHalf
+    var pageY = p.worldY - centerY + tileHeightHalf
+    var mapXY = this.toMap(pageX, pageY)
+    if (!this.onMap(mapXY)) { return }
+    //console.log(mapXY)
+    this.drawTile(mapXY)
+    this.selected.push(mapXY)
+  }
+  eraseMove(p) {
+    var pageX = p.worldX - centerX + tileWidthHalf
+    var pageY = p.worldY - centerY + tileHeightHalf
+    var mapXY = this.toMap(pageX, pageY)
+    if (!this.onMap(mapXY)) { return }// && this.areNext(mapXY, this.selected[this.selected.length - 1])
+    this.graphics.clear()
+    this.graphics.lineStyle(1, 0x00ff000, 2);
+    this.graphics.fillStyle(0xff0000, .4)
+
+    for (var y = this.selected[0].y; y < mapXY.y + 1; y++) {
+
+      for (var x = this.selected[0].x; x < mapXY.x + 1; x++) {
+        if (this.onMap(mapXY)) {
+          this.drawTile({ x: x, y: y })
+
+        }
+
+      }
     }
 
-
-
   }
-  dragEndErase(pointer, gameObject) {
-    this.graphics.clear()
-    this.selectCursor.destroy()
-    gameMode = GM_INFO
+  eraseUp(p) {
+    console.log(this.selected)
 
-    gameObject.x = pointer.worldX;
-    gameObject.y = pointer.worldY;
-    gameObject.setDepth(centerY + 1000);
-    var pageX = gameObject.x - centerX + tileWidthHalf
-    var pageY = gameObject.y - centerY + tileHeightHalf
+    var pageX = p.worldX - centerX + tileWidthHalf
+    var pageY = p.worldY - centerY + tileHeightHalf
     var mapXY = this.toMap(pageX, pageY)
-    var tile = grid[mapXY.y][mapXY.x]
-    if (tile.partOf != null) {
-      this.deleteBuilding(tile.partOf, grid[tile.partOf.y][tile.partOf.x].size)
-    } else if (tile.road != null) {
-      this.deleteRoad(mapXY)
+    var rowcount = 0
+    var colcount = 0
+    if (!this.onMap(mapXY)) { return }// && this.areNext(mapXY, this.selected[this.selected.length - 1])
+    if (this.newTile(mapXY)) {
+      this.selected.push(mapXY)
     }
+    this.drawTile(mapXY)
+    this.selected.push(mapXY)
+    //console.log(this.selected)
+
+    var testSelect1 = []
+    for (var y = this.selected[0].y; y < this.selected[1].y + 1; y++) {
+
+      for (var x = this.selected[0].x; x < this.selected[1].x + 1; x++) {
+
+        testSelect1.push({ x: x, y: y })
+        //this.drawTile({ x: x, y: y })
+        //grid[y][x].tile.setTint(0x668EE0)
+
+
+
+      }
+
+    }
+    //this.eraseZone(this.selected)
+    this.eraseSelected(testSelect1)
+    //this.buldResidentialZone(testSelect2, rowcount, colcount / rowcount)
+    console.log(testSelect1)
+    this.selected = []
+    this.graphics.clear()
+    //gameMode = GM_INFO
 
   }
+  eraseSelected(selected) {
+    for (var i = 0; i < selected.length; i++) {
+      var tile = grid[selected[i].y][selected[i].x]
+      if (tile.partOf != null) {
+        this.deleteBuilding(tile.partOf, grid[tile.partOf.y][tile.partOf.x].size)
+      } else if (tile.road != null) {
+        this.deleteRoad(tile.xy)
+      }
+    }
+  }
+
+
+
+
   deleteRoad(point) {
     var tile = grid[point.y][point.x]
     var tileIMG = gridImage[point.y][point.x]
@@ -349,7 +439,11 @@ class playGame extends Phaser.Scene {
     var tileIMG = gridImage[point.y][point.x]
     if (tileIMG.building) {
       tileIMG.building.destroy()
+      console.log('parent ' + tile.parentMenu + ' menu ' + tile.menu)
       if (tile.zone > 8) {
+        sim.gameData.demandCaps[0] -= buildMenu[tile.parentMenu].subMenu[tile.menu].capRelief[0]
+        sim.gameData.demandCaps[1] -= buildMenu[tile.parentMenu].subMenu[tile.menu].capRelief[1]
+        sim.gameData.demandCaps[2] -= buildMenu[tile.parentMenu].subMenu[tile.menu].capRelief[2]
         sim.gameData.zoneCounts[tile.zone] -= 1
         sim.gameData.maintenanceCosts[tile.zone] -= buildMenu[tile.parentMenu].subMenu[tile.menu].maintenance
         sim.gameData.maintenanceCostsSpending[tile.zone] -= buildMenu[tile.parentMenu].subMenu[tile.menu].maintenance * (sim.gameData.maintenanceCostsPer[tile.zone] / 100)
@@ -382,9 +476,7 @@ class playGame extends Phaser.Scene {
         removeSchool(buildMenu[tile.parentMenu].subMenu[tile.menu].capacity)
       }
       sim.gameData.specialJobs -= buildMenu[tile.parentMenu].subMenu[tile.menu].jobs
-      sim.gameData.demandCaps[0] -= buildMenu[tile.parentMenu].subMenu[tile.menu].capRelief[0]
-      sim.gameData.demandCaps[1] -= buildMenu[tile.parentMenu].subMenu[tile.menu].capRelief[1]
-      sim.gameData.demandCaps[2] -= buildMenu[tile.parentMenu].subMenu[tile.menu].capRelief[2]
+
       tileIMG.building = null
 
     }
@@ -525,7 +617,7 @@ class playGame extends Phaser.Scene {
 
     this.graphics.clear()
     this.graphics.lineStyle(1, 0xff0000, 2);
-    this.graphics.fillStyle(this.zoneData.color, .1)
+    this.graphics.fillStyle(this.zoneData.color, .4)
     this.selected = []
     var pageX = p.worldX - centerX + tileWidthHalf
     var pageY = p.worldY - centerY + tileHeightHalf
@@ -540,7 +632,9 @@ class playGame extends Phaser.Scene {
     var pageY = p.worldY - centerY + tileHeightHalf
     var mapXY = this.toMap(pageX, pageY)
     if (!this.onMap(mapXY)) { return }// && this.areNext(mapXY, this.selected[this.selected.length - 1])
-
+    this.graphics.clear()
+    this.graphics.lineStyle(1, 0xff0000, 2);
+    this.graphics.fillStyle(this.zoneData.color, .4)
 
     for (var y = this.selected[0].y; y < mapXY.y + 1; y++) {
 
@@ -733,75 +827,7 @@ class playGame extends Phaser.Scene {
     }
     return true
   }
-  eraseDown(p) {
-    this.graphics.clear()
-    this.graphics.lineStyle(1, 0x00ff000, 2);
-    this.graphics.fillStyle(0xff0000, .1)
-    this.selected = []
-    var pageX = p.worldX - centerX + tileWidthHalf
-    var pageY = p.worldY - centerY + tileHeightHalf
-    var mapXY = this.toMap(pageX, pageY)
-    if (!this.onMap(mapXY)) { return }
-    console.log(mapXY)
-    this.drawTile(mapXY)
-    this.selected.push(mapXY)
-  }
-  eraseMove(p) {
-    var pageX = p.worldX - centerX + tileWidthHalf
-    var pageY = p.worldY - centerY + tileHeightHalf
-    var mapXY = this.toMap(pageX, pageY)
-    if (!this.onMap(mapXY)) { return }// && this.areNext(mapXY, this.selected[this.selected.length - 1])
 
-
-    for (var y = this.selected[0].y; y < mapXY.y + 1; y++) {
-
-      for (var x = this.selected[0].x; x < mapXY.x + 1; x++) {
-        if (this.onMap(mapXY)) {
-          this.drawTile({ x: x, y: y })
-
-        }
-
-      }
-    }
-
-  }
-  eraseUp(p) {
-    console.log(this.selected)
-    var pageX = p.worldX - centerX + tileWidthHalf
-    var pageY = p.worldY - centerY + tileHeightHalf
-    var mapXY = this.toMap(pageX, pageY)
-    var rowcount = 0
-    var colcount = 0
-    if (!this.onMap(mapXY)) { return }// && this.areNext(mapXY, this.selected[this.selected.length - 1])
-    if (this.newTile(mapXY)) {
-      this.selected.push(mapXY)
-    }
-    this.drawTile(mapXY)
-    this.selected.push(mapXY)
-    console.log(this.selected)
-
-    var testSelect2 = []
-    for (var y = this.selected[0].y; y < this.selected[1].y + 1; y++) {
-      var temp = []
-      for (var x = this.selected[0].x; x < this.selected[1].x + 1; x++) {
-
-        temp.push({ x: x, y: y })
-        //this.drawTile({ x: x, y: y })
-        //grid[y][x].tile.setTint(0x668EE0)
-        colcount++
-
-
-      }
-      testSelect2.push(temp)
-      rowcount++
-    }
-    this.eraseZone(this.selected)
-    //this.buldResidentialZone(testSelect2, rowcount, colcount / rowcount)
-    this.selected = []
-    this.graphics.clear()
-    gameMode = GM_INFO
-
-  }
 
   eraseZone(tileArray) {
     console.log(tileArray)
@@ -1089,12 +1115,6 @@ class playGame extends Phaser.Scene {
         value += 4;
       }
     }
-
-
-
-
-
-
 
     return value
   }

@@ -3,6 +3,137 @@
 
 //reference
 
+/////////////////////////////////////////////////////////////////////////////////
+// HELPER/UTILITY
+///////////////////////////////////////////////////////////////////////////////
+function getBuildableCount() {
+  var count = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  for (var y = 0; y < mapConfig.height; y++) {
+    for (var x = 0; x < mapConfig.width; x++) {
+      var tile = grid[y][x]
+      if (tile.zone > -1 && tile.zone < 9) {
+        if (!waterInRange(tile.xy) || !roadInRange(tile.xy) || !powerInRange(tile.xy)) {
+          var value = getLandValue(tile.xy)
+          var lvIndex = getLVIndex(value)
+          var rciIndex = getRCIIndex(tile.zone, lvIndex)
+          count[rciIndex] += 1
+        }
+      }
+
+    }
+  }
+  return count
+}
+//getLVIndex(value)
+//getRCIIndex(zone, lvIndex)
+function getResBuildableCount() {
+  var count = 0
+  var buildCounts = getBuildableCount()
+  for (var i = 0; i < 9; i++) {
+    count += buildCounts[i]
+  }
+  return count
+}
+function getComBuildableCount() {
+  var count = 0
+  var buildCounts = getBuildableCount()
+  for (var i = 9; i < 18; i++) {
+    count += buildCounts[i]
+  }
+
+  return count
+}
+// 012 345 678
+function getIndBuildableCount() {
+  var count = 0
+  var buildCounts = getBuildableCount()
+  for (var i = 18; i < 24; i++) {
+    count += buildCounts[i]
+  }
+
+  return count
+}
+function getTilesInRange(point, range) {
+  var tilesInRange = [];
+  for (var y = point.y - range; y <= point.y + range; y++) {
+    for (var x = point.x - range; x <= point.x + range; x++) {
+      if (this.validPoint(x, y)) {
+        tilesInRange.push(grid[y][x])
+      }
+
+    }
+  }
+  return tilesInRange
+}
+
+function getRandomIndTile() {
+
+  var ind = sim.gameData.zoneCounts[6] + sim.gameData.zoneCounts[7] + sim.gameData.zoneCounts[8]
+  if (ind == 0) {
+    return null
+  }
+  var found = false
+  while (!found) {
+    var ranX = Phaser.Math.Between(0, sim.gameData.mapConfig.width - 1)
+    var ranY = Phaser.Math.Between(0, sim.gameData.mapConfig.height - 1)
+    if (grid[ranY][ranX].zone == 6 || grid[ranY][ranX].zone == 7 || grid[ranY][ranX].zone == 7) {
+      found = true
+      return { x: ranX, y: ranY }
+    }
+  }
+}
+function getRandomResTile() {
+
+  var res = sim.gameData.zoneCounts[0] + sim.gameData.zoneCounts[1] + sim.gameData.zoneCounts[2]
+  if (res == 0) {
+    return null
+  }
+  var found = false
+  while (!found) {
+    var ranX = Phaser.Math.Between(0, sim.gameData.mapConfig.width - 1)
+    var ranY = Phaser.Math.Between(0, sim.gameData.mapConfig.height - 1)
+    if (grid[ranY][ranX].zone == 0 || grid[ranY][ranX].zone == 1 || grid[ranY][ranX].zone == 2) {
+      found = true
+      return { x: ranX, y: ranY }
+    }
+  }
+}
+function getRandomComTile() {
+  var com = sim.gameData.zoneCounts[3] + sim.gameData.zoneCounts[4] + sim.gameData.zoneCounts[5]
+  if (com == 0) {
+    return null
+  }
+  var found = false
+  while (!found) {
+    var ranX = Phaser.Math.Between(0, sim.gameData.mapConfig.width - 1)
+    var ranY = Phaser.Math.Between(0, sim.gameData.mapConfig.height - 1)
+    if (grid[ranY][ranX].zone == 3 || grid[ranY][ranX].zone == 4 || grid[ranY][ranX].zone == 5) {
+      found = true
+      return { x: ranX, y: ranY }
+    }
+  }
+}
+function getCovSub(per) {
+  var sub = 0
+  if (per > 110) {
+    sub = -3
+  } else if (per > 100) {
+    sub = -2
+  } else if (per == 100) {
+    sub = 0
+  } else if (per < 60) {
+    sub = 5
+  } else if (per < 70) {
+    sub = 4
+  } else if (per < 80) {
+    sub = 3
+  } else if (per < 90) {
+    sub = 2
+  } else if (per < 100) {
+    sub = 1
+  }
+  return sub
+}
 
 
 

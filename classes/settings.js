@@ -104,7 +104,7 @@ let birthRates = [.0075, .0085, .01, .0125, .015, .0175, .02]
 let gameRules = {
   roadRange: 4,
   startingFunds: 100000,
-  dayLength: 12000,
+  dayLength: 3000,
   apNormal: 1500,
   wpNormal: 1000,
   crimeNormal: 8,
@@ -184,7 +184,7 @@ const GM_INFO = 5
 const GM_RAIL = 7
 
 
-let gameModeNames = ['Road', 'Pan', 'Place', 'Erase', 'Zone', 'Info', 'Rail']
+let gameModeNames = ['Road', 'Pan', 'Place', 'Erase', 'Zone', 'Select', 'Rail']
 let gameMode = GM_INFO;
 let zoneNames = ['Light Residential', 'Medium Residential', 'Dense Residential', 'Light Commercial', 'Medium Commercial', 'Dense Commercial', 'Light Industry', 'Medium Industry', 'Dense Industry', 'Power', 'Water', 'Waste', 'Communication', 'Health', 'Police', 'Fire', 'Education', 'Culture', 'Parks', 'Recreation', 'Government', 'Special', 'Military', 'Transportation']
 

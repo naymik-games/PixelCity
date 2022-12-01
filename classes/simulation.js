@@ -68,6 +68,10 @@ class Sim {
     //////////////////////////////////////////////////////////////////////////////////////////
     var rand = Phaser.Math.Between(0, birthRates.length - 1)
     var births = Math.round(this.gameData.population * birthRates[rand]) //new pop from births
+    console.log('unbuildable ' + getBuildableCount())
+    console.log('unbuildable ' + getResBuildableCount())
+    console.log('unbuildable ' + getComBuildableCount())
+    console.log('unbuildable ' + getIndBuildableCount())
     var availableHousing = resSupply - this.gameData.population
     var migration = resWorkers * (workerRatio - 1)
     var r = clamp(migration, -20, availableHousing + births)
@@ -207,9 +211,14 @@ class Sim {
   }
   getTotalResCapacity() {
     var resSupply = 0
+    var resCount = 0
+    var buildCounts = getBuildableCount()
     for (var i = 0; i < 9; i++) {
-      resSupply += sim.gameData.rciCounts[i] * rciSupply[i]
+
+      resSupply += (sim.gameData.rciCounts[i] - buildCounts[i]) * rciSupply[i]
     }
+
+    console.log(resSupply)
     if (resSupply == 0) {
       resSupply = 1
     }
@@ -217,9 +226,13 @@ class Sim {
   }
   getTotalComCapacity() {
     var comSupply = 0
+    var comCount = 0
+    var buildCounts = getBuildableCount()
     for (var i = 9; i < 18; i++) {
-      comSupply += sim.gameData.rciCounts[i] * rciSupply[i]
+
+      comSupply += (sim.gameData.rciCounts[i] - buildCounts[i]) * rciSupply[i]
     }
+
     if (comSupply == 0) {
       comSupply = 1
     }
@@ -227,9 +240,12 @@ class Sim {
   }
   getTotalIndCapacity() {
     var indSupply = 0
+    var indCount = 0
+    var buildCounts = getBuildableCount()
     for (var i = 18; i < 24; i++) {
-      indSupply += sim.gameData.rciCounts[i] * rciSupply[i]
+      indSupply += (sim.gameData.rciCounts[i] - buildCounts[i]) * rciSupply[i]
     }
+
     if (indSupply == 0) {
       indSupply = 1
     }
@@ -237,9 +253,11 @@ class Sim {
   }
   getWorkers() {
     var resWorkers = 0
+    var buildCounts = getBuildableCount()
     for (var i = 0; i < 9; i++) {
-      resWorkers += sim.gameData.rciCounts[i] * rciJobs[i]
+      resWorkers += (sim.gameData.rciCounts[i] - buildCounts[i]) * rciJobs[i]
     }
+
     if (Math.round(sim.gameData.population / 2) >= resWorkers) {
       resWorkers += gameRules.commuters
     } else {
@@ -252,15 +270,19 @@ class Sim {
   }
   getComJobs() {
     var comJobs = 0
+    var buildCounts = getBuildableCount()
     for (var i = 9; i < 18; i++) {
-      comJobs += sim.gameData.rciCounts[i] * rciJobs[i]
+      comJobs += (sim.gameData.rciCounts[i] - buildCounts[i]) * rciJobs[i]
+
     }
     return comJobs
   }
   getIndJobs() {
     var indJobs = 0
+    var buildCounts = getBuildableCount()
     for (var i = 18; i < 24; i++) {
-      indJobs += sim.gameData.rciCounts[i] * rciJobs[i]
+      indJobs += (sim.gameData.rciCounts[i] - buildCounts[i]) * rciJobs[i]
+
     }
     return indJobs
   }
@@ -273,7 +295,7 @@ class Sim {
         added: this.gameData.year,
         count: 2,
         HQ: 80.10,
-        EQ: wEQ / 5,
+        EQ: wEQ / 5 < 10 ? 10 : wEQ / 5,
       }
 
       this.gameData.generations.unshift(born)
@@ -286,5 +308,6 @@ class Sim {
 
 
     parentalEducation()
+    healthUpdate()
   }
 }

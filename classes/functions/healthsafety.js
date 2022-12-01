@@ -134,7 +134,26 @@ function getHq() {
   return { pHQ: Math.round(pHqTotal / sim.gameData.generations.length), wfHQ: Math.round(wfHqTotal / 8) }
 }
 function hqDecay() {
-  for (var i = 0; i < sim.gameData.generations.length; i++) {
-    sim.gameData.generations[i].HQ -= sim.gameData.generations[i].HQ * .015
+  var realCapacity = sim.gameData.hospitalCapacity * (sim.gameData.maintenanceCostsPer[13] / 100)//capacity * funding percent
+  if (realCapacity == 0) {
+    var servedPer = 101
+  } else {
+    var servedPer = (getNumberOfPatients() / realCapacity) * 100
   }
+
+  if (servedPer <= 100) {
+    var decay = .002
+  } else {
+    var decay = .018
+  }
+  console.log(decay)
+  for (var i = 0; i < sim.gameData.generations.length; i++) {
+    sim.gameData.generations[i].HQ -= sim.gameData.generations[i].HQ * decay
+  }
+}
+function getNumberOfPatients() {
+  return Math.ceil(sim.gameData.population * .05)
+}
+function healthUpdate() {
+
 }
