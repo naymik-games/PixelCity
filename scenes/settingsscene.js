@@ -39,7 +39,7 @@ class Settings extends Phaser.Scene {
 
 
 
-    this.jobText = this.add.bitmapText(25, 925, 'topaz', 'home ', 40).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive();
+    this.jobText = this.add.bitmapText(25, 725, 'topaz', 'home ', 40).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive();
 
     this.jobText.on('pointerdown', function () {
       this.scene.start('startGame')
@@ -47,8 +47,23 @@ class Settings extends Phaser.Scene {
       this.scene.stop('playGame')
       this.scene.stop('Menu') */
     }, this)
-
-
+    this.nameText = this.add.text(25, 1000, 'Speed ', { fontFamily: 'PixelFont', fontSize: '30px', color: '#CAD4D8', align: 'left' })
+    this.slowText = this.add.bitmapText(25, 1125, 'topaz', 'Slow ', 40).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive();
+    this.slowText.on('pointerdown', function () {
+      gameRules.dayLength = 36000
+    }, this)
+    this.normText = this.add.bitmapText(250, 1125, 'topaz', 'Norm ', 40).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive();
+    this.normText.on('pointerdown', function () {
+      gameRules.dayLength = 24000
+    }, this)
+    this.quickText = this.add.bitmapText(450, 1125, 'topaz', 'Quick ', 40).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive();
+    this.quickText.on('pointerdown', function () {
+      gameRules.dayLength = 12000
+    }, this)
+    this.fastText = this.add.bitmapText(750, 1125, 'topaz', 'Fast ', 40).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive();
+    this.fastText.on('pointerdown', function () {
+      gameRules.dayLength = 6000
+    }, this)
 
     //console.log(roadInRange(tile.xy))
     /* if (tile.hasBuilding) {
