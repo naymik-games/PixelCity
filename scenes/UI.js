@@ -195,6 +195,15 @@ class UI extends Phaser.Scene {
     }, this)
     this.advisorGroup.add(trafficIcon)
 
+    var fireIcon = this.add.image(75, 950, 'icons', 50).setOrigin(.5).setScale(2).setInteractive()
+    fireIcon.on('pointerdown', function () {
+      this.scene.launch('Fire')
+      this.scene.pause()
+      this.scene.pause('playGame')
+      this.scene.pause('Menu')
+    }, this)
+    this.advisorGroup.add(fireIcon)
+
     this.advisorGroup.setPosition(-150, 25)
     ///////////////////////////////////////////////////////
     this.dataGroup = this.add.container()
@@ -313,6 +322,28 @@ class UI extends Phaser.Scene {
        this.scene.pause('Menu') */
     }, this)
     this.dataGroup.add(crimeIcon)
+
+
+    var fireON = false
+    var fireIcon = this.add.image(75, 875, 'icons', 50).setOrigin(.5).setScale(2).setInteractive()
+    fireIcon.on('pointerdown', function () {
+      if (fireON) {
+        this.Main.graphicsData.clear()
+        this.Main.graphicsBorder.clear()
+        fireON = false
+      } else {
+
+        this.Main.drawFireGrid()
+        fireON = true
+      }
+
+      /*  this.scene.launch('Rci')
+       this.scene.pause()
+       this.scene.pause('playGame')
+       this.scene.pause('Menu') */
+    }, this)
+    this.dataGroup.add(fireIcon)
+
 
     this.dataGroup.setPosition(-150, 25)
     var dataOn = false
@@ -529,7 +560,7 @@ class UI extends Phaser.Scene {
     this.ind1.displayHeight = 75 * clamp(sim.gameData.rci[2], 0, 1)
   }
   updateStats() {
-    this.fundsText.setText('$' + sim.gameData.funds)
+    this.fundsText.setText(formatter.format(sim.gameData.funds))
   }
   togglePan() {
     if (this.drag) {

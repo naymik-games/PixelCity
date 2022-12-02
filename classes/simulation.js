@@ -15,6 +15,10 @@ class Sim {
     this.updatePopulation(newYear, fiveYear)
     if (this.gameData.population > 500) {
       this.gameData.maxPlotSize = 2
+    } else if (this.gameData.population > 1500) {
+      this.gameData.maxPlotSize = 3
+    } else if (this.gameData.population > 3000) {
+      this.gameData.maxPlotSize = 4
     }
     setNoRoad()
   }

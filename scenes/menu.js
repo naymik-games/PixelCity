@@ -20,6 +20,7 @@ class Menu extends Phaser.Scene {
     this.containers = []
     this.menuOpen = false
     this.menuButtons = []
+    this.menuButtonsContainer = this.add.container()
     this.currentMenu = null
     this.Main = this.scene.get('playGame');
     //var tablebg = ;
@@ -27,6 +28,7 @@ class Menu extends Phaser.Scene {
     // var footerbg =;
     /* this.header.displayWidth = 870;
      this.header.displayHeight = 200; */
+
     for (var i = 0; i < buildMenu.length; i++) {
       var icon = this.add.image(50 + i * 75, 1575, 'icons', buildMenu[i].frameOff).setOrigin(0, 1).setScale(2).setInteractive()
       icon.name = buildMenu[i].name
@@ -40,6 +42,7 @@ class Menu extends Phaser.Scene {
 
       icon.on('pointerdown', this.menuPress.bind(this, icon))
       this.menuButtons.push(icon)
+      this.menuButtonsContainer.add(icon)
     }
     //this.createTransportationMenu()
 
@@ -988,7 +991,7 @@ let buildMenu = [
         globalLV: [-10, -15, -15, -15],//res,com,ind, other
         localLV: -25,
         capacity: 6000,
-        powerRange: 15,
+        powerRange: 20,
         maintenance: 1000,
         crime: 0,
         crimeRadius: 0,
@@ -1134,7 +1137,7 @@ let buildMenu = [
         globalLV: [-50, -18, -7, -12],
         localLV: -50,
         capacity: 50000,
-        powerRange: 17,
+        powerRange: 22,
         maintenance: 20000,
         crime: 0,
         crimeRadius: 0,
@@ -1683,7 +1686,7 @@ let buildMenu = [
         garbage: 1,
         jobs: 1,
         globalLV: [12, 25, 0, 0],//res,com,ind, other
-        localLV: 5,
+        localLV: 10,
         maintenance: 0,
         crime: 0,
         crimeRadius: 0,

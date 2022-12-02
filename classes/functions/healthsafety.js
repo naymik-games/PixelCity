@@ -157,3 +157,50 @@ function getNumberOfPatients() {
 function healthUpdate() {
 
 }
+// FIRE ///////////////////////////////////////////////////
+function addFireStation(mapXY, id, yearAdded) {
+  sim.gameData.fireStations.push([mapXY, id, yearAdded])
+}
+
+function removeFireStation(mapxy) {
+  var ind = -1
+  for (var i = 0; i < sim.gameData.fireStations.length; i++) {
+    var station = sim.gameData.fireStations[i][0]
+    if (station.x == mapxy.x && station.y == mapxy.y) {
+      ind = i
+    }
+  }
+  if (ind > -1) {
+    sim.gameData.fireStations.splice(ind, 1)
+  }
+}
+
+function fireInRange(point) {
+  //0 1 5
+  var fs = 0
+  // var ph = 0
+  var firePer = sim.gameData.maintenanceCostsPer[15]
+  var radFS = gameRules.phRadius - getCovSub(firePer)
+
+  var radFH = gameRules.phRadius - getCovSub(firePer)
+
+  var tiles = getTilesInRange(point, radFS)
+  for (var i = 0; i < tiles.length; i++) {
+    if (tiles[i].menu == 3 && tiles[i].parentMenu == 3) {
+      fs++
+    }
+  }
+  var tiles = getTilesInRange(point, radFH)
+  for (var i = 0; i < tiles.length; i++) {
+    if (tiles[i].menu == 6 && tiles[i].parentMenu == 3) {
+      fs += 2
+    }
+  }
+  //console.log(ps)
+  return fs
+  /* if (ps || ph) {
+    return true
+  } else {
+    return false
+  } */
+}

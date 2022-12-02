@@ -86,6 +86,7 @@ let gameStats = {
   powerPlants: [],
   waterPlants: [],
   policeStations: [],
+  fireStations: [],
   schoolCapacity: 0,
   collegeCapacity: 0,
   hospitalCapacity: 0,
@@ -113,6 +114,8 @@ let gameRules = {
   baseLV: 50,
   psRadius: 10,
   phRadius: 15,
+  fsRadius: 20,
+  fhRadius: 30,
   commuters: 150
 }
 rciSupply = [23,

@@ -18,7 +18,7 @@ window.onload = function () {
     dom: {
       createContainer: true
     },
-    scene: [preloadGame, startGame, playGame, UI, Menu, Info, People, Rci, Power, Finance, Settings, Police, Laws, Transportation]
+    scene: [preloadGame, startGame, playGame, UI, Menu, Info, People, Rci, Power, Finance, Settings, Police, Laws, Transportation, Fire]
   }
   game = new Phaser.Game(gameConfig);
   window.focus();
@@ -458,6 +458,9 @@ class playGame extends Phaser.Scene {
       if (tile.zone == 14) {
         removePoliceStation(point)
       }
+      if (tile.zone == 15) {
+        removeFireStation(point)
+      }
       if (tile.zone == 13) {
         removeHospital(buildMenu[tile.parentMenu].subMenu[tile.menu].capacity)
       }
@@ -829,7 +832,7 @@ class playGame extends Phaser.Scene {
   }
 
 
-  eraseZone(tileArray) {
+  /* eraseZone(tileArray) {
     console.log(tileArray)
     for (let i = 0; i < tileArray.length; i++) {
 
@@ -860,6 +863,7 @@ class playGame extends Phaser.Scene {
     }
   }
 
+ */
 
 
 
@@ -874,8 +878,7 @@ class playGame extends Phaser.Scene {
 
 
 
-
-  eraseZone_(tileArray) {
+  /* eraseZone_(tileArray) {
     console.log(tileArray)
     for (let i = 0; i < tileArray.length; i++) {
 
@@ -919,7 +922,7 @@ class playGame extends Phaser.Scene {
 
 
     }
-  }
+  } */
 
 
 
@@ -933,7 +936,7 @@ class playGame extends Phaser.Scene {
 
 
 
-  eraseZone__(tileArray) {
+  /* eraseZone__(tileArray) {
     console.log(tileArray)
     for (let i = 0; i < tileArray.length; i++) {
       for (let j = 0; j < tileArray[0].length; j++) {
@@ -975,7 +978,7 @@ class playGame extends Phaser.Scene {
 
       }
     }
-  }
+  } */
 
   tileSelect(p) {
     this.selected = []
@@ -984,14 +987,33 @@ class playGame extends Phaser.Scene {
     var mapXY = this.toMap(pageX, pageY)
     if (!this.onMap(mapXY)) { return }
     if (!this.canAfford(this.transportType.cost)) { return }
-    console.log(mapXY)
+    if (grid[mapXY.y][mapXY.x].terrain == 'water') { return }
+    //console.log(mapXY)
     this.selected.push(mapXY)
-    this.addScore(mapXY)
-
-
     var value = this.calculatePath(mapXY)
-    console.log(value)
     this.setRoad(mapXY, value)
+    var neighbors = getNeighborPoints(mapXY)
+    for (var i = 0; i < neighbors.length; i++) {
+
+      var preTile = neighbors[i]
+      if (grid[preTile.y][preTile.x].road != null) {
+        var preValue = this.calculatePath(preTile)
+        if (grid[preTile.y][preTile.x].road.frame == 18) {
+          preValue = 18
+        } else if (grid[preTile.y][preTile.x].road.frame == 17) {
+          preValue = 17
+        }
+        if (grid[preTile.y][preTile.x].road.frame == 19) {
+          preValue = 19
+        } else if (grid[preTile.y][preTile.x].road.frame == 20) {
+          preValue = 20
+        }
+        console.log('previous value')
+        console.log(preValue)
+        this.setRoad(preTile, preValue)
+      }
+    }
+    // console.log(neighbors)
     sim.gameData.funds -= this.transportType.cost
     sim.gameData.maintenanceCosts[this.transportType.zone] += this.transportType.maintenance
     this.events.emit('updateStats')
@@ -1037,24 +1059,46 @@ class playGame extends Phaser.Scene {
 
       }
       this.setRoad(mapXY, value)
-      console.log(this.selected.length)
-      if (this.selected.length > 0) {
-        var preTile = this.selected[this.selected.length - 1]
-        var preValue = this.calculatePath(preTile)
-        if (grid[preTile.y][preTile.x].road.frame == 18) {
-          preValue = 18
-        } else if (grid[preTile.y][preTile.x].road.frame == 17) {
-          preValue = 17
+      //console.log(this.selected.length)
+      this.setRoad(mapXY, value)
+      var neighbors = getNeighborPoints(mapXY)
+      for (var i = 0; i < neighbors.length; i++) {
+
+        var preTile = neighbors[i]
+        if (grid[preTile.y][preTile.x].road != null) {
+          var preValue = this.calculatePath(preTile)
+          if (grid[preTile.y][preTile.x].road.frame == 18) {
+            preValue = 18
+          } else if (grid[preTile.y][preTile.x].road.frame == 17) {
+            preValue = 17
+          }
+          if (grid[preTile.y][preTile.x].road.frame == 19) {
+            preValue = 19
+          } else if (grid[preTile.y][preTile.x].road.frame == 20) {
+            preValue = 20
+          }
+          //console.log('previous value')
+          //console.log(preValue)
+          this.setRoad(preTile, preValue)
         }
-        if (grid[preTile.y][preTile.x].road.frame == 19) {
-          preValue = 19
-        } else if (grid[preTile.y][preTile.x].road.frame == 20) {
-          preValue = 20
-        }
-        console.log('previous value')
-        console.log(preValue)
-        this.setRoad(preTile, preValue)
       }
+      /*       if (this.selected.length > 0) {
+              var preTile = this.selected[this.selected.length - 1]
+              var preValue = this.calculatePath(preTile)
+              if (grid[preTile.y][preTile.x].road.frame == 18) {
+                preValue = 18
+              } else if (grid[preTile.y][preTile.x].road.frame == 17) {
+                preValue = 17
+              }
+              if (grid[preTile.y][preTile.x].road.frame == 19) {
+                preValue = 19
+              } else if (grid[preTile.y][preTile.x].road.frame == 20) {
+                preValue = 20
+              }
+              console.log('previous value')
+              console.log(preValue)
+              this.setRoad(preTile, preValue)
+            } */
       sim.gameData.funds -= this.transportType.cost
       this.events.emit('updateStats')
       this.selected.push(mapXY)
@@ -1073,7 +1117,7 @@ class playGame extends Phaser.Scene {
     var isoXY = this.toIso(mapXY.x, mapXY.y)
     if (value == 0) {
       if (grid[mapXY.y][mapXY.x].raod == null) {
-        var road = this.add.image(centerX + isoXY.x, centerY + isoXY.y, this.transportType.sheet, 1).setOrigin(.5, 1).setDepth(centerY + isoXY.y);
+        var road = this.add.image(centerX + isoXY.x, centerY + isoXY.y, this.transportType.sheet, 0).setOrigin(.5, 1).setDepth(centerY + isoXY.y);
         grid[mapXY.y][mapXY.x].road = { sheet: this.transportType.sheet, frame: 1 }
         gridImage[mapXY.y][mapXY.x].road = road
       } else {
@@ -1118,7 +1162,7 @@ class playGame extends Phaser.Scene {
 
     return value
   }
-
+  //////////////////////////////////////////////////////////////////////////////////////////////////
   placeItem(mapXY) {
     this.selectCursor.destroy()
     console.log(this.placeData)
@@ -1166,6 +1210,11 @@ class playGame extends Phaser.Scene {
       if (this.placeData.zone == 14) {
         if (this.placeData.id == 2 || this.placeData.id == 5) {
           addPoliceStation(mapXY, this.placeData.id, sim.gameData.year)
+        }
+      }
+      if (this.placeData.zone == 15) {
+        if (this.placeData.id == 3 || this.placeData.id == 6) {
+          addFireStation(mapXY, this.placeData.id, sim.gameData.year)
         }
       }
       if (this.placeData.zone == 16) {
@@ -1341,6 +1390,27 @@ class playGame extends Phaser.Scene {
         this.graphicsData.fillStyle(color1, .5)
 
         this.drawTileData(point)
+      }
+    }
+  }
+  drawFireGrid() {
+    if (sim.gameData.fireStations.length > 0) {
+      var firePer = sim.gameData.maintenanceCostsPer[15]
+      this.graphicsBorder.clear()
+      this.graphicsBorder.lineStyle(3, 0x0000ff, 1);
+      this.graphicsBorder.fillStyle(0x0000ff, 0)
+      for (var i = 0; i < sim.gameData.fireStations.length; i++) {
+        console.log(sim.gameData.fireStations)
+        var plantID = sim.gameData.fireStations[i][1]
+        var plant = buildMenu[3].subMenu[plantID]
+        if (plantID == 3) {
+          var rad = gameRules.fsRadius - getCovSub(firePer)
+        } else if (plantID == 6) {
+          var rad = gameRules.fhRadius - getCovSub(firePer)
+        }
+
+        this.drawDataTileSize(sim.gameData.fireStations[i][0], rad)
+
       }
     }
   }

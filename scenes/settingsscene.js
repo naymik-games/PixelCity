@@ -39,31 +39,83 @@ class Settings extends Phaser.Scene {
 
 
 
-    this.jobText = this.add.bitmapText(25, 725, 'topaz', 'home ', 40).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive();
+    this.jobText = this.add.bitmapText(25, 825, 'topaz', 'home ', 40).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive();
 
     this.jobText.on('pointerdown', function () {
-      this.scene.start('startGame')
-      /* this.scene.stop()
+      this.scene.stop('Menu')
+      this.scene.stop()
       this.scene.stop('playGame')
-      this.scene.stop('Menu') */
+      this.scene.start('startGame')
     }, this)
-    this.nameText = this.add.text(25, 1000, 'Speed ', { fontFamily: 'PixelFont', fontSize: '30px', color: '#CAD4D8', align: 'left' })
-    this.slowText = this.add.bitmapText(25, 1125, 'topaz', 'Slow ', 40).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive();
-    this.slowText.on('pointerdown', function () {
-      gameRules.dayLength = 36000
-    }, this)
-    this.normText = this.add.bitmapText(250, 1125, 'topaz', 'Norm ', 40).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive();
-    this.normText.on('pointerdown', function () {
-      gameRules.dayLength = 24000
-    }, this)
-    this.quickText = this.add.bitmapText(450, 1125, 'topaz', 'Quick ', 40).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive();
-    this.quickText.on('pointerdown', function () {
-      gameRules.dayLength = 12000
-    }, this)
-    this.fastText = this.add.bitmapText(750, 1125, 'topaz', 'Fast ', 40).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive();
-    this.fastText.on('pointerdown', function () {
-      gameRules.dayLength = 6000
-    }, this)
+    if (gameRules.dayLength == 36000) {
+      this.speed = 0
+    } else if (gameRules.dayLength == 24000) {
+      this.speed = 1
+    } else if (gameRules.dayLength == 12000) {
+      this.speed = 2
+    } else if (gameRules.dayLength == 6000) {
+      this.speed = 3
+    }
+    this.speedRadios = []
+    //this.speed = 1
+    this.speedContainer = this.add.container(0, 1050)
+    var speedText = this.add.text(25, 0, 'Speed ', { fontFamily: 'PixelFont', fontSize: '30px', color: '#CAD4D8', align: 'left' })
+    this.speedContainer.add(speedText)
+
+    var radioS1 = this.add.image(50, 75, 'radio', 3)
+    this.speedContainer.add(radioS1)
+    this.speedRadios.push(radioS1)
+    var radioS1Text = this.add.bitmapText(radioS1.x + 50, 75, 'topaz', 'Slow ', 45).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive()
+    this.speedContainer.add(radioS1Text)
+    radioS1Text.on('pointerdown', function () {
+      this.speedHandler(0)
+    }, this);
+
+
+    var radioS2 = this.add.image(250, 75, 'radio', 3)
+    this.speedContainer.add(radioS2)
+    this.speedRadios.push(radioS2)
+    var radioS2Text = this.add.bitmapText(radioS2.x + 50, 75, 'topaz', 'Normal ', 45).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive()
+    this.speedContainer.add(radioS2Text)
+    radioS2Text.on('pointerdown', function () {
+      this.speedHandler(1)
+    }, this);
+
+    var radioS3 = this.add.image(475, 75, 'radio', 3)
+    this.speedContainer.add(radioS3)
+    this.speedRadios.push(radioS3)
+    var radioS3Text = this.add.bitmapText(radioS3.x + 50, 75, 'topaz', 'Quick ', 45).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive()
+    this.speedContainer.add(radioS3Text)
+    radioS3Text.on('pointerdown', function () {
+      this.speedHandler(2)
+    }, this);
+
+    var radioS4 = this.add.image(700, 75, 'radio', 3)
+    this.speedContainer.add(radioS4)
+    this.speedRadios.push(radioS4)
+    var radioS4Text = this.add.bitmapText(radioS4.x + 50, 75, 'topaz', 'Fast ', 45).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive()
+    this.speedContainer.add(radioS4Text)
+    radioS4Text.on('pointerdown', function () {
+      this.speedHandler(3)
+    }, this);
+
+    this.speedHandler(this.speed)
+    /*    this.slowText = this.add.bitmapText(25, 1125, 'topaz', 'Slow ', 40).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive();
+       this.slowText.on('pointerdown', function () {
+         gameRules.dayLength = 36000
+       }, this)
+       this.normText = this.add.bitmapText(245, 1125, 'topaz', 'Normal ', 40).setOrigin(0, .5).setTint(0xF0B060).setInteractive();
+       this.normText.on('pointerdown', function () {
+         gameRules.dayLength = 24000
+       }, this)
+       this.quickText = this.add.bitmapText(460, 1125, 'topaz', 'Quick ', 40).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive();
+       this.quickText.on('pointerdown', function () {
+         gameRules.dayLength = 12000
+       }, this)
+       this.fastText = this.add.bitmapText(750, 1125, 'topaz', 'Fast ', 40).setOrigin(0, .5).setTint(0xCAD4D8).setInteractive();
+       this.fastText.on('pointerdown', function () {
+         gameRules.dayLength = 6000
+       }, this) */
 
     //console.log(roadInRange(tile.xy))
     /* if (tile.hasBuilding) {
@@ -84,5 +136,21 @@ class Settings extends Phaser.Scene {
       this.scene.resume('Menu')
     }, this)
 
+  }
+  speedHandler(radio) {
+    for (var i = 0; i < this.speedRadios.length; i++) {
+      this.speedRadios[i].setFrame(3)
+    }
+    this.speedRadios[radio].setFrame(2)
+    this.speed = radio
+    if (this.speed == 0) {
+      gameRules.dayLength = 36000
+    } else if (this.speed == 1) {
+      gameRules.dayLength = 24000
+    } else if (this.speed == 2) {
+      gameRules.dayLength = 12000
+    } else if (this.speed == 3) {
+      gameRules.dayLength = 6000
+    }
   }
 }

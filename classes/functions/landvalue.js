@@ -61,16 +61,35 @@ function getLandValue(point) {
   landvalue += crimeAdder
   lvObject.crimeadder = crimeAdder
   //console.log('lv local: ' + landvalue + ' (' + tile.localLandValue + ')')
-  var pollutionadder = getAirPollutionEffect(tile.pollution[0], landvalueStart)
+
 
   //ADD AIR POLLUTION
+  var pollutionadder = getAirPollutionEffect(tile.pollution[0], landvalueStart)
   landvalue = landvalue + pollutionadder
   lvObject.airpol = pollutionadder
   //console.log('lv 3: ' + landvalue + ' (' + pollutionadder + ')')
-  var wpolladder = getWaterPollutionEffect(tile.pollution[1], landvalueStart)
+
   //ADD WATER POLLUTION
+  var wpolladder = getWaterPollutionEffect(tile.pollution[1], landvalueStart)
   landvalue = landvalue + wpolladder
   lvObject.waterpol = wpolladder
+
+  //ADD FIRE
+  var fireCoverage = fireInRange(point)
+  var fireBonus = 0
+  if (fireCoverage == 0) {
+    fireBonus = 0
+  } else if (fireCoverage = 1) {
+    fireBonus = 10
+  } else if (fireCoverage = 2) {
+    fireBonus = 20
+  } else if (fireCoverage = 3) {
+    fireBonus = 50
+  } else {
+    fireBonus = 70
+  }
+  lvObject.fireBonus = fireBonus
+  landvalue = landvalue + fireBonus
   //console.log('lv 4: ' + landvalue + ' (' + wpolladder + ')')
 
   lvObject.landvalue = landvalue

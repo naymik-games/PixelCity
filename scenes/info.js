@@ -139,9 +139,13 @@ class Info extends Phaser.Scene {
 
     var distance = getDistanceBonus(this.mapXY)
 
-    this.distanceText = this.add.bitmapText(450, 1575, 'topaz', 'D Bonus: ' + distance, 40).setOrigin(0, .5).setTint(0x000000)
-    var dwater = distanceFromOpenWater(this.mapXY, 5)
-    this.nearWaterText = this.add.bitmapText(25, 1575, 'topaz', 'Near Water: ' + dwater, 40).setOrigin(0, .5).setTint(0x000000)
+    // this.distanceText = this.add.bitmapText(450, 1575, 'topaz', 'D Bonus: ' + distance, 40).setOrigin(0, .5).setTint(0x000000)
+    var n = scaleValue(600, [100, 700], [-1, 1])
+    this.distanceText = this.add.bitmapText(450, 1575, 'topaz', 'D Bonus: ' + n, 40).setOrigin(0, .5).setTint(0x000000)
+    // var dwater = distanceFromOpenWater(this.mapXY, 5)
+    //this.nearWaterText = this.add.bitmapText(25, 1575, 'topaz', 'Near Water: ' + dwater, 40).setOrigin(0, .5).setTint(0x000000)
+    var fireCoverage = fireInRange(this.mapXY)
+    this.fireText = this.add.bitmapText(25, 1575, 'topaz', 'Fire: ' + fireCoverage, 40).setOrigin(0, .5).setTint(0xA6CAF0)
 
     this.airPollutionText = this.add.bitmapText(450, 1175, 'topaz', 'Air P: ' + tile.pollution[0], 40).setOrigin(0, .5).setTint(0xA6CAF0)
     this.airPollutionText = this.add.bitmapText(450, 1275, 'topaz', 'Water P: ' + tile.pollution[1], 40).setOrigin(0, .5).setTint(0xA6CAF0)

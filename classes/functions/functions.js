@@ -65,7 +65,26 @@ function getTilesInRange(point, range) {
   }
   return tilesInRange
 }
-
+function getNeighborPoints(point) {
+  var neighbors = []
+  var n1 = { x: point.x + 1, y: point.y }
+  if (onMap(n1)) {
+    neighbors.push(n1)
+  }
+  var n2 = { x: point.x - 1, y: point.y }
+  if (onMap(n2)) {
+    neighbors.push(n2)
+  }
+  var n3 = { x: point.x, y: point.y + 1 }
+  if (onMap(n3)) {
+    neighbors.push(n3)
+  }
+  var n4 = { x: point.x, y: point.y - 1 }
+  if (onMap(n4)) {
+    neighbors.push(n4)
+  }
+  return neighbors
+}
 function getRandomIndTile() {
 
   var ind = sim.gameData.zoneCounts[6] + sim.gameData.zoneCounts[7] + sim.gameData.zoneCounts[8]
@@ -134,8 +153,29 @@ function getCovSub(per) {
   }
   return sub
 }
-
-
+function onMap(mapXY) {
+  if (mapXY.x < 0 || mapXY.x > mapConfig.width - 1 || mapXY.y < 0 || mapXY.y > mapConfig.height - 1) {
+    return false
+  } else {
+    return true
+  }
+}
+/* // Convert 33 from a 0-100 range to a 0-65535 range
+* var n = scaleValue(33, [0,100], [0,65535]);
+*
+* // Ranges don't have to be positive
+* var n = scaleValue(0, [-50,+50], [0,65535]);
+*
+* Ranges are defined as arrays of two values, inclusive
+*
+* The ~~ trick on return value does the equivalent of Math.floor, just faster.
+*
+*/
+function scaleValue(value, from, to) {
+  var scale = (to[1] - to[0]) / (from[1] - from[0]);
+  var capped = Math.min(from[1], Math.max(from[0], value)) - from[0];
+  return ~~(capped * scale + to[0]);
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////
