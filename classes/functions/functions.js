@@ -165,16 +165,21 @@ function onMap(mapXY) {
 *
 * // Ranges don't have to be positive
 * var n = scaleValue(0, [-50,+50], [0,65535]);
-*
+*value to scale, array of min,max of value range, array of scale range, boolean to round result
 * Ranges are defined as arrays of two values, inclusive
 *
 * The ~~ trick on return value does the equivalent of Math.floor, just faster.
 *
 */
-function scaleValue(value, from, to) {
+function scaleValue(value, from, to, round) {
   var scale = (to[1] - to[0]) / (from[1] - from[0]);
   var capped = Math.min(from[1], Math.max(from[0], value)) - from[0];
-  return ~~(capped * scale + to[0]);
+  if (round) {
+    return ~~(capped * scale + to[0]);
+  } else {
+    return (capped * scale + to[0]);
+  }
+
 }
 
 

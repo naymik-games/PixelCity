@@ -115,6 +115,26 @@ function getAverageCrime() {
    } */
   return Math.round(totalC / count)
 }
+function getAverageCrimeAfterCoverage() {
+  var count = 0
+  var totalC = 0
+  for (var y = 0; y < mapConfig.height; y++) {
+    for (var x = 0; x < mapConfig.width; x++) {
+      var tile = grid[y][x]
+      if (tile.hasBuilding) {
+
+        totalC += getCrimeAfterCoverage(tile.xy, tile.crime)
+        count++
+      }
+
+    }
+  }
+  // console.log('total' + totalC + 'count ' + count)
+  /*  if (totalC < 1) {
+     totalC = 1
+   } */
+  return Math.round(totalC / count)
+}
 function addHospital(capacity) {
   sim.gameData.hospitalCapacity += capacity
 }

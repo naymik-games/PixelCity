@@ -18,7 +18,7 @@ window.onload = function () {
     dom: {
       createContainer: true
     },
-    scene: [preloadGame, startGame, playGame, UI, Menu, Info, People, Rci, Power, Finance, Settings, Police, Laws, Transportation, Fire]
+    scene: [preloadGame, startGame, playGame, UI, Menu, Info, People, Rci, Power, Finance, Settings, Police, Laws, Transportation, Fire, Mayor]
   }
   game = new Phaser.Game(gameConfig);
   window.focus();
@@ -268,7 +268,7 @@ class playGame extends Phaser.Scene {
     this.input.on("pointermove", this.inputMove, this)
     this.input.on("pointerup", this.inputUp, this)
     // this.cameras.main.setZoom(4)
-
+    driveTimes()
     /*  
      this.input.on("pointerup", this.removeGems, this);
     */

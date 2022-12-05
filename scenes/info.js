@@ -140,8 +140,12 @@ class Info extends Phaser.Scene {
     var distance = getDistanceBonus(this.mapXY)
 
     // this.distanceText = this.add.bitmapText(450, 1575, 'topaz', 'D Bonus: ' + distance, 40).setOrigin(0, .5).setTint(0x000000)
-    var n = scaleValue(600, [100, 700], [-1, 1])
-    this.distanceText = this.add.bitmapText(450, 1575, 'topaz', 'D Bonus: ' + n, 40).setOrigin(0, .5).setTint(0x000000)
+    var n = scaleValue(175, [100, 700], [-1, 1], true)
+    // var avgPol = getAveragePollution()
+    // var averCon = getAverageCongestion()
+    //var avLV = sim.gameData.averageLV
+    var averCrime = getAverageCrimeAfterCoverage()
+    this.distanceText = this.add.bitmapText(450, 1575, 'topaz', 'D Bonus: ' + averCrime, 40).setOrigin(0, .5).setTint(0x000000)
     // var dwater = distanceFromOpenWater(this.mapXY, 5)
     //this.nearWaterText = this.add.bitmapText(25, 1575, 'topaz', 'Near Water: ' + dwater, 40).setOrigin(0, .5).setTint(0x000000)
     var fireCoverage = fireInRange(this.mapXY)

@@ -2582,7 +2582,7 @@ let buildMenu = [
         garbage: 8,
         jobs: 0,
         globalLV: [60, 30, 10, 8],//res,com,ind, other
-        localLV: 10,
+        localLV: 15,
         maintenance: 15,
         crime: 0,
         crimeRadius: 0,

@@ -110,10 +110,27 @@ class UI extends Phaser.Scene {
     // this.scoreText = this.add.bitmapText(100, 40 + 197 / 2, 'topaz', sim.gameData.day, 65).setOrigin(.5).setTint(0xCAD4D8).setAlpha(1);
     this.fundsText = this.add.bitmapText(420, 85, 'topaz', formatter.format(sim.gameData.funds), 42).setOrigin(0, .5).setTint(0xCAD4D8).setAlpha(1);
     this.headerGroup.add(this.fundsText)
-    this.popText = this.add.bitmapText(420, 145, 'topaz', 'P: ' + formatterNum.format(sim.gameData.population), 42).setOrigin(0, .5).setTint(0xCAD4D8).setAlpha(1);
+    var popIcon = this.add.image(390, 145, 'icons_clear', 38).setOrigin(0, .5).setScale(2).setInteractive()
+    this.headerGroup.add(popIcon)
+    this.popText = this.add.bitmapText(popIcon.x + popIcon.width + 20, 145, 'topaz', formatterNum.format(sim.gameData.population), 42).setOrigin(0, .5).setTint(0xCAD4D8).setAlpha(1);
     this.headerGroup.add(this.popText)
     this.yearText = this.add.bitmapText(420, 205, 'topaz', this.month[sim.gameData.day] + ' ' + sim.gameData.year, 42).setOrigin(0, .5).setTint(0xCAD4D8).setAlpha(1);
     this.headerGroup.add(this.yearText)
+
+    var mayorIcon = this.add.image(885, 100, 'icons_clear', 60).setOrigin(1, .5).setScale(3).setInteractive()
+    this.headerGroup.add(mayorIcon)
+    this.mayorText = this.add.text(mayorIcon.x - mayorIcon.width - 70, 100, '12', { fontFamily: 'PixelFont', fontSize: '45px', color: '#F0B060', align: 'left' }).setOrigin(1, .5)
+    this.headerGroup.add(this.mayorText)
+    mayorIcon.on('pointerdown', function () {
+      this.scene.launch('Mayor')
+      this.scene.pause()
+      this.scene.pause('playGame')
+      this.scene.pause('Menu')
+    }, this)
+    var cityIcon = this.add.image(885, 200, 'icons_clear', 64).setOrigin(1, .5).setScale(3).setInteractive()
+    this.cityText = this.add.text(cityIcon.x - cityIcon.width - 70, 200, '25', { fontFamily: 'PixelFont', fontSize: '45px', color: '#F0B060', align: 'left' }).setOrigin(1, .5)
+    this.headerGroup.add(this.cityText)
+    this.headerGroup.add(cityIcon)
 
     this.modeLabelText = this.add.bitmapText(50, 1600, 'topaz', 'Mode:', 42).setOrigin(0, .5).setTint(0xffffff).setInteractive();
     this.modeText = this.add.bitmapText(160, 1600, 'topaz', '', 42).setOrigin(0, .5).setTint(0xffffff);
@@ -509,7 +526,7 @@ class UI extends Phaser.Scene {
         sim.gameData.day++
         var newYear = false
         var fiveYear = false
-        this.popText.setText('P: ' + formatterNum.format(sim.gameData.population))
+        this.popText.setText(formatterNum.format(sim.gameData.population))
         if (sim.gameData.day == 13) {
           sim.gameData.year++
           newYear = true

@@ -64,3 +64,17 @@ function updatePollution() {
     }
   }
 }
+function getAveragePollution() {
+  var value = 0
+  var count = 0
+  for (var y = 0; y < mapConfig.height; y++) {
+    for (var x = 0; x < mapConfig.width; x++) {
+      var point = { x: x, y: y }
+      var airPol = grid[point.y][point.x].pollution[0]
+      value += airPol
+      count++
+
+    }
+  }
+  return Math.floor(value / count)
+}
